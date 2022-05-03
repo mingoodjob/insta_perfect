@@ -116,4 +116,7 @@
 
 # 와이어 프레임
 
+<img src="https://velog.velcdn.com/images/psjlmk/post/849942da-fd41-47e3-bb5b-62d48acad552/image.png">
+<img src="https://velog.velcdn.com/images/psjlmk/post/1484664d-e71e-4464-88f6-68e4f0934c84/image.png">
+
 
