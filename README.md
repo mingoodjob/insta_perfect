@@ -89,7 +89,7 @@
 | 이미지 저장  | POST  | /feed_save | { 'title' : title ,  'desc' : desc , 'img' : img } | 작성된 제목 이미지 내용 |
 | 좋아요 카운팅 및 아이디 | POST  | /like_click | { 'like_count' : like_count , 'like_id' : session_id } | 해당 게시물 좋아요 갯수 및 아이디 저장 |
 | 좋아요 카운팅 및 아이디 | GET  | /like | | 해당 피드 좋아요 카운팅 및 클릭 아이디  |
-| 댓글 저장 | POST  | /comment_list | { 'comment' : comment } | 해당 피드 댓글 내용 저장 |
+| 댓글 저장 | POST  | /comment_list | { 'comment_id' : session_id , comment' : comment } | 해당 피드 댓글 내용 및 사용자 저장 |
 
 ## 기술
 
