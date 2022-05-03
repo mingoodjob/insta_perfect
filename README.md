@@ -84,10 +84,10 @@
 | 기능  | 메소드 | URL | request | respone |
 | ------------- | ------------- | ----- | ---- | ---- |
 | 회원가입 | POST  | /join | {'uid' : uid , 'e_mail' : e_mail , 'pswd' : pswd , 'profile_img' : profile_img | 아이디 비밀번호 이메일 프로필 사진 저장 |
-| 로그인 | GET  | /login | {'uid' : uid , 'pswd' : pswd , 'profile_img' : profile_img | 아이디 비밀번호 프로필 사진 아이디는 세션에 저장 |
+| 로그인 | GET  | /login | {'uid' : uid , 'pswd' : pswd , 'profile_img' : profile_img | 아이디 비밀번호 프로필 사진 아이디는 세션에 저장 |
 | 피드 이미지 목록 불러오기  | GET  | /feed_list |  | 모든 이미지 , 모든 댓글 카운트 및 내용 , 좋아요 카운트 , 좋아요 클릭 아이디 |
 | 이미지 저장  | POST  | /feed_save | { 'title' : title ,  'desc' : desc , 'img' : img } | 작성된 제목 이미지 내용 |
-| 좋아요 카운팅 및 아이디 | POST  | /like_click | { 'like_count' : like_count , 'like_id' : session_id } | 해당 게시물 좋아요 갯수 및 아이디 저장 |
+| 좋아요 카운팅 및 아이디 | POST  | /like_click | { 'like_count' : like_count , 'like_id' : session_id } | 해당 게시물 좋아요 갯수 및 아이디 저장 |
 | 좋아요 카운팅 및 아이디 | GET  | /like | | 해당 피드 좋아요 카운팅 및 클릭 아이디  |
 | 댓글 저장 | POST  | /comment_list | { 'comment' : comment } | 해당 피드 댓글 내용 저장 |
 
