@@ -83,7 +83,7 @@
 
 | 기능  | 메소드 | URL | request | respone |
 | ------------- | ------------- | ----- | ---- | ---- |
-| 회원가입 | POST  | /join | {'uid' : uid , 'e_mail' : e_mail , 'pwd' : pwd , 'photo' : photo | 아이디 비밀번호 이메일 프로필 사진 저장 |
+| 회원가입 | POST  | /join | {'uid' : uid , 'pwd' : pwd , 'photo' : photo | 아이디 비밀번호 이메일 프로필 사진 저장 |
 | 로그인 | GET  | /login | {'uid' : uid , 'pwd' : pwd , 'photo' : photo | 아이디 비밀번호 프로필 사진 아이디는 세션에 저장 |
 | 피드 이미지 목록 불러오기  | GET  | /feed_list |  | 모든 이미지 , 모든 댓글 카운트 및 내용 , 좋아요 카운트 , 좋아요 클릭 아이디 |
 | 이미지 저장  | POST  | /feed_save | { 'content' : content , 'photo' : photo } | 작성된 제목 이미지 내용 |
