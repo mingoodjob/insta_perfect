@@ -454,3 +454,7 @@ input:focus::placeholder {
     overflow: hidden !important;
     touch-action: none;
 }
+
+.photo_preview{
+    margin: 100px;
+}
