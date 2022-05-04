@@ -22,7 +22,21 @@ function Go_profile() {
     })
 }
 
-// 포스트 작동 아이콘 모달 /////////////////////////////////////////
+// 이미지 슬라이드 //////////////////////
+$(document).ready(function() {
+    $('.slider_post').bxSlider({  // bxslider 라이브러리에 지정된 커스텀 가능한 옵션들  // 포스트 박스내 슬라이드
+        speed: 300,  // 슬라이드 속도
+        infiniteLoop: false,  // 루프 off
+        hideControlOnEnd: true,  // 첫 슬라이드의 이전 버튼과 마지막 슬라이드 다음 버튼 제거
+        touchEnabled: false,  // 터치로 슬라이드 불가능
+        adaptiveHeight: true,  // 사진 높이에 따라 박스 크기 조절
+        onSliderLoad: function(){
+            $(".slider_post").css("visibility", "visible").animate({opacity:1})
+        }
+    })
+})
+
+// 포스트 작성 아이콘 모달 /////////////////////////////////////////
 const getPostButton = document.querySelector('#button_post')  // 작성 아이콘 버튼을 변수에 담음
 const getPostModal = document.querySelector('.modal_body_post')  // 모달이 될 레이아웃을 변수에 담음(배경 포함)
 const body = document.querySelector('body')  // 모달이 보여질때 스크롤이 잠기게 하기위해 바디 전체를 변수에 담음
@@ -49,10 +63,19 @@ getPostModal.addEventListener('click', (event) => {  // 모달 변수에 클릭 
 
 // 옵션 버튼 모달 ///////////////////////////////////////////
 const getOptionButton = document.querySelector('.button_option')  // 옵션 버튼을 변수에 담음
+const getOptionModalButton = document.querySelector('.button_option_modal')  // 모달창의 옵션 버튼을 변수에 담음
 const getOptionModal = document.querySelector('.option_body_modal')  // 변수에 모달이 될 영역을 넣음
-const getButtonCencel = document.querySelector('#button_cencel')  // 취소 버튼을 변수에 담음
+const getButtonCancel = document.querySelector('#button_cancel')  // 취소 버튼을 변수에 담음
 
 getOptionButton.addEventListener('click', () => {  // 버튼에 클릭 이벤트가 발생하면
+    getOptionModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
+
+    if (getOptionModal.classList.contains('modalToggle')) {  // getOptionModal 변수에 modalToggle가 활성화됐다면
+        body.style.overflow = 'hidden'  // 스크롤을 막음
+    }
+})
+
+getOptionModalButton.addEventListener('click', () => {  // 버튼에 클릭 이벤트가 발생하면
     getOptionModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
 
     if (getOptionModal.classList.contains('modalToggle')) {  // getOptionModal 변수에 modalToggle가 활성화됐다면
@@ -64,8 +87,76 @@ getOptionModal.addEventListener('click', (event) => {  // 모달 변수에 클�
     if (event.target === getOptionModal) {  // 그게 만약 '엄격하게' 모달 변수 위에서 발생한다면 (모달시 실제로 보여지는 영역은 option_body_modal 자식태그이므로 해당하지않음)
         getOptionModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
         body.style.overflow = 'auto'  // 스크롤을 다시 활성화
-    } else if (event.target === getButtonCencel) {  // 혹은 그게 만약 취소 버튼 변수 위라면
+    } else if (event.target === getButtonCancel) {  // 혹은 그게 만약 취소 버튼 변수 위라면
         getOptionModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
+        body.style.overflow = 'auto'  // 스크롤을 다시 활성화
+    }
+})
+
+// 댓글 모달 ///////////////////////////////////////////
+var modalslide = ''
+
+    $(document).ready(function() {
+        modalslide = $('.slider_modal').bxSlider()
+    })
+
+const getCommentButton = document.querySelector('.comment_icon')  // 댓글 아이콘을 변수에 담음
+const getCommentShowButton = document.querySelector('.show_comment')  // 댓글 모두보기 버튼을 변수에 담음
+const getCommentModal = document.querySelector('.comment_modal_body')  // 변수에 모달이 될 영역을 넣음
+const getCommentQuit = document.querySelector('.quit_comment_modal')  // 취소 버튼을 변수에 담음
+
+getCommentButton.addEventListener('click', () => {  // 댓글 아이콘에 클릭 이벤트가 발생하면
+    getCommentModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
+
+    // setTimeout(function() {  // 모달창에서 슬라이드 이미지가 안뜨면 시도해볼 것
+    //     apiLayout();
+    //     },500);
+
+    // function apiLayout() {
+    // console.log('apiLayout call')
+
+    modalslide.reloadSlider({
+        speed: 300,  // 슬라이드 속도
+        infiniteLoop: false,  // 루프 off
+        hideControlOnEnd: true,  // 첫 슬라이드의 이전 버튼과 마지막 슬라이드 다음 버튼 제거
+        touchEnabled: false,  // 터치로 슬라이드 불가능
+        adaptiveHeight: true,  // 사진 높이에 따라 박스 크기 조절
+        onSliderLoad: function() {
+            $(".box_slider").css("visibility", "visible").animate({opacity: 1})
+        }
+    });
+// }
+
+    if (getCommentModal.classList.contains('modalToggle')) {  // getCommentModal 변수에 modalToggle가 활성화됐다면
+        body.style.overflow = 'hidden'  // 스크롤을 막음
+    }
+})
+
+getCommentShowButton.addEventListener('click', () => {  // 댓글 모두보기 버튼에 클릭 이벤트가 발생하면
+    getCommentModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
+
+    modalslide.reloadSlider({
+        speed: 300,  // 슬라이드 속도
+        infiniteLoop: false,  // 루프 off
+        hideControlOnEnd: true,  // 첫 슬라이드의 이전 버튼과 마지막 슬라이드 다음 버튼 제거
+        touchEnabled: false,  // 터치로 슬라이드 불가능
+        adaptiveHeight: true,  // 사진 높이에 따라 박스 크기 조절
+        onSliderLoad: function() {
+            $(".box_slider").css("visibility", "visible").animate({opacity: 1})
+        }
+    });
+
+    if (getCommentModal.classList.contains('modalToggle')) {  // getCommentModal 변수에 modalToggle가 활성화됐다면
+        body.style.overflow = 'hidden'  // 스크롤을 막음
+    }
+})
+
+getCommentModal.addEventListener('click', (event) => {  // 모달 변수에 클릭 이벤트가 발생되고
+    if (event.target === getCommentModal) {  // 그게 만약 '엄격하게' 모달 변수 위에서 발생한다면 (모달시 실제로 보여지는 영역은 comment_modal_body 자식태그이므로 해당하지않음)
+        getCommentModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
+        body.style.overflow = 'auto'  // 스크롤을 다시 활성화
+    } else if (event.target === getCommentQuit) {  // 혹은 그게 만약 취소 버튼 변수 위라면
+        getCommentModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
         body.style.overflow = 'auto'  // 스크롤을 다시 활성화
     }
 })
@@ -77,16 +168,6 @@ function focus_search() {
 function blur_search() {
     $(".icon_glass").attr("style", "display: block;") // 나타남
 }
-
-// 이미지 슬라이드 //////////////////////
-$(document).ready(function() {
-    $('.slider').bxSlider({  // bxslider 라이브러리에 지정된 커스텀 가능한 옵션들
-        speed: 300,  // 슬라이드 속도
-        infiniteLoop: false,  // 루프 off
-        hideControlOnEnd: true,  // 첫 슬라이드의 이전 버튼과 마지막 슬라이드 다음 버튼 제거
-        touchEnabled: false  // 터치로 슬라이드 불가능
-    })
-})
 
 // 좋아요 버튼 ///////////////////////////
 function red_heart_show() {  // 좋아요 입력
