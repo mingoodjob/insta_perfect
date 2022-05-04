@@ -286,7 +286,7 @@ nav {
 }
 
 /* 포스트 네임카드 박스 */
-.box_name_post {
+.container_name_post {
     width: 614px;
     height: 60px;
     border-bottom: 1px solid rgb(219,219,219, 0.5);
@@ -302,11 +302,15 @@ nav {
     cursor: pointer;
 }
 
-/* 이름 */
-.name_post {
+/* 이름 박스 */
+.box_name_post {
     flex-grow: 1;
     margin-left: 12px;
     padding-bottom: 3px;
+}
+
+/* 이름 */
+.name_post {
     font-weight: 600;
     cursor: pointer;
 }
@@ -547,7 +551,7 @@ nav {
 .time_post {
     font-size: 10px;
     letter-spacing: 0.2px;
-    margin: 4px 0 17px 0;
+    margin: 4px 0 17px 16px;
     color: rgb(142, 142, 142);
     cursor: pointer;
 }
@@ -630,10 +634,14 @@ nav {
     cursor: pointer;
 }
 
-/* 이름 */
-.profile_name {
+/* 이름 박스 */
+.box_profile_name {
     width: 187px;
     margin: 12px 8px 12px 18px;
+}
+
+/* 이름 */
+.profile_name {
     font-weight: 600;
     cursor: pointer;
 }
