@@ -128,4 +128,6 @@
 
 <img src="https://velog.velcdn.com/images/psjlmk/post/1484664d-e71e-4464-88f6-68e4f0934c84/image.png">
 
+# db 설계
 
+<img src="https://velog.velcdn.com/images/psjlmk/post/f042ce13-c9b1-48f1-86ff-50df957f36fe/image.jpg">
