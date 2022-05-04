@@ -101,29 +101,25 @@ function empty_heart_show() {  // 좋아요 취소
     $(".heart_count").hide()
 }
 
-// // 컨텐츠 로딩 완료 후 높이 기준으로 클래스 재처리
-// window.addEventListener('load', function () {
-//     let contentHeight = document.querySelector('.box_content > .text_content').offsetHeight; //컨텐츠 높이 얻기
-//     if (contentHeight < 20) {
-//         console.log('1줄입니다')
-//         document.querySelector('.box_show_text').classList.add('hide_btn_open') // 버튼 감춤
-//     } else {
-//         console.log('두줄 이상입니다')
-//         document.querySelector('.text_content').classList.add('limit_box')
-//     }
-// })
+// content 내용이 길면 숨김 처리와 더보기 버튼
+window.addEventListener('load', function () {
+    let contentHeight = document.querySelector('.text_content').offsetHeight // content 높이 얻기
+    if (contentHeight < 20) {
+        document.querySelector('.show_cotent').classList.add('hide_btn') // 1줄이하면 버튼 감춤
+    } else {
+        document.querySelector('.box_content').classList.add('hide_content') // 2줄이상은 숨김
+    }
+})
 
-// function btn_click() {
-//             console.log('버튼 클릭감지되었습니다')
-//             // document.querySelector('.text_content').classList.remove('limit_box')
-//             document.querySelector('.box_show_text').classList.add('hide_btn_open')
-//         }
-
+function show_content() {  // 더 보기 버튼 클릭시
+    document.querySelector('.box_content').classList.remove('hide_content') // 텍스트 숨김처리 취소
+    document.querySelector('.show_cotent').classList.add('hide_btn') // 버튼 숨김
+}
 
 // 댓글달기 input 박스에 텍스트 감지 여부에 따라 게시 버튼 스타일 변경 기능 //////////////////////
 $(document).ready(function() {
     $(".write_comment").on('input',function() {
-        if($('.write_comment').val()=='')
+        if($('.write_comment').val() == '')
             $('.write_button').attr("style", "opacity: 50%; cursor: auto;");  // 텍스트 감지되지않으면 흐리게, 기본 커서
         else
             $('.write_button').attr("style", "opacity: 100%; cursor: pointer;")  // 텍스트 감지되면 진하게, 포인터 커서
@@ -133,10 +129,11 @@ $(document).ready(function() {
 
 // 댓글 달기 기능
 function write_button() {
+    let writer_comment = $('.profile_name').text()
     let comment = $('.write_comment').val()
-    if (comment != '') {
+    if (comment !== '') {
         let temp_html = `<div class="box_list_comment">
-                        <span class="writer_comment" onclick="Go_profile()">댓글 작성자 이름</span>
+                        <span class="writer_comment" onclick="Go_profile()">${writer_comment}</span>
                         <span class="comment">${comment}</span>
                         <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
                             <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
