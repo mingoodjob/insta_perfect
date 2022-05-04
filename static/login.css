@@ -9,14 +9,12 @@ body {
     width: 250px;
     height: 480px;
 
-
 }
 .container {
     width: 100vw;
     height: 100vh;
     background-color:#fafafa;
 }
-
 
 .phone_img_box {
     position: absolute;
@@ -27,13 +25,7 @@ body {
     height: 630px;
     z-index: 99;
 }
-/*.phone_img1 {*/
-/*    position: relative;*/
-/*    left: 33.7%;*/
-/*    top: 4.2%;*/
-/*    width: 250px;*/
-/*    height: 538px;*/
-/*}*/
+
 
 .login_box {
     position: absolute;
@@ -55,39 +47,73 @@ body {
 }
 .login_input {
     width: 265px;
+    top: 20%;
+    height: 20px;
+    background-color: #FAFAFA;
+    border: none;
+    position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+    outline: none;
+
+
+}
+
+.log_input {
+    width: 270px;
     left: 11%;
     top: 33.5%;
     height: 36px;
-    border: 1px solid #dbdbdb;
     background-color: #FAFAFA;
     border-radius: 3px;
+    border: 1px solid #dbdbdb;
     position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+}
+
+.log_input2 {
+    width: 270px;
+    left: 11%;
+    top: 45%;
+    height: 36px;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    border: 1px solid #dbdbdb;
+    position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+
 }
 .login_input2 {
     width: 265px;
-    left: 11%;
-    top: 45%;
-    height: 34px;
-    border: 1px solid #dbdbdb;
+    top: 19%;
+    height: 20px;
     background-color: #FAFAFA;
-    border-radius: 3px;
+    border: none;
     position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+    outline: none;
+    /*padding: 9px 0 1px 4px;*/
+
 }
 
 .login_input_text {
     font-size: 12px;
-    left: 14%;
-    top: 36.5%;
+    left: 2%;
+    top: 25.5%;
     color: darkgrey;
     position: absolute;
-    z-index: 1;
     font-weight: 600;
+    padding: 1px 0 1px 1px;
+
 }
 .login_input_text2 {
     font-weight: 600;
     font-size: 12px;
-    left: 14%;
-    top: 48%;
+   left: 2%;
+    top: 29%;
     z-index: 1;
     color: darkgrey;
     position: absolute;
@@ -100,11 +126,12 @@ body {
     height: 30px;
     cursor: pointer;
     border-radius: 5px;
-    /*background-color: #0095f6 클릭시 진해지는 값*/
-    background-color: rgba(var(--d69,0,149,246),.3);
+    font-weight: bold;
+    background-color: #0095f6;
     border: 1px solid transparent;
     color: white;
     font-size: 14px;
+    opacity: 0.3;
 }
 .middle_line {
     background-color: #dbdbdb;
@@ -229,6 +256,19 @@ body {
     font-size: 12px;
     color: #8e8e8e;
 }
+
+.login_hide_pwd {
+    position: absolute;
+    top: 28%;
+    left: 68%;
+    font-weight: bold;
+    font-size: 12.5px;
+    z-index: 2;
+    display: none;
+    cursor: pointer;
+}
+
+
 /*@media (max-width: 2400px) {*/
 /*  .login_box {*/
 /*   */

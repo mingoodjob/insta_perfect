@@ -12,6 +12,7 @@
 <style>
 .bx-wrapper {border:0;box-shadow:none; background-color: black;}
 </style>
+    <script src="../../sparta/개인프로젝트/insta/static/main.js"></script>
 </head>
 <body>
     <div class="container">  <!-- 로그인 페이지 폰 화면 container!-->
@@ -30,15 +31,18 @@
         <div class="login_box">
             <img class="insta_logo" src="../static/login_img/insta_logo.png">
             <label>
-
 <!--               id,pw로그인 -->
-               <div>
-                    <span class="login_input_text">전화번호, 사용자 이름 또는 이메일</span>
-                    <input class="login_input" type="text" >
-               </div>
-                <div>
+                   <div class="log_input">
+                       <input class="login_input" type="text" id="id_value" >
+                        <span class="login_input_text">전화번호, 사용자 이름 또는 이메일</span>
+                   </div>
+
+
+
+                <div class="log_input2">
                      <span class="login_input_text2 ">비밀번호</span>
-                    <input class="login_input2" type="text" >
+                     <span class="login_hide_pwd">비밀번호 표시</span>
+                    <input class="login_input2" type="password" id="pwd_value">
                 </div>
                 <button class="login_btn">로그인</button>
             </label>
@@ -76,7 +80,7 @@
 
 
 
-<script src="../static/image_slide_js.js"></script>
+<script src="../static/image_slide.js"></script>
 
 </body>
 </html>
