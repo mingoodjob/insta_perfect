@@ -122,7 +122,7 @@
 
 ### 회원가입 페이지
 
-https://velog.velcdn.com/images/psjlmk/post/63659384-238e-4613-8091-74ccb3318b46/image.png
+<img src=https://velog.velcdn.com/images/psjlmk/post/63659384-238e-4613-8091-74ccb3318b46/image.png">
 
 ### 홈 화면 페이지
 
