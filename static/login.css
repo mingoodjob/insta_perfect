@@ -1,0 +1,236 @@
+body {
+    margin: 0;
+}
+.bx-wrapper {
+    box-shadow:none;
+    position: absolute;
+    left: 33.7%;
+    top: 4%;
+    width: 250px;
+    height: 480px;
+
+
+}
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-color:#fafafa;
+}
+
+
+.phone_img_box {
+    position: absolute;
+    left: 33%;
+    top: 21.7%;
+    background-image: url("../static/login_img/iphone.png");
+    width: 460px;
+    height: 630px;
+    z-index: 99;
+}
+/*.phone_img1 {*/
+/*    position: relative;*/
+/*    left: 33.7%;*/
+/*    top: 4.2%;*/
+/*    width: 250px;*/
+/*    height: 538px;*/
+/*}*/
+
+.login_box {
+    position: absolute;
+    left: 50.8%;
+    top: 22.7%;
+    width: 350px;
+    height: 400px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+
+}
+
+.insta_logo {
+    width: 175px;
+    height: 51px;
+    margin-top: 14%;
+    margin-left: 25%;
+    cursor: pointer;
+}
+.login_input {
+    width: 265px;
+    left: 11%;
+    top: 33.5%;
+    height: 36px;
+    border: 1px solid #dbdbdb;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    position: absolute;
+}
+.login_input2 {
+    width: 265px;
+    left: 11%;
+    top: 45%;
+    height: 34px;
+    border: 1px solid #dbdbdb;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    position: absolute;
+}
+
+.login_input_text {
+    font-size: 12px;
+    left: 14%;
+    top: 36.5%;
+    color: darkgrey;
+    position: absolute;
+    z-index: 1;
+    font-weight: 600;
+}
+.login_input_text2 {
+    font-weight: 600;
+    font-size: 12px;
+    left: 14%;
+    top: 48%;
+    z-index: 1;
+    color: darkgrey;
+    position: absolute;
+}
+.login_btn {
+    position: absolute;
+    width: 270px;
+    left: 11%;
+    top: 58.5%;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    /*background-color: #0095f6 클릭시 진해지는 값*/
+    background-color: rgba(var(--d69,0,149,246),.3);
+    border: 1px solid transparent;
+    color: white;
+    font-size: 14px;
+}
+.middle_line {
+    background-color: #dbdbdb;
+    width: 103px;
+    height: 1px;
+    position: absolute;
+    top: 72%;
+    left: 11.3%;
+}
+.middle_line2 {
+    background-color: #dbdbdb;
+    width: 103px;
+    height: 1px;
+    position: absolute;
+    top: 72%;
+    left: 58.3%;
+}
+
+.middle_line_text {
+    position: absolute;
+    font-size: 13px;
+    color:  gray;
+    font-weight: 600;
+    left: 46%;
+    top: 70%;
+}
+.facebook_logo {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 81%;
+    left: 26%;
+}
+.facebook_btn {
+    color: #385185;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-weight: 700;
+    position: absolute;
+    top: 80.2%;
+    left: 32%;
+
+}
+.find_pwd {
+    position: absolute;
+    text-decoration-line: none;
+    top: 90%;
+    left: 31%;
+    font-size: 12px;
+    color: #00376b;
+}
+.find_id_box{
+    position: absolute;
+    top: 102.7%;
+    width: 350px;
+    height: 63px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+
+}
+.find_id_text {
+    color: #262626;
+    font-size: 14px;
+    position: absolute;
+    top: 35%;
+    left: 22%;
+}
+.find_id_btn {
+    position: absolute;
+    left: 57.5%;
+    top: 34%;
+    color: #0095f6;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.down_text {
+    position: absolute;
+    left: 30%;
+    top: 128%;
+    color: #262626;
+    font-size: 14px;
+}
+
+.app_img {
+    position: absolute;
+    width: 136px;
+    height: 40px;
+    left: 9%;
+    top: 175%;
+}
+.google_img {
+    position: absolute;
+    width: 136px;
+    height: 40px;
+    top: 175%;
+    left: 51%;
+}
+
+.footer_1 {
+    position: absolute;
+    left: 45%;
+    top: 90%;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+.footer_2 {
+    position: absolute;
+    left: 46.5%;
+    top: 92%;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+.footer_3 {
+    position: absolute;
+    left: 45%;
+    top: 94%;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+/*@media (max-width: 2400px) {*/
+/*  .login_box {*/
+/*   */
+/*  }*/
+/*}*/
