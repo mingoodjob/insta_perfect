@@ -1,3 +1,18 @@
+a:link {
+    color: red;
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(0, 0, 0);
+    text-decoration: underline;
+}
+
 body {
     background: #FAFAFA;
     margin: 0;

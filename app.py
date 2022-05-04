@@ -1,12 +1,13 @@
-from flask import Flask, render_template
-
+from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
-from pymongo import MongoClient
-
-client = MongoClient('localhost', 27017)
-db = client.codeggumst
-
+# 파일 저장
+@app.route('/api', methods=['POST'])
+def get_file():
+    image = request.file['image']
+    print(f'{image}')
+#   image.save(f'./{image.filename}')
+    return render_template('profile.html')
 
 # 시작 페이지 로드
 @app.route('/')
