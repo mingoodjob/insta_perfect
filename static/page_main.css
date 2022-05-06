@@ -1,221 +1,375 @@
-.page_main {
-    width: 789px;
-    height: 100vh + 50;
-    padding: 10px 0px;
-}
-
-.profile_status {
-    width: 789px;
-    height: 200px;
-}
-
-.pr {
-    width: 150px;
-    height: 150px;
-    border-radius: 70%;
-    overflow: hidden;
-}
-
-.pr_img {
+.top_menu_bar{
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.account_ {
-    padding-left: 100px;
-}
-
-._id {
-    font-size: 28px;
-    font-weight: bold;
-    padding-right: 20px;
-}
-
-.profile_edit {
-    padding-right: 20px;
-}
-
-.profile_edit>button {
-    background-color: transparent;
-    border: 1px solid #efefef;
-    border-radius: 5px;
-    padding: 5px 9px;
-}
-
-.nick {
-    font-size: 16px;
-    font-weight: bold;
-    padding-top: 20px;
-}
-
-.hobby {
-    color: #8e8e8e;
-}
-
-.high_img {
-    width: 77px;
-    height: 77px;
-    border-radius: 70%;
-    overflow: hidden;
-    border: 2px solid red;
-}
-
-.highlight {
-    width: 901px;
-    height: 130px;
-    padding: 50px;
-}
-
-.wd-300 {
-    width: 300px;
-    height: 210px;
-}
-
-.bbs_menu {
-    padding: 0px 100px;
-}
-
-.feed_photo_list {
+    height: 60px;
     display: flex;
-    justify-content: center;
-    padding-top: 30px;
-}
-
-.feed_photo_list>div {
-    padding: 0px 10px;
-}
-
-.img_box {
-    flex: 1;
-    width: 290px;
-    height: 290px;
-    border: 1px solid #efefef;
-}
-
-.img_box>img {
-    width: 100%;
-    height: 100%;
-    object-fit: none;
-}
-
-.img_box>img:hover {
-    opacity: 0.4;
-}
-
-.bbs_menu_text {
-    letter-spacing: 5px;
-    font-size: 12px;
-}
-
-.feed_modal {
-    width: 100%;
-    height: 100%;
-    background: #000000A6;
-    z-index: 10;
-    display: none;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    border-bottom: 1px solid #dbdbdb;
 }
-
-.feed_modal_body {
-    display: flex;
-    width: 70%;
-    height: 70%;
-    background-color: black;
-    z-index: 100;
-}
-
-.modal_photo {
-    background: black;
-    width: 60%;
-    height: 100%;
-}
-
-.modal_photo>img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.modal_content {
-    background: white;
-    width: 40%;
-    height: 100%;
-}
-
-.modal_account {
-    padding: 20px 20px;
-    border-bottom: 1px solid #f0f0f0;
+.serch_box {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
-.modal_account_img {
-    width: 32px;
-    height: 32px;
-    border-radius: 70%;
-    overflow: hidden;
+.serch_box > div{
+    padding-left: 10px;
+    position: absolute;
 }
 
-.modal_comment_account {
-    padding: 20px 0 10px 20px;
-    display: flex;
-    align-items: center;
-}
-
-.modal_commnet{
-    border-bottom: 1px solid #f0f0f0;
-    height: 470px;
-}
-
-.body_like_button_box{
-    padding: 10px 20px;
-    border-bottom: 1px solid #f0f0f0;;
-}
-
-.modal_menu_btn{
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
-
-.modal_save{
-    display: flex;
-    justify-content: end;
-    width: 350px;
-}
-
-.modal_comment_input{
-    display: flex;
-    align-items: center;
-    padding: 10px 0px;
-}
-
-.modal_comment_input > input{
+.serch_box > input {
     border: none;
+    background-color: #efefef;
+    border-radius: 10px;
+    width: 236px;
+    padding: 10px 16px;
+    height: 36px;
 }
 
-.modal_comment_input > input:focus{
+.serch_box > input:focus {
     outline: none;
 }
 
+.serch_box > input::placeholder {
+    padding-left: 15px;
+}
 
-.modal_time {
-    /* padding: 0px 0px 0px 0px; */
+.right_menu_icons{
+    cursor: pointer;
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.modal_time>div {
-    padding-left: 70px;
+.right_menu_icons > div{
+    padding: 0 10px 0 10px;
+}
+
+.modal_body{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #cecece;
+    display: none;
+    justify-content: center;
+    align-items: center;;
+}
+
+.modal_box{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 80%;
+}
+
+.modal_title{
+    display: flex;
+    padding: 0px 10px;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    font-weight: bold;
+    width: 100%;
+    height: 5%;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.second_title{
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.second_title > form > button {
+    border: 0;
+    background: white;
+    color: #0095f6;
+    font-weight: bold;
+}
+
+.photo_upload{
+    background: #ffffff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo_upload > button {
+    color: #ffffff;
+    background: #0095f6;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.img_box{
+    width: 100%;
+    height: 95%;
+    display: none;
+}
+.photo_img{
+    padding: 5px;
+    width: 70%;
+    height: 100%;
+    background-color: white;
+    overflow: hidden;
+}
+
+.content_input{
+    background-color: white;
+    padding: 20px;
+    width: 30%;
+}
+
+.content_input > textarea{
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.content_input > textarea:focus{
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+
+.photo_img > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal_title_info{
+    z-index: 10;
+    display: none;
+    justify-content: space-between;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.modal_center{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_center > div > button{
+    border: 0;
+    outline: 0;
+    border-radius: 10px;
+    padding: 10px;
+    background: #0095f6;
+    color: white;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.content_box{
+    display: flex;
+    max-width: 1200px;
+    padding: 10px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.profiles{
+    width: 100%;
+    height: 300px;
+    /* background: gray; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pr_photo_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    /* background: red; */
+}
+
+.pr_photo{
+    width: 50%;
+    height: 70%;
+    border-radius: 70%;
+    background: #0095f6;
+    overflow: hidden;
+}
+
+.pr_photo > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pr_info{
+    padding: 20px 20px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    /* background: blue; */
+}
+.pr_account{
+    padding: 0 20px 0 0;
+    width: 60%;
+    display: flex;
+    justify-content: start;
+    
+}
+
+.pr_account > div{
+    padding-right: 20px;
+}
+
+.pr_edit > button{
+    border: 1px solid #c3c1c1; 
+    border-radius: 5px; 
+    padding: 5px 9px; 
+    background-color: white;
+}
+
+.feed{
+    padding: 5px 5px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo_box{
+    padding: 30px 5px;
+    width: 30%;
+    height: 30%;
+    overflow: hidden;
+}
+
+.photo_box > img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.photo_box > img:hover{
+    opacity: 0.3;
+}
+
+.feed_photo:hover{
+    opacity: 0.5;
+}
+
+.feed_info_modal{
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background-color: #b9b9b9;
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed_info_content{
+    width: 70%;
+    height: 70%;
+    background: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed_info_photo{
+    width: 60%;
+    height: 100%;
+    background-color: aqua;
+    overflow: hidden;
+}
+
+.feed_info_photo>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feed_info_desc{
+    display: flex;
+    /* align-items: center;
+    justify-content: space-around; */
+    flex-direction: column;
+    width: 40%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+.feed_info_account{
+    padding: 12px;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feed_pr_photo{
+    /* margin-right: 2%; */
+    width: 10%;
+    background-color: antiquewhite;
+    border-radius: 80%;
+    overflow: hidden;
+}
+
+.feed_pr_photo>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feed_account{
+    width: 75%;
+    font-weight: bold;
     font-size: 12px;
-    color: #8e8e8e;
+    /* background-color: blueviolet; */
 }
 
-.modal_time>div:nth-child(2) {
-    padding-left: 20px;
+.feed_top_menu{
+    width: 5%;
+    /* background-color: darkseagreen; */
 }
 
-@media (max-width: 600px) {}
+.comment_list{
+    width: 100%;
+    height: 60%;
+    background-color: blue;
+}
+
+.like_info{
+    width: 100%;
+    height: 20%;
+    background-color: chartreuse;
+}
+
+.comment_write{
+    width: 100%;
+    height: 10%;
+    background-color: darkkhaki;
+}
+
+
+/* 미디어 쿼리 상단 검색창 숨기기 */
+@media (max-width: 700px) {
+    .serch_box {
+        display: none;
+    }
+}
