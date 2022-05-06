@@ -3,18 +3,33 @@ import os, hashlib
 
 app = Flask(__name__)
 
-## URL 별로 함수명이 같거나,
-## route('/') 등의 주소가 같으면 안됩니다.
 
-# loginCheck = False
+@app.route("/join", methods=["POST"])
+def join_post():
+    uid_receive = request.form['uid_give']
+    name_receive = request.form['name_give']
+    pwd_receive = request.form['pwd_give']
+    hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
+    pr_photo_receive = request.form['pr_photo_give']
+
+    doc = {
+        'uid': uid_receive,
+        'name': name_receive,
+        'pwd': hashed_pw,
+        'pr_photo': pr_photo_receive
+    }
+
+    db.joinusers.insert_one(doc)
+
+    return jsonify({'response':'success', 'msg':'환영합니다!'})
 
 @app.route('/')
 def home():
-    return render_template('feed.html')
+  return render_template('feed.html')
 
 @app.route('/login')
-def login():
-    return render_template('login.html')
+def feed():
+  return render_template('login.html')
 
 @app.route('/login_check', methods =['POST'])
 def login_check():
@@ -26,7 +41,6 @@ def login_check():
         print('아이디/비밀번호가 틀립니다')
         return redirect(url_for('login'))
    
-  
 @app.route("/join_page")
 def join_page():
     return render_template('join.html')
@@ -55,6 +69,7 @@ def join_post():
 
     return jsonify({'response':'success', 'msg':'환영합니다!'})  
   
+# 프로필 페이지 이동
 @app.route('/profile')
 def profile():
     # import os
