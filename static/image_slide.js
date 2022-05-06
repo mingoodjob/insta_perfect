@@ -1,4 +1,3 @@
-'use strict';
 $(document).ready(function() {
 
         $('.bxslider').bxSlider({
@@ -15,7 +14,7 @@ $(document).ready(function() {
 // 로그인 input 입력시 글자이동 //
 const login_input = document.querySelector(".login_input");
 const login_input_text = document.querySelector(".login_input_text");
-login_input.addEventListener('keyup', (event) => {
+login_input.addEventListener('keydown', (event) => {
     login_input_text.style.fontSize = "5px";
     login_input_text.style.lineHeight = "1px";
      login_input.style.padding ="7px 0 1px 4px";
