@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+    <title>instagram</title>
+<style>
+.bx-wrapper {border:0;box-shadow:none; background-color: black;}
+</style>
+    <script src="../../sparta/개인프로젝트/insta/static/main.js"></script>
+</head>
+<body>
+    <div class="container">  <!-- 로그인 페이지 폰 화면 container!-->
+        <div class ="phone_img_box">
+            <ul class="bxslider">
+                <li><img src="../static/login_img/phone_img1.png"/></li>
+                <li><img src="../static/login_img/phone_img2.png"/></li>
+                <li><img src="../static/login_img/phone_img3.png"/></li>
+                <li><img src="../static/login_img/phone_img4.png"/></li>
+            </ul>
+            <script>
+                // $(document).ready(function(){ $('.bxslider').bxSlider(); });
+            </script>
+        </div>
+<!--        로그인 박스 작업 -->
+        <div class="login_box">
+            <img class="insta_logo" src="../static/login_img/insta_logo.png">
+             <form method="post" action="/login_check">
+                <label>
+<!--               id,pw로그인 -->
+                   <div class="log_input">
+                   <input class="login_input" type="text" id="id_value" name="uid" >
+                        <span class="login_input_text">전화번호, 사용자 이름 또는 이메일</span>
+                   </div>
+                <div class="log_input2">
+                     <span class="login_input_text2 ">비밀번호</span>
+                     <span class="login_hide_pwd">비밀번호 표시</span>
+                    <input class="login_input2" type="password" id="pwd_value" name="pwd">
+                </div>
+                <button type="submit" class="login_btn">로그인</button>
+            </label>
+            </form>
+<!--            ----또는---- 부분 -->
+            <div>
+                <div class="middle_line">
+                    </div>
+                            <div class="middle_line_text">
+                                또는
+                            </div>
+                    <div class="middle_line2">
+                    </div>
+                <!--            페이스북으로 이동 -->
+                    <div>
+                        <img class="facebook_logo" src="../static/login_img/facebook.png">
+                    </div>
+                <button class="facebook_btn">Facebook 으로 로그인</button>
+                <a class="find_pwd" href="https://www.instagram.com/accounts/password/reset/" target='_blank'>비밀번호를 잊으셨나요?</a>
+            </div>
+<!--        아이디 찾기 박스-->
+             <div class="find_id_box">
+                 <span class="find_id_text">계정이 없으신가요?</span>
+                 <a href="/join_page"><button class="find_id_btn">가입하기</button></a>
+                 <span class="down_text">앱을 다운로드하세요.</span>
+                 <a href="https://apps.apple.com/app/instagram/id389801252?vt=lo"><img class="app_img" src="../static/login_img/app_down.png"></a>
+                 <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DD5393DA3-8894-4581-98D1-AA774BA7EBE2%26utm_content%3Dlo%26utm_medium%3Dbadge"><img class="google_img" src="../static/login_img/google_down.png"></a>
+             </div>
+        </div>
+        <footer>
+            <span class="footer_1">인스타그램 클론 코딩 프로젝트 Insta Perfect</span>
+            <span class="footer_2">김하진 백선영 이민기 최재완</span>
+            <span class="footer_3">c 2022 내일배움캠프 AI트랙 2기 14조 기억해조</span>
+        </footer>
+    </div>
+
+
+
+<script src="../static/login.js"></script>
+
+</body>
+</html>
