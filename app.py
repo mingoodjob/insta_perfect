@@ -10,18 +10,18 @@ def home():
    return render_template('login.html')
 
 
-@app.route('/main')
-def main():
+@app.route('/feed')
+def feed():
     return render_template('index.html')
 
 
 @app.route('/login', methods =['POST'])
 def login():
 
-    id_ = request.form['id_']
-    pw_ = request.form['pw_']
-    if id_ == 'test' and pw_ == '123456':
-        return redirect(url_for('main'))
+    uid = request.form['uid']
+    pwd = request.form['pwd']
+    if uid == 'test' and pwd == '123456':
+        return redirect(url_for('feed'))
     else:
         print('아이디/비밀번호가 틀립니다')
         return redirect(url_for('home'))
