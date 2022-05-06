@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>회원가입ㆍinstagram</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://kit.fontawesome.com/45d75bb0cc.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous">
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<style>
+
+    body {
+        background-color: whitesmoke;
+    }
+
+    .form-control{
+        background-color: whitesmoke;
+        margin: 10px;
+        width: 250px;
+    }
+
+    .comment{
+
+        color: gray;
+        font-weight: bold;
+        font-size: 15px;
+        margin: 0px auto 70px auto;
+        text-align: center;
+
+    }
+
+    .joinbox{
+        border: 1px solid lightgray;
+        width: 300px;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+    }
+
+    .form_group{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .smallbox{
+        border: 1px solid lightgray;
+        width: 300px;
+        margin-top: 10px;
+        text-align: center;
+        padding: 25px 10px 10px 10px;
+        background-color: white;
+        font-size: 14px;
+
+    }
+
+    .main{
+        max-width: 300px;
+        width:100%;
+        margin: 30px auto auto auto;
+
+    }
+
+    .btn-primary {
+        margin: 10px auto 30px 10px;
+        width:250px;
+        font-size: 13px;
+    }
+
+    .footer {
+        font-size: 10px;
+        color: gray;
+        text-align: center;
+        position: absolute;
+        top: 700px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+      .photobox{
+        background-color: white;
+        border: 1px solid lightgray;
+        max-width: 300px;
+        width: 100%;
+        padding: 20px;
+        margin: 100px auto auto auto;
+        text-align: center;
+      }
+
+      .sbcomment{
+        color: gray;
+        font-size:13px;
+      }
+
+      .choosephoto{
+          font-size: 13px;
+          padding: 5px;
+          background-color: blue;
+          border-radius: 4px;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+      }
+
+      .submitphoto {
+          font-size: 13px;
+          padding: 5px;
+          background-color: blue;
+          border-radius: 4px;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+          margin-top: 15px;
+      }
+
+      .preview{
+          width: 200px;
+          height: 200px;
+      }
+
+
+</style>
+
+
+
+
+
+<body>
+
+
+    <div class="main" id="mainbox">
+            <div class="joinbox">
+                <img style= "width:200px; height:80px;"
+                     src = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcpjP3n%2FbtrBgpiGvjs%2Fka3t6Pkkg1k60VKGYl3tMk%2Fimg.png">
+                <p class="comment">친구들의 사진과 동영상을 보려면<br>가입하세요.</p>
+                    <div class="form_group_wrap">
+                        <div class="form_group">
+                                <input type="text" id="uid" class="form-control" placeholder="아이디">
+                                <input type="text" id="name" class="form-control" placeholder="성명">
+                                <input type="text" id="pwd" class="form-control" placeholder="비밀번호">
+                            <button type="button" id="btn_false_join" class="btn btn-lg btn-primary" disabled>가입</button>
+<!--                            비활성화버튼-->
+                            <button type="button" id="btn_join" class="btn btn-primary">가입</button>
+<!--                              활성화버튼-->
+
+                        </div>
+                    </div>
+            </div>
+
+            <div class="smallbox">
+                <p>계정이 있으신가요? <a href="로그인링크">로그인</a></p>
+            </div>
+    </div>
+
+    <div class="photobox" id="photobox">
+        <i class="fa-solid fa-camera-retro fa-lg"></i>
+        <br><br>
+        <h6><b>프로필 사진 추가</b></h6>
+        <p class="sbcomment">친구들이 회원님을 알아볼 수 있도록 <br>프로필 사진을 추가하세요.</p>
+        <br>
+            <label for="pr_photo" id="choosephoto" class="choosephoto" >
+                프로필 사진 추가
+            </label>
+            <input type="file" accept="image/jpeg,.png" id="pr_photo" style="display: none"onchange="readURL(this);"/>
+            <img id="preview" class="preview" src="#" alt="이미지 미리보기" />
+            <label for="photo" id="submitphoto" class="submitphoto">
+                시작하기
+            </label>
+            <input onclick="join()" id="photo" type="submit" style="display:none">
+
+    </div>
+
+    <br><br>
+    <div class="footer">
+        <p>인스타그램 클론 코딩 프로젝트 Insta Perfect</p>
+        <p>김하진 백선영 이민기 최재완</p>
+        <address>© 2022 내일배움캠프 AI트랙 2기 기억해조</address>
+    </div>
+
+
+<script>
+
+// # input입력에 따라 버튼 활성화/ 비활성화
+// 첫 로드시 가짜join버튼과 메인박스, 사진선택하기만 보이고, 진짜 join버튼과 포토박스, 시작하기+미리보기는 가려지도록
+    $(document).ready(function() { //
+        $('#btn_false_join').show();
+        $('#mainbox').show();
+        $('#choosephoto').show()
+
+
+        $('#btn_join').hide();
+        $('#photobox').hide();
+        $('#submitphoto').hide()
+        $('#preview').hide()
+
+    })
+
+    $("#uid").on('input', function() {
+
+        if ($("#uid").val() == '') {
+
+            $('#btn_join').hide()
+
+            $('#btn_false_join').show()
+
+        } else { // input
+
+            $('#btn_false_join').show()
+
+            $('#btn_join').hide()
+
+        }
+    });
+
+    $("#name").on('input', function() {
+
+        if ($("#name").val() == '') {
+
+            $('#btn_join').hide()
+
+            $('#btn_false_join').show()
+
+        } else { // input
+
+            $('#btn_false_join').show()
+
+            $('#btn_join').hide()
+        }
+    });
+
+    $("#pwd").on('input', function() {
+
+        if ($("#pwd").val() == '') {
+
+            $('#btn_join').hide()
+
+            $('#btn_false_join').show()
+
+        } else { // input
+
+            $('#btn_false_join').hide()
+
+            $('#btn_join').show()
+
+        }
+    });
+
+// 가입 버튼 누르면 메인박스 사라지고 프로필사진박스 나타나게
+    $("#btn_join").click(function () {
+
+        $("#mainbox").hide();
+
+        $("#photobox").show();
+
+    })
+
+// 프로필사진선택 버튼 누르면 프로필사진선택버튼 사라지고 시작하기+이미지 미리보기 버튼 나오게
+    $("#choosephoto").click(function () {
+        $("#choosephoto").hide();
+
+        $("#submitphoto").show();
+        $("#preview").show();
+    })
+
+// join 함수로 ajax 콜
+        function join() {
+            let uid = $('#uid').val()
+            let name = $('#name').val()
+            let pwd = $('#pwd').val()
+            let pr_photo = $('#pr_photo').val()
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/join',
+                data: { uid_give:uid, name_give:name, pwd_give:pwd, pr_photo_give:pr_photo },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+
+                }
+            });
+        }
+
+// 이미지 미리보기
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('preview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('preview').src = "";
+        }
+    }
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

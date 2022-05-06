@@ -1,7 +1,28 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-import os
+import os, hashlib
 
 app = Flask(__name__)
+
+
+
+@app.route("/join", methods=["POST"])
+def join_post():
+    uid_receive = request.form['uid_give']
+    name_receive = request.form['name_give']
+    pwd_receive = request.form['pwd_give']
+    hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
+    pr_photo_receive = request.form['pr_photo_give']
+
+    doc = {
+        'uid': uid_receive,
+        'name': name_receive,
+        'pwd': hashed_pw,
+        'pr_photo': pr_photo_receive
+    }
+
+    db.joinusers.insert_one(doc)
+
+    return jsonify({'response':'success', 'msg':'환영합니다!'})
 
 ## URL 별로 함수명이 같거나,
 ## route('/') 등의 주소가 같으면 안됩니다.
@@ -56,7 +77,6 @@ def get_file():
         print(content)
         image.save(f'./static/img_upload/{img_number}.jpg')
     return redirect(url_for('profile'))
-
 
 
 if __name__ == '__main__':
