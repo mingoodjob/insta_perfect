@@ -30,22 +30,21 @@
 <!--        로그인 박스 작업 -->
         <div class="login_box">
             <img class="insta_logo" src="../static/login_img/insta_logo.png">
-            <label>
+             <form method="post" action="/login">
+                <label>
 <!--               id,pw로그인 -->
                    <div class="log_input">
-                       <input class="login_input" type="text" id="id_value" >
+                   <input class="login_input" type="text" id="id_value" name="id_" >
                         <span class="login_input_text">전화번호, 사용자 이름 또는 이메일</span>
                    </div>
-
-
-
                 <div class="log_input2">
                      <span class="login_input_text2 ">비밀번호</span>
                      <span class="login_hide_pwd">비밀번호 표시</span>
-                    <input class="login_input2" type="password" id="pwd_value">
+                    <input class="login_input2" type="password" id="pwd_value" name="pw_">
                 </div>
-                <button class="login_btn">로그인</button>
+                <button type="submit" class="login_btn">로그인</button>
             </label>
+            </form>
 <!--            ----또는---- 부분 -->
             <div>
                 <div class="middle_line">
@@ -80,7 +79,7 @@
 
 
 
-<script src="../static/image_slide.js"></script>
+<script src="../static/login.js"></script>
 
 </body>
 </html>

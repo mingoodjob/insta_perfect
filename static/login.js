@@ -55,6 +55,10 @@ login_input2.addEventListener('keydown', (event) => {
      else {
          login_btn.style.opacity = .3;
      }
+$(document).ready(function(){
+	  listing();
+});
+
 
 });
 
