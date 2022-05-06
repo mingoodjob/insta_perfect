@@ -2,103 +2,17 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Instagram</title>
+    <title>Instagram Perfect</title>
     <link rel="shortcut icon" href="https://www.instagram.com/static/images/ico/favicon.ico/36b3ee2d91ed.ico"> <!-- 파비콘 -->
-    <link rel="stylesheet" type="text/css" href="../static/style.css">  <!-- 로컬 css 불러옴 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">  <!-- 이미지 슬라이드 CDN -->
+    <link rel="stylesheet" type="text/css" href="/static/style_feed.css">  <!-- 로컬 css 불러옴 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">  <!-- 이미지 슬라이드 CSS CDN -->
     <script
       src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
       crossorigin="anonymous"></script>  <!-- jquery CDN -->
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>  <!-- 이미지 슬라이드 CDN -->
+    <script src="/static/jquery.bxslider.min.js"></script>  <!-- 이미지 슬라이드 로컬 js -->
     <script src="https://kit.fontawesome.com/0469981faa.js" crossorigin="anonymous"></script>  <!-- 아이콘 키트 CDN -->
-
-    <script>
-        // 이미지 슬라이드 //////////////////////
-        $(document).ready(function() {
-            $('.slider').bxSlider({  // bxslider 라이브러리에 지정된 커스텀 가능한 옵션들
-                speed: 300,  // 슬라이드 속도
-                infiniteLoop: false,  // 루프 off
-                hideControlOnEnd: true,  // 첫 슬라이드의 이전 버튼과 마지막 슬라이드 다음 버튼 제거
-                touchEnabled: false  // 터치로 슬라이드 불가능
-            })
-        })
-
-        // 좋아요 버튼 ///////////////////////////
-        function red_heart_show() {  // 좋아요 입력
-            $(".red_heart").show()
-            $(".empty_heart").hide()
-            $(".heart_count").show()
-        }
-
-        function empty_heart_show() {  // 좋아요 취소
-            $(".empty_heart").show()
-            $(".red_heart").hide()
-            $(".heart_count").hide()
-        }
-
-        // // 컨텐츠 로딩 완료 후 높이 기준으로 클래스 재처리
-        // window.addEventListener('load', function () {
-        //     let contentHeight = document.querySelector('.box_content > .text_content').offsetHeight; //컨텐츠 높이 얻기
-        //     if (contentHeight < 20) {
-        //         console.log('1줄입니다')
-        //         document.querySelector('.box_show_text').classList.add('hide_btn_open') // 버튼 감춤
-        //     } else {
-        //         console.log('두줄 이상입니다')
-        //         document.querySelector('.text_content').classList.add('limit_box')
-        //     }
-        // })
-
-        // function btn_click() {
-        //             console.log('버튼 클릭감지되었습니다')
-        //             // document.querySelector('.text_content').classList.remove('limit_box')
-        //             document.querySelector('.box_show_text').classList.add('hide_btn_open')
-        //         }
-
-        // 검색창 input 박스에 onfocus 시 돋보기 아이콘 사라짐 기능 //////////////////////
-        function focus_search() {
-            $(".icon_glass").attr("style", "display: none;") // 사라짐
-        }
-        function blur_search() {
-            $(".icon_glass").attr("style", "display: block;") // 나타남
-        }
-
-        // 댓글달기 input 박스에 텍스트 감지 여부에 따라 게시 버튼 스타일 변경 기능 //////////////////////
-        $(document).ready(function() {
-            $(".write_comment").on('input',function() {
-                if($(".write_comment").val()=='')
-                    $(".write_button").attr("style", "opacity: 50%; cursor: auto;");  // 텍스트 감지되지않으면 흐리게, 기본 커서
-                else
-                    $(".write_button").attr("style", "opacity: 100%; cursor: pointer;")  // 텍스트 감지되면 진하게, 포인터 커서
-                    $(".write_comment").attr("style", "font-size: 14px; padding-bottom: 1px;")  // 텍스트 감지되면 폰트 사이즈 키우고 살짝 위로
-            })
-        })
-
-        // 피드 페이지로 이동
-        function Go_feed() {
-            $.ajax({
-                type: "get",
-                url: "/feed",
-                data: {},
-                success: function () {
-                    window.location.href='/feed'
-                }
-            })
-        }
-
-        // 프로필 페이지로 이동
-        function Go_profile() {
-            $.ajax({
-                type: "get",
-                url: "/profile",
-                data: {},
-                success: function () {
-                    window.location.href='/profile'
-                }
-            })
-        }
-    </script>
-
 </head>
+
 <body>
 <!------------------------------------------------ 포스트 모달 ---------------------------------------------------------->
 <div class="modal_body_post">
@@ -123,8 +37,92 @@
         <button class="button_modal_option">공유 대상...</button>
         <button class="button_modal_option">링크 복사</button>
         <button class="button_modal_option">퍼가기</button>
-        <button class="button_modal_option" id="button_cencel">취소</button>
+        <button class="button_modal_option" id="button_cancel">취소</button>
     </div>
+</div>
+<!------------------------------------------------ 댓글 모달 ----------------------------------------------------------->
+<div class="comment_modal_body">
+    <div class="container_comment_modal">
+        <div class="box_slider">
+            <div class="slider_modal">
+                <img src="https://i.imgur.com/VCobrt6.png">
+                <img src="https://i.imgur.com/VCobrt6.png">
+                <img src="https://i.imgur.com/VCobrt6.png">
+            </div>
+        </div>
+        <div>
+            <div class="container_name_modal">
+                <img class="profile_name_post" onclick="Go_profile()" src="https://i.imgur.com/IqLqJHB.png">
+                <div class="box_name_post">
+                    <a class="name_post" onclick="Go_profile()">jaewan_choi</a>
+                </div>
+                <svg class="button_option_modal" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                    <circle cx="12" cy="12" r="1.5"></circle>
+                    <circle cx="6" cy="12" r="1.5"></circle>
+                    <circle cx="18" cy="12" r="1.5"></circle>
+                </svg>
+            </div>
+            <section class="box_content_comment_commentModal">
+                <section class="section_content_commentModal">
+                    <section>
+                        <img class="profileImg_comment_modal" onclick="Go_profile()" src="https://i.imgur.com/IqLqJHB.png">
+                    </section>
+                    <section>
+                        <span class="name_post" onclick="Go_profile()">jaewan_choi</span>
+                        <span>졸귀탱;;</span>
+                        <section class="time_post_commentModal">
+                            <div style="font-size:12px; font-weight:400; color:rgb(142, 142, 142)"><span>13</span>시간</div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <div class="box_icon_modal">
+                <!-- 빨간 하트 아이콘 -->
+                <svg class="red_heart_modal" style="display: none; opacity: 1;" onclick="empty_heart_show()"
+                     color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48" width="24">
+                    <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
+                    10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
+                    7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
+                </svg>
+                <!-- 빈 하트 아이콘 -->
+                <svg class="empty_heart_modal" onclick="red_heart_show()" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                    <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
+                    3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
+                    014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0
+                    013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0
+                    3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174
+                    0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
+                </svg>
+                <!-- 댓글 아이콘 -->
+                <svg class="icon_SNS_modal" color="#262626" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
+                    <path d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+                <!-- 공유 아이콘 -->
+                <svg class="icon_SNS_modal" color="#262626" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
+                    <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line>
+                    <polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon>
+                </svg>
+                <!-- 북마크 아이콘 -->
+                <svg class="bookmark_modal" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                    <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                </svg>
+            </div>
+            <section class="text_like_commentModal">
+                <div>가장 먼저&nbsp;<span style="font-weight: 600">좋아요</span>를 눌러보세요</div>
+            </section>
+            <div class="time_post"><span style="margin:0; padding:0;">13</span>시간 전</div>
+            <div class="box_write">
+                <button class="emote">
+                    <svg color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                        <path d="M15.83 10.997a1.167 1.167 0 101.167 1.167 1.167 1.167 0 00-1.167-1.167zm-6.5 1.167a1.167 1.167 0 10-1.166 1.167 1.167 1.167 0 001.166-1.167zm5.163 3.24a3.406 3.406 0 01-4.982.007 1 1 0 10-1.557 1.256 5.397 5.397 0 008.09 0 1 1 0 00-1.55-1.263zM12 .503a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012 .503zm0 21a9.5 9.5 0 119.5-9.5 9.51 9.51 0 01-9.5 9.5z"></path>
+                    </svg>
+                </button>
+                <input class="write_comment_commentModal" placeholder="댓글 달기...">
+                <button class="write_button_commentModal" onclick="write_button()">게시</button>
+            </div>
+        </div>
+    </div>
+    <i class="quit_comment_modal fa-regular fa-xmark-large"></i>
 </div>
 <!------------------------------------------------- 상단바 ------------------------------------------------------------->
 <header>
@@ -176,9 +174,11 @@
     <!--------------------------------------------- 포스트 컨테이너 ----------------------------------------------------->
     <div class="container_post">
         <!------------------------------------------------ 포스트 네임카드 ---------------------------------------------->
-        <div class="box_name_post">
+        <div class="container_name_post">
             <img class="profile_name_post" onclick="Go_profile()" src="https://i.imgur.com/IqLqJHB.png">
-            <a class="name_post" onclick="Go_profile()">jaewan_choi</a>
+            <div class="box_name_post">
+                <a class="name_post" onclick="Go_profile()">jaewan_choi</a>
+            </div>
             <svg class="button_option" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
                 <circle cx="12" cy="12" r="1.5"></circle>
                 <circle cx="6" cy="12" r="1.5"></circle>
@@ -187,22 +187,22 @@
         </div>
         <!------------------------------------------------ 사진 슬라이드 ------------------------------------------------>
         <div class="box_picture_post">
-            <div class="slider">
-                <img src="https://i.imgur.com/uCA04xC.png">
+            <div class="slider_post">
                 <img src="https://i.imgur.com/VCobrt6.png">
-                <img src="https://i.imgur.com/pDuHC55.png">
+                <img src="https://i.imgur.com/uCA04xC.png">
+                <img src="https://i.imgur.com/kwuEf8S.gif">
             </div>
         </div>
         <!------------------------------------------------ 상호작용 ---------------------------------------------------->
         <div class="box_icon_SNS">
-            <!-- 빈 하트 아이콘 -->
+            <!-- 빨간 하트 아이콘 -->
             <svg class="red_heart" style="display: none; opacity: 1;" onclick="empty_heart_show()"
                  color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48" width="24">
                 <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
                 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
                 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
             </svg>
-            <!-- 빨간 하트 아이콘 -->
+            <!-- 빈 하트 아이콘 -->
             <svg class="empty_heart" onclick="red_heart_show()" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
                 <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
                 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
@@ -211,8 +211,8 @@
                 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174
                 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
             </svg>
-            <!-- 댓글 달기 아이콘 -->
-            <svg class="icon_SNS" color="#262626" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
+            <!-- 댓글 아이콘 -->
+            <svg class="comment_icon icon_SNS" color="#262626" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
                 <path d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
             </svg>
             <!-- 공유 아이콘 -->
@@ -227,41 +227,17 @@
         </div>
         <div class="heart_count">좋아요 <span>1</span>개</div>
         <!------------------------------------------------ 포스팅 내용 -------------------------------------------------->
-        <div class="box_content">
-            <span class="writer_content" onclick="Go_profile()">jaewan_choi</span>
-            <span class="text_content">졸귀탱;;</span>
+        <div class="container_content">
+            <div class="box_content">
+                <span class="writer_content" onclick="Go_profile()">jaewan_choi</span>
+                <span class="text_content">졸귀탱;;</span>
+            </div>
+            <div class="show_cotent" onclick="show_content()">... 더 보기</div>
         </div>
         <!---------------------------------------------------- 댓글 --------------------------------------------------->
         <button class="show_comment">댓글 <span>3</span>개 모두 보기</button>
-        <div class="box_comment">
-            <div class="box_list_comment">
-                <span class="writer_comment" onclick="Go_profile()">i_see_you</span>
-                <span class="comment">귀척 ㄴㄴ</span>
-                <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
-                    <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-                    3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-                    014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
-                    0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
-                    9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
-                    2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
-                    4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
-                </svg>
-            </div>
-            <div class="box_list_comment">
-                <span class="writer_comment" onclick="Go_profile()">sparta_tutor</span>
-                <span class="comment">내가 더 귀여움</span>
-                <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
-                    <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-                    3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-                    014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
-                    0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
-                    9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
-                    2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
-                    4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
-                </svg>
-            </div>
-            <div class="time_post"><span style="margin:0; padding:0;">13</span>시간 전</div>
-        </div>
+        <div class="box_comment"></div>
+        <div class="time_post"><span style="margin:0; padding:0;">13</span>시간 전</div>
          <!------------------------------------------------ 댓글 작성 -------------------------------------------------->
         <div class="box_write">
             <button class="emote">
@@ -270,114 +246,16 @@
                 </svg>
             </button>
             <input class="write_comment" placeholder="댓글 달기...">
-            <button class="write_button">게시</button>
-        </div>
-    </div>
-    <!--------------------------------------------- 포스트 컨테이너 ----------------------------------------------------->
-    <div class="container_post">
-        <!------------------------------------------------ 포스트 네임카드 ---------------------------------------------->
-        <div class="box_name_post">
-            <img class="profile_name_post" onclick="Go_profile()" src="https://i.imgur.com/IqLqJHB.png">
-            <a class="name_post" onclick="Go_profile()">jaewan_choi</a>
-            <svg class="button_option" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                <circle cx="12" cy="12" r="1.5"></circle>
-                <circle cx="6" cy="12" r="1.5"></circle>
-                <circle cx="18" cy="12" r="1.5"></circle>
-            </svg>
-        </div>
-        <!------------------------------------------------ 사진 슬라이드 ------------------------------------------------->
-        <div class="box_picture_post">
-            <div class="slider">
-                <img src="https://i.imgur.com/uCA04xC.png">
-                <img src="https://i.imgur.com/VCobrt6.png">
-                <img src="https://i.imgur.com/pDuHC55.png">
-            </div>
-        </div>
-        <!------------------------------------------------ 상호작용 ---------------------------------------------------->
-        <div class="box_icon_SNS">
-            <!-- 빈 하트 아이콘 -->
-            <svg class="red_heart" style="display: none; opacity: 1;" onclick="empty_heart_show()"
-                 color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48" width="24">
-                <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
-                10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
-                7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
-            </svg>
-            <!-- 빨간 하트 아이콘 -->
-            <svg class="empty_heart" onclick="red_heart_show()" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-                3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-                014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0
-                013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0
-                3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174
-                0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
-            </svg>
-            <!-- 댓글 달기 아이콘 -->
-            <svg class="icon_SNS" color="#262626" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
-                <path d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
-            </svg>
-            <!-- 공유 아이콘 -->
-            <svg class="icon_SNS" color="#262626" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
-                <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line>
-                <polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon>
-            </svg>
-            <!-- 북마크 아이콘 -->
-            <svg class="bookmark" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
-            </svg>
-        </div>
-        <div class="heart_count">좋아요 <span>2,121,561</span>개</div>
-        <!------------------------------------------------ 포스팅 내용 -------------------------------------------------->
-        <div class="box_content">
-            <span class="writer_content" onclick="Go_profile()">jaewan_choi</span>
-            <span class="text_content">나 심장 죽어ㅓㅓㅓ</span>
-        </div>
-        <!---------------------------------------------------- 댓글 --------------------------------------------------->
-        <button class="show_comment">댓글 <span>154,561</span>개 모두 보기</button>
-        <div class="box_comment">
-            <div class="box_list_comment">
-                <span class="writer_comment" onclick="Go_profile()">lostark_official</span>
-                <span class="comment">로스트아크 신규 업데이트 '엘가시아' 많은 관심 부탁드립니다</span>
-                <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
-                    <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-                    3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-                    014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
-                    0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
-                    9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
-                    2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
-                    4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
-                </svg>
-            </div>
-            <div class="box_list_comment">
-                <span class="writer_comment" onclick="Go_profile()">im_inssa</span>
-                <span class="comment">로아 그뭔씹;;</span>
-                <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
-                    <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-                    3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-                    014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
-                    0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
-                    9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
-                    2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
-                    4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
-                </svg>
-            </div>
-            <div class="time_post"><span style="margin:0; padding:0;">2</span>일 전</div>
-        </div>
-         <!------------------------------------------------ 댓글 작성 -------------------------------------------------->
-        <div class="box_write">
-            <button class="emote">
-                <svg color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                    <path d="M15.83 10.997a1.167 1.167 0 101.167 1.167 1.167 1.167 0 00-1.167-1.167zm-6.5 1.167a1.167 1.167 0 10-1.166 1.167 1.167 1.167 0 001.166-1.167zm5.163 3.24a3.406 3.406 0 01-4.982.007 1 1 0 10-1.557 1.256 5.397 5.397 0 008.09 0 1 1 0 00-1.55-1.263zM12 .503a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012 .503zm0 21a9.5 9.5 0 119.5-9.5 9.51 9.51 0 01-9.5 9.5z"></path>
-                </svg>
-            </button>
-            <input class="write_comment" placeholder="댓글 달기...">
-            <button class="write_button">게시</button>
+            <button class="write_button" onclick="write_button()">게시</button>
         </div>
     </div>
     <!----------------------------------------------------- 네임 카드 -------------------------------------------------->
     <div class="container_name_card">
         <div class="box_name_card">
             <img class="profile_name_card" onclick="Go_profile()" src="https://i.imgur.com/IqLqJHB.png">
-            <a class="profile_name" onclick="Go_profile()">jaewan_choi</a>
+            <div class="box_profile_name">
+                <a class="profile_name" onclick="Go_profile()">jaewan_choi</a>
+            </div>
             <span class="change_name">전환</span>
         </div>
         <!-------------------------------------------------- 추천 카드 ------------------------------------------------->
@@ -423,54 +301,6 @@
 </div>
 </body>
 
-<script>
-    // 포스트 작동 아이콘 모달 /////////////////////////////////////////
-    const getPostButton = document.querySelector('#button_post')  // 작성 아이콘 버튼을 변수에 담음
-    const getPostModal = document.querySelector('.modal_body_post')  // 모달이 될 레이아웃을 변수에 담음(배경 포함)
-    const body = document.querySelector('body')  // 모달이 보여질때 스크롤이 잠기게 하기위해 바디 전체를 변수에 담음
-    const getButtonQuit = document.querySelector('.quit_modal_post')  // 취소 버튼을 변수에 담음
-
-    getPostButton.addEventListener('click', () => {  // 버튼에 클릭 이벤트가 발생하면
-        getPostModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
-        // (토글은 지정한 변수(modalToggle)를 사용하여(css에선 .modalToggle) 세부 기능을 껐다 켰다 할 수 있도록함. ex).hide() 혹은 display=none 인 것을 .show() 혹은 반대로 작동)
-
-        if (getPostModal.classList.contains('modalToggle')) {  // getPostModal 에 modalToggle이 활성화 된 상태라면
-            body.style.overflow = 'hidden'  // overflow(스크롤기능) 숨김
-        }
-    })
-
-    getPostModal.addEventListener('click', (event) => {  // 모달 변수에 클릭 이벤트가 발생되고
-        if (event.target === getPostModal) {  // 그게 만약 ===('엄격하게') 모달 변수 위에서 발생한다면 (모달시 실제로 보여지는 영역은 modal_body_post의 자식태그이므로 해당하지않음)
-            getPostModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
-            body.style.overflow = 'auto'  // 스크롤을 다시 활성화
-        } else if (event.target === getButtonQuit) {  // 혹은 그게 만약 나가기 x버튼 변수 위라면
-            getPostModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
-            body.style.overflow = 'auto'  // 스크롤을 다시 활성화
-        }
-    })
-
-    // 옵션 버튼 모달 ///////////////////////////////////////////
-    const getOptionButton = document.querySelector('.button_option')  // 옵션 버튼을 변수에 담음
-    const getOptionModal = document.querySelector('.option_body_modal')  // 변수에 모달이 될 영역을 넣음
-    const getButtonCencel = document.querySelector('#button_cencel')  // 취소 버튼을 변수에 담음
-
-    getOptionButton.addEventListener('click', () => {  // 버튼에 클릭 이벤트가 발생하면
-        getOptionModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
-
-        if (getOptionModal.classList.contains('modalToggle')) {  // getOptionModal 변수에 modalToggle가 활성화됐다면
-            body.style.overflow = 'hidden'  // 스크롤을 막음
-        }
-    })
-
-    getOptionModal.addEventListener('click', (event) => {  // 모달 변수에 클릭 이벤트가 발생되고
-        if (event.target === getOptionModal) {  // 그게 만약 '엄격하게' 모달 변수 위에서 발생한다면 (모달시 실제로 보여지는 영역은 option_body_modal 자식태그이므로 해당하지않음)
-            getOptionModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
-            body.style.overflow = 'auto'  // 스크롤을 다시 활성화
-        } else if (event.target === getButtonCencel) {  // 혹은 그게 만약 취소 버튼 변수 위라면
-            getOptionModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
-            body.style.overflow = 'auto'  // 스크롤을 다시 활성화
-        }
-    })
-</script>
+<script src="/static/script_feed.js"></script>
 
 </html>
