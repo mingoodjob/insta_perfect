@@ -33,6 +33,20 @@ $(function(){
         }
     }
 
+    $('.photo_box').click(() => {
+        $('.feed_info_modal').css('display', 'flex');
+
+        // var src = jQuery(".photo2").attr("src");
+        // console.log(src)
+    })
+
+    $(document).mouseup(function (e) {
+        if ($(".feed_info_modal").has(e.target).length === 0) {
+            $(".feed_info_modal").css('display', 'none');
+            $('body').removeClass('hidden').off('scroll touchmove mousewheel');
+        }
+    });
+
 })
 //바로 실행 함수 종료
 

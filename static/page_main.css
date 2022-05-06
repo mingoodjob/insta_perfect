@@ -270,6 +270,103 @@
     opacity: 0.5;
 }
 
+.feed_info_modal{
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background-color: #b9b9b9;
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed_info_content{
+    width: 70%;
+    height: 70%;
+    background: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed_info_photo{
+    width: 60%;
+    height: 100%;
+    background-color: aqua;
+    overflow: hidden;
+}
+
+.feed_info_photo>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feed_info_desc{
+    display: flex;
+    /* align-items: center;
+    justify-content: space-around; */
+    flex-direction: column;
+    width: 40%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+.feed_info_account{
+    padding: 12px;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feed_pr_photo{
+    /* margin-right: 2%; */
+    width: 10%;
+    background-color: antiquewhite;
+    border-radius: 80%;
+    overflow: hidden;
+}
+
+.feed_pr_photo>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feed_account{
+    width: 75%;
+    font-weight: bold;
+    font-size: 12px;
+    /* background-color: blueviolet; */
+}
+
+.feed_top_menu{
+    width: 5%;
+    /* background-color: darkseagreen; */
+}
+
+.comment_list{
+    width: 100%;
+    height: 60%;
+    background-color: blue;
+}
+
+.like_info{
+    width: 100%;
+    height: 20%;
+    background-color: chartreuse;
+}
+
+.comment_write{
+    width: 100%;
+    height: 10%;
+    background-color: darkkhaki;
+}
+
+
 /* 미디어 쿼리 상단 검색창 숨기기 */
 @media (max-width: 700px) {
     .serch_box {

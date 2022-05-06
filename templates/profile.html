@@ -11,7 +11,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <link href="./static/page_main.css" rel="stylesheet">
-    <link href="./static/style_main.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./static/script_main.js"></script>
     <script src="https://kit.fontawesome.com/0e01622099.js" crossorigin="anonymous"></script>
@@ -50,7 +49,7 @@
 
 <body>
 
-    <!-- 모달창 띄우기 -->
+    <!-- 사진 등록 모달창 띄우기 -->
     <div class="modal_body">
         <div class="modal_box">
             <div class="modal_title">
@@ -78,6 +77,49 @@
     </form>
     <!-- 모달창 코드 종료  -->
 
+    <!-- 피드 상세 정보 모달 -->
+    <div class="feed_info_modal">
+        <div class="feed_info_content">
+            <div class="feed_info_photo">
+                <img src="{{ url_for('static', filename='img_upload/{}'.format('1.jpg')) }}" alt="" srcset="">
+            </div>
+            
+            <div class="feed_info_desc">
+
+                <div class="feed_info_account">
+                    <div class="feed_pr_photo">
+                        <img src="{{ url_for('static', filename='img_upload/{}'.format('1.jpg')) }}" alt="" srcset="">
+                    </div>
+
+                    <div class="feed_account">
+                        dlalsrl
+                    </div>
+
+                    <div class="feed_top_menu">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                </div>
+
+                <div class="comment_list">
+
+                </div>
+
+                <div class="like_info">
+
+                </div>
+                
+                <div class="comment_write">
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!-- -->
 
     <!-- 프로필 info -->
     <div class="content_box">
@@ -104,7 +146,7 @@
             <div class="feed">
                 {% for img in imglist %}
                 <div class="photo_box">
-                    <img src="{{ url_for('static', filename='img_upload/{}'.format(img)) }}">
+                    <img src="{{ url_for('static', filename='img_upload/{}'.format(img)) }}" class="photo2">
                 </div>
                 {% endfor %}
             </div>
