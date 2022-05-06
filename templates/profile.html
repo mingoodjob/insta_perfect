@@ -11,8 +11,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <link href="./static/page_main.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./static/style.css"> <!-- 로컬 css 불러옴 -->
-    <link href="./static/style_main.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./static/script_main.js"></script>
     <script src="https://kit.fontawesome.com/0e01622099.js" crossorigin="anonymous"></script>
@@ -50,18 +48,116 @@
 <!-- 상단 메뉴바 종료 -->
 
 <body>
-    <!-- 모달창 띄우기 -->
+
+    <!-- 사진 등록 모달창 띄우기 -->
     <div class="modal_body">
-        <div class="modal_content">
+        <div class="modal_box">
             <div class="modal_title">
-                새 게시물 만들기
+                <div class="first_title">새 게시물 만들기</div>
+                <div class="second_title">
+                    <div onclick="cancel()" style="color: red; cursor: pointer;">취소</div>
+                    <!-- 이미지 파일과 내용 컨텐츠를 가져오는 from action 서버에서 request 로 받는다 -->
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <input id="photo_upload" type="file" name="file" style="display: none">
+                        <button type="submit">다음</button>
+                </div>
             </div>
-            <div><img class="img_preview" src="" id="preview"/></div>
-            <div class="modal_center">
-                <div><button onclick="photo_upload()">컴퓨터에서 선택</button></div>
-                <input id="photo_upload" type="file" style="display: none">
+            <div onclick="photo_upload()" class="photo_upload"><button type="button">컴퓨터에서 선택</button></div>
+            <div class="img_box">
+                <div class="photo_img">
+
+                    <img src="" id="preview">
+                </div>
+                <div class="content_input">
+                    <textarea id="content" name="content" placeholder="문구 입력...."></textarea>
+                </div>
             </div>
         </div>
     </div>
+    </form>
     <!-- 모달창 코드 종료  -->
+
+    <!-- 피드 상세 정보 모달 -->
+    <div class="feed_info_modal">
+        <div class="feed_info_content">
+            <div class="feed_info_photo">
+                <img src="{{ url_for('static', filename='img_upload/{}'.format('1.jpg')) }}" alt="" srcset="">
+            </div>
+            
+            <div class="feed_info_desc">
+
+                <div class="feed_info_account">
+                    <div class="feed_pr_photo">
+                        <img src="{{ url_for('static', filename='img_upload/{}'.format('1.jpg')) }}" alt="" srcset="">
+                    </div>
+
+                    <div class="feed_account">
+                        dlalsrl
+                    </div>
+
+                    <div class="feed_top_menu">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                </div>
+
+                <div class="comment_list">
+
+                </div>
+
+                <div class="like_info">
+
+                </div>
+                
+                <div class="comment_write">
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!-- -->
+
+    <!-- 프로필 info -->
+    <div class="content_box">
+        <div class="profiles">
+            <div class="pr_photo_box">
+                <!-- 프로필 이미지 박스 올린 이미지중 가장 최근게 올라감 -->
+                <div class="pr_photo">
+                    <img src="{{ url_for('static', filename='img_upload/{}'.format(pr_photo)) }}" alt="" srcset="">
+                </div>
+            </div>
+
+            <div class="pr_info">
+                <div class="pr_account">
+                    <div style="font-size:24px; color: #262626;">Leeminki</div>
+                    <div class="pr_edit"><button>프로필 편집</button></div>
+                    <div style="padding: 8px;"><i class="fa-solid fa-gear fa-lg"></i></div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+
+        <!-- 피드 리스트 출력 -->
+        <div class="feed_box">
+            <div class="feed">
+                {% for img in imglist %}
+                <div class="photo_box">
+                    <img src="{{ url_for('static', filename='img_upload/{}'.format(img)) }}" class="photo2">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!--  -->
+
+
+
+
+    </div>
+
 </body>
+
+</html>

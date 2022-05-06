@@ -16,7 +16,10 @@ $(function(){
     });
 
     $('#photo_upload').change(function(){
-        $('.modal_center').css('display', 'none');
+        $('.photo_upload').css('display', 'none');
+        $('.img_box').css('display', 'flex');
+        $('.first_title').css('display', 'none');
+        $('.second_title').css('display', 'flex');
         setImageFromFile(this, '#preview');
     });
     
@@ -30,6 +33,20 @@ $(function(){
         }
     }
 
+    $('.photo_box').click(() => {
+        $('.feed_info_modal').css('display', 'flex');
+
+        // var src = jQuery(".photo2").attr("src");
+        // console.log(src)
+    })
+
+    $(document).mouseup(function (e) {
+        if ($(".feed_info_modal").has(e.target).length === 0) {
+            $(".feed_info_modal").css('display', 'none');
+            $('body').removeClass('hidden').off('scroll touchmove mousewheel');
+        }
+    });
+
 })
 //바로 실행 함수 종료
 
@@ -41,4 +58,13 @@ function photo_upload(){
     $('#photo_upload').click()
 }
 
+function content_get(){
+    alert('하이')
+    let content = $('#content').val()
+    alert(content)
+}
 
+function cancel(){
+    $(".modal_body").css('display', 'none');
+    window.location.reload()
+}
