@@ -8,6 +8,19 @@ $(document).ready(function() {
             mode: 'fade',
             pause: 3000,
         });
+     let idValue = login_input.value;
+     let pwValue = login_input2.value;
+
+     if(
+         (idValue && pwValue) &&
+         (pwValue.length >= 5) &&
+         (idValue.length >= 1)
+     ) {
+         login_btn.style.opacity = 1;
+     }
+     else {
+         login_btn.style.opacity = .3;
+     }
 
  });
 
@@ -41,7 +54,7 @@ login_input2.addEventListener('keydown', (event) => {
         $('.login_input2').prop("type", "password");
     })
     })
-
+     // 아이디 비밀번호 입력시 게시글 버튼 활성화 //
      let idValue = login_input.value;
      let pwValue = login_input2.value;
 
@@ -55,13 +68,7 @@ login_input2.addEventListener('keydown', (event) => {
      else {
          login_btn.style.opacity = .3;
      }
-$(document).ready(function(){
-	  listing();
 });
-
-
-});
-
 
 //
 
