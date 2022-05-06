@@ -285,7 +285,8 @@ body {
 }
 
 @media screen and (max-width: 750px) {
-    .phone_img_box{
+    .phone_img_box {
 
-        display: none;   }
-}
+        display: none;
+    }
+}}
