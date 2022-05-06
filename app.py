@@ -15,7 +15,7 @@ def Go_start():
     return render_template('feed.html')  # 작업 편의성을 위해 임시로 피드페이지로 바로 로드
 
 # 피드 페이지 로드
-@app.route('/feed')
+@app.route('/')
 def Go_feed():
     return render_template('feed.html')
 
