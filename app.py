@@ -1,11 +1,37 @@
-from flask import Flask, render_template, request, jsonify,redirect,url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
+
 app = Flask(__name__)
 
+## URL 별로 함수명이 같거나,
+## route('/') 등의 주소가 같으면 안됩니다.
+
+loginCheck = False
 @app.route('/')
 def home():
+  if loginCheck == True:
     return render_template('feed.html')
+  else:
+    return render_template('login.html')
 
+@app.route('/login')
+def feed():
+    return render_template('login.html')
+
+
+@app.route('/login', methods =['POST'])
+def login():
+
+    uid = request.form['uid']
+    pwd = request.form['pwd']
+    if uid == 'test' and pwd == '123456':
+      loginCheck = True
+        return redirect(url_for('feed'))
+    else:
+        print('아이디/비밀번호가 틀립니다')
+        return redirect(url_for('home'))
+   
+  
 @app.route('/profile')
 def profile():
     # import os
@@ -31,21 +57,7 @@ def get_file():
         image.save(f'./static/img_upload/{img_number}.jpg')
     return redirect(url_for('profile'))
 
-# 시작 페이지 로드
-@app.route('/')
-def Go_start():
-    return render_template('feed.html')  # 작업 편의성을 위해 임시로 피드페이지로 바로 로드
-
-# 피드 페이지 로드
-@app.route('/feed')
-def Go_feed():
-    return render_template('feed.html')
-
-# 프로필 페이지 로드
-@app.route('/profile')
-def Go_profile():
-    return render_template('profile.html')
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=80, debug=True)
+   app.run('0.0.0.0', port=5000, debug=True)
