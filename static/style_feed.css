@@ -1,30 +1,15 @@
-a:link {
-    color: red;
-    text-decoration: none;
-}
-
-a:visited {
-    color: black;
-    text-decoration: none;
-}
-
-a:hover {
-    color: rgb(0, 0, 0);
-    text-decoration: underline;
-}
-
 body {
     background: #FAFAFA;
     margin: 0;
     display: flex;
+    color: rgb(38, 38, 38);
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     font-weight: 400;  /* 전체 폰트 굵기 */
     font-size: 14px;
-    color: rgb(38, 38, 38);
 }
 
 /* /////////////////////////////////////////////////// 포스트 모달 /////////////////////////////////////////////////////*/
-/* 숨겨진 상태 */
+/* 배경 영역 */
 .modal_body_post {
     position: fixed;
     width: 100%;
@@ -107,14 +92,14 @@ body {
 }
 
 /* ////////////////////////////////////////////////// 옵션 모달 ////////////////////////////////////////////////////////*/
-/* 숨겨진 상태 */
+/* 배경 영역 */
 .option_body_modal {
     position: fixed;
     width: 100%;
     height: 100%;
     display: none;
     background: rgb(0, 0, 0, .65);
-    z-index: 10001;  /* 상단바보다 위에 있도록 함 */
+    z-index: 10002;  /* 상단바보다 위에 있도록 함 */
 }
 
 /* 보여진 상태 */
@@ -156,6 +141,204 @@ body {
     background: transparent;
     font-size: 14px;
     cursor: pointer;
+}
+
+/* /////////////////////////////////////////////////// 댓글 모달 ///////////////////////////////////////////////////// */
+/* 배경 영역 */
+.comment_modal_body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 24px 64px;
+    display: none;
+    background: rgb(0, 0, 0, .65);
+    z-index: 10001;  /* 상단바보다 위에 있도록 함 */
+}
+
+/* 나가기 버튼 */
+.quit_comment_modal {
+    position: absolute;
+    color: white;
+    font-size: 24px;
+    right: 10px;
+    top: 17px;
+    cursor: pointer;
+}
+
+/* 보여진 상태 */
+.comment_modal_body.modalToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ /*댓글 모달 박스 */
+.container_comment_modal {
+    width: 892px;
+    height: 487px;
+    background: white;
+    display: flex;
+}
+
+/* /////////////////////////////////////////////// 모달 슬라이드 박스 ////////////////////////////////////////////////// */
+/* 슬라이드 박스 */
+.box_slider {
+    width: 487px;
+    height: 487px;
+    border-right: 1px solid rgb(219,219,219, 0.5);
+    visibility: hidden;
+    opacity: 0;
+}
+
+.box_slider > .bx-wrapper {
+    border: 0;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
+    box-shadow: none;
+    width: 487px;
+    height: 487px;
+}
+
+/* //////////////////////////////////////// 모달 컨텐츠, 댓글 박스 ///////////////////////////////////////////////////// */
+/* 포스트 네임카드 박스 */
+.container_name_modal {
+    width: 404px;
+    height: 60px;
+    border-bottom: 1px solid rgb(219,219,219, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+/* 옵션 버튼 */
+.button_option_modal {
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    padding-right: 16px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* content, comment 박스 */
+.box_content_comment_commentModal {
+    display: flex;
+    flex-direction: column;
+    width: 372px;
+    height: 228px;
+    padding: 16px;
+    border-bottom: 1px solid rgb(219,219,219, 0.5);
+    overflow: auto;
+}
+
+/* content 섹션 */
+.section_content_commentModal {
+    display: flex;
+    padding-bottom: 16px;
+}
+
+/* content 프로필이미지 */
+.profileImg_comment_modal {
+    margin-right: 18px;
+    width: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* 작성 시간 */
+.time_post_commentModal {
+    margin-top: 16px;
+}
+
+/* comment 섹션 */
+.section_comment_commentModal {
+    display: flex;
+    padding-top: 7px;
+    padding-bottom: 16px;
+}
+
+/* 아이콘 박스 */
+.box_icon_modal {
+    height: 40px;
+    padding: 10px 16px 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+/* 아이콘 */
+.icon_SNS_modal {
+    width: 24px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.icon_SNS_modal:hover {
+    opacity: 0.5;
+}
+
+/* 빨간 하트 아이콘 */
+.red_heart_modal {
+    padding-right: 8px;
+    cursor: pointer;
+}
+
+.red_heart_modal:hover {
+    opacity: 0.5;
+}
+
+/* 빈 하트 아이콘 */
+.empty_heart_modal {
+    padding-right: 8px;
+    cursor: pointer;
+}
+
+.empty_heart_modal:hover {
+    opacity: 0.5;
+}
+
+/* 북마크 아이콘 */
+.bookmark_modal {
+    margin: 0 -10px 0 230px;
+    width: 24px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.bookmark_modal:hover {
+    opacity: 0.5;
+}
+
+/* 좋아요 텍스트 */
+.text_like_commentModal {
+    padding: 0 16px 4px 16px;
+    display: flex;
+    align-items: center;
+}
+
+/* 댓글 input */
+.write_comment_commentModal {
+    flex-grow: 1;
+    padding: 0;
+    border: 0;
+    font-size: 12px;
+    opacity: 0.9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* 댓글 input 포커스 */
+.write_comment_commentModal:focus {
+    outline: none;
+}
+
+/* 게시 button */
+.write_button_commentModal {
+    right: 10px;
+    border: 0;
+    background: transparent;
+    padding: 0 0 3px 0;
+    color: rgb(0, 149, 246);
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0.3;
+    cursor: auto;
 }
 
 /* //////////////////////////////////////////////////// 상단바 /////////////////////////////////////////////////////// */
@@ -286,7 +469,7 @@ nav {
 }
 
 /* 포스트 네임카드 박스 */
-.box_name_post {
+.container_name_post {
     width: 614px;
     height: 60px;
     border-bottom: 1px solid rgb(219,219,219, 0.5);
@@ -302,11 +485,15 @@ nav {
     cursor: pointer;
 }
 
-/* 이름 */
-.name_post {
+/* 이름 박스 */
+.box_name_post {
     flex-grow: 1;
     margin-left: 12px;
     padding-bottom: 3px;
+}
+
+/* 이름 */
+.name_post {
     font-weight: 600;
     cursor: pointer;
 }
@@ -333,10 +520,15 @@ nav {
     position: center;  /* 해당 div 위에 다른 div 를 겹치기 위해 설정 */
 }
 
+.slider_post {
+    visibility: hidden;
+    opacity: 0;
+}
+
 /* 이미지 슬라이드 박스 (라이브러리 내부 옵션) */
-.bx-wrapper {
-    border: 0 !important;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
-    box-shadow: none !important;
+.box_picture_post > .bx-wrapper {
+    border: 0;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
+    box-shadow: none;
 }
 
 /* 이미지 슬라이드 다음 버튼 (라이브러리 내부 옵션) */
@@ -363,11 +555,11 @@ nav {
 
 /* 이미지 슬라이드 페이지 아이콘 박스 (라이브러리 내부 옵션) */
 .bx-pager {
-    bottom: -25px !important;
-    padding-top: 0 !important;
-    height: 0 !important;
-    margin-bottom: 18px !important;
-    margin-left: 2px !important;
+    bottom: -25px;
+    padding-top: 0;
+    height: 0;
+    margin-bottom: 18px;
+    margin-left: 2px;
 }
 
 /* 이미지 슬라이드 비활성화 페이지 아이콘 (라이브러리 내부 옵션) */
@@ -448,11 +640,17 @@ nav {
 }
 
 /* ////////////////////////////////////////////// 포스팅 내용 ///////////////////////////////////////////////////////// */
+/* 포스팅 내용 컨테이너 */
+.container_content {
+    display: flex;
+}
+
 /* 포스팅 내용 박스 */
 .box_content {
     margin-bottom: 3px;
-    padding: 0 16px;
-    overflow: auto;  /* 텍스트가 가로로 길다면 스크롤을 추가함 */
+    padding-left: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 포스트 작성자 */
@@ -471,9 +669,27 @@ nav {
     opacity: 0.5;
 }
 
-/* 텍스트 */
-.text_content {
-    color: rgb(38, 38, 38);
+/* 텍스트 숨기기 */
+.hide_content {
+    height: 19px;
+}
+
+/* 더 보기 버튼 */
+.show_cotent {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: rgb(142, 142, 142);
+    width: 100px;
+    cursor: pointer;
+}
+
+/* 버튼 숨기기 */
+.hide_btn {
+    display: none;
 }
 
 /* //////////////////////////////////////////////////// 댓글 ///////////////////////////////////////////////////////// */
@@ -506,7 +722,6 @@ nav {
 .box_list_comment {
     display: flex;
     flex-direction: row;
-    align-items: center;
     margin: 0 2px 3px 0;
 }
 
@@ -528,12 +743,15 @@ nav {
 
 /* 댓글 */
 .comment {
-    flex-grow: 1;
+    width: 484.969px;
     margin: 0 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 댓글 좋아요 버튼 */
 .heart_comment {
+    margin: auto;
     font-size: 12px;
 }
 
@@ -547,7 +765,7 @@ nav {
 .time_post {
     font-size: 10px;
     letter-spacing: 0.2px;
-    margin: 4px 0 17px 0;
+    margin: 4px 0 17px 16px;
     color: rgb(142, 142, 142);
     cursor: pointer;
 }
@@ -577,7 +795,7 @@ nav {
 
 /* 댓글달기 인풋 태그 */
 .write_comment {
-    width: 514px;
+    flex-grow: 1;
     padding: 0;
     border: 0;
     font-size: 12px;
@@ -592,6 +810,7 @@ nav {
 
 /* 게시 버튼 */
 .write_button {
+    right: 10px;
     border: 0;
     background: transparent;
     padding: 0 0 3px 0;
@@ -630,10 +849,14 @@ nav {
     cursor: pointer;
 }
 
-/* 이름 */
-.profile_name {
+/* 이름 박스 */
+.box_profile_name {
     width: 187px;
     margin: 12px 8px 12px 18px;
+}
+
+/* 이름 */
+.profile_name {
     font-weight: 600;
     cursor: pointer;
 }
