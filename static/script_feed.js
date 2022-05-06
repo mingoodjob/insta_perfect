@@ -2,7 +2,7 @@
 function Go_feed() {
     $.ajax({
         type: "get",
-        url: "/feed",
+        url: "/",
         data: {},
         success: function () {
             window.location.href='/feed'
@@ -86,10 +86,18 @@ getOptionModalButton.addEventListener('click', () => {  // 버튼에 클릭 이�
 getOptionModal.addEventListener('click', (event) => {  // 모달 변수에 클릭 이벤트가 발생되고
     if (event.target === getOptionModal) {  // 그게 만약 '엄격하게' 모달 변수 위에서 발생한다면 (모달시 실제로 보여지는 영역은 option_body_modal 자식태그이므로 해당하지않음)
         getOptionModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
-        body.style.overflow = 'auto'  // 스크롤을 다시 활성화
+        if (getCommentModal.classList.contains('modalToggle')) {  // 만약 comment 모달이 있는 상태라면
+            body.style.overflow = 'hidden'  // 스크롤을 막음
+        } else {
+                body.style.overflow = 'auto'  // 스크롤을 다시 활성화
+            }
     } else if (event.target === getButtonCancel) {  // 혹은 그게 만약 취소 버튼 변수 위라면
         getOptionModal.classList.toggle('modalToggle')  // modalToggle를 다시 토글시켜 사라지게함
-        body.style.overflow = 'auto'  // 스크롤을 다시 활성화
+        if (getCommentModal.classList.contains('modalToggle')) {  // 만약 comment 모달이 있는 상태라면
+            body.style.overflow = 'hidden'  // 스크롤을 막음
+        } else {
+                body.style.overflow = 'auto'  // 스크롤을 다시 활성화
+            }
     }
 })
 
@@ -206,26 +214,51 @@ $(document).ready(function() {
             $('.write_button').attr("style", "opacity: 100%; cursor: pointer;")  // 텍스트 감지되면 진하게, 포인터 커서
             $('.write_comment').attr("style", "font-size: 14px; padding-bottom: 1px;")  // 텍스트 감지되면 폰트 사이즈 키우고 살짝 위로
     })
+    $(".write_comment_commentModal").on('input',function() {
+        if($('.write_comment_commentModal').val() == '')
+            $('.write_button_commentModal').attr("style", "opacity: 50%; cursor: auto;");  // 텍스트 감지되지않으면 흐리게, 기본 커서
+        else
+            $('.write_button_commentModal').attr("style", "opacity: 100%; cursor: pointer;")  // 텍스트 감지되면 진하게, 포인터 커서
+            $('.write_comment_commentModal').attr("style", "font-size: 14px; padding-bottom: 1px;")  // 텍스트 감지되면 폰트 사이즈 키우고 살짝 위로
+    })
 })
 
 // 댓글 달기 기능
 function write_button() {
-    let writer_comment = $('.profile_name').text()
-    let comment = $('.write_comment').val()
+    let profileImg = $('.profile_name_card').attr('src')  // 작성자 프로필 이미지
+    let writer_comment = $('.profile_name').text()  // 작성자 닉네임
+    let comment = $('.write_comment').val()  // 작성자 코멘트
     if (comment !== '') {
-        let temp_html = `<div class="box_list_comment">
-                        <span class="writer_comment" onclick="Go_profile()">${writer_comment}</span>
-                        <span class="comment">${comment}</span>
-                        <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
-                            <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-                            3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-                            014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
-                            0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
-                            9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
-                            2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
-                            4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
-                        </svg>
-                    </div>`
-    $('.box_comment').append(temp_html)
+        // 포스트 박스 div
+        let post_temp_html = `<div class="box_list_comment">
+                                    <span class="writer_comment" onclick="Go_profile()">${writer_comment}</span>
+                                    <span class="comment">${comment}</span>
+                                    <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
+                                        <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
+                                        3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
+                                        014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
+                                        0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
+                                        9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
+                                        2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
+                                        4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
+                                    </svg>
+                               </div>`
+        // 모달 박스 div
+        let modal_temp_html = `<section class="section_comment_commentModal">
+                                        <section>
+                                        <img class="profileImg_comment_modal" onclick="Go_profile()"
+                                             src=${profileImg}>
+                                        </section>
+                                        <section>
+                                            <span class="name_post" onclick="Go_profile()">${writer_comment}</span>
+                                            <span>${comment}</span>
+                                            <section class="time_post_commentModal">
+                                                <div style="font-size:12px; font-weight:400; color:rgb(142, 142, 142)"><span>13</span>시간
+                                                </div>
+                                            </section>
+                                        </section>
+                               </section>`
+    $('.box_comment').append(post_temp_html)
+    $('.box_content_comment_commentModal').append(modal_temp_html)
     }
 }
