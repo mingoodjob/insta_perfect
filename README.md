@@ -114,6 +114,12 @@
 7. MongoDB
 8. Amazon AWS
 
+## 사용 기술
+
+1. 로그인 기능 (FLASK SESSION)
+2. API (AJAX , request from)
+3. HTML 기술 (JINJA2 문법)
+
 # 와이어 프레임
 
 ### 로그인 페이지
