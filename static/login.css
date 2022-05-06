@@ -1,5 +1,6 @@
 body {
     margin: 0;
+
 }
 .bx-wrapper {
     box-shadow:none;
@@ -14,10 +15,13 @@ body {
     width: 100vw;
     height: 100vh;
     background-color:#fafafa;
+    display: flex;
+
 }
 
 .phone_img_box {
-    position: absolute;
+    display: flex;
+    position: relative;
     left: 33%;
     top: 21.7%;
     background-image: url("../static/login_img/iphone.png");
@@ -26,10 +30,10 @@ body {
     z-index: 99;
 }
 
-
 .login_box {
-    position: absolute;
-    left: 50.8%;
+    display: flex;
+    position: relative;
+    left: 32.8%;
     top: 22.7%;
     width: 350px;
     height: 400px;
@@ -270,9 +274,18 @@ body {
     cursor: pointer;
 }
 
+@media screen and (max-width: 750px) {
+    .phone_img_box{
 
-/*@media (max-width: 2400px) {*/
-/*  .login_box {*/
-/*   */
-/*  }*/
-/*}*/
+}
+@media screen and (max-width: 750px) {
+    .container{
+        width: 120%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .phone_img_box{
+
+        display: none;   }
+}
