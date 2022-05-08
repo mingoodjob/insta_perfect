@@ -179,15 +179,23 @@ function blur_search() {
 
 // 좋아요 버튼 ///////////////////////////
 function red_heart_show() {  // 좋아요 입력
-    $(".red_heart").show()
     $(".empty_heart").hide()
+    $('.empty_heart_modal').hide()
+    $('.like_cnt_zero_commentModal').hide()
+    $(".red_heart").show()
+    $('.red_heart_modal').show()
     $(".heart_count").show()
+    $(".like_cnt_commentModal").show()
 }
 
 function empty_heart_show() {  // 좋아요 취소
-    $(".empty_heart").show()
     $(".red_heart").hide()
+    $('.red_heart_modal').hide()
     $(".heart_count").hide()
+    $(".like_cnt_commentModal").hide()
+    $(".empty_heart").show()
+    $('.empty_heart_modal').show()
+    $('.like_cnt_zero_commentModal').show()
 }
 
 // content 내용이 길면 숨김 처리와 더보기 버튼
@@ -223,7 +231,7 @@ $(document).ready(function() {
     })
 })
 
-// 댓글 달기 기능
+// 포스트 박스 댓글 달기 기능
 function write_button() {
     let profileImg = $('.profile_name_card').attr('src')  // 작성자 프로필 이미지
     let writer_comment = $('.profile_name').text()  // 작성자 닉네임
@@ -258,7 +266,50 @@ function write_button() {
                                             </section>
                                         </section>
                                </section>`
-    $('.box_comment').append(post_temp_html)
-    $('.box_content_comment_commentModal').append(modal_temp_html)
+        $('.box_comment').append(post_temp_html)
+        $('.box_content_comment_commentModal').append(modal_temp_html)
+        $('.write_comment').val('')
+    }
+}
+
+// 코멘트 모달 댓글 달기 기능
+function write_button_commentModal() {
+    console.log('모달 게시 버튼 입력')
+    let profileImg = $('.profile_name_card').attr('src')  // 작성자 프로필 이미지
+    let writer_comment = $('.profile_name').text()  // 작성자 닉네임
+    let comment = $('.write_comment_commentModal').val()  // 작성자 코멘트
+    if (comment !== '') {
+        // 포스트 박스 div
+        let post_temp_html = `<div class="box_list_comment">
+                                    <span class="writer_comment" onclick="Go_profile()">${writer_comment}</span>
+                                    <span class="comment">${comment}</span>
+                                    <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
+                                        <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
+                                        3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
+                                        014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
+                                        0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
+                                        9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
+                                        2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
+                                        4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
+                                    </svg>
+                               </div>`
+        // 모달 박스 div
+        let modal_temp_html = `<section class="section_comment_commentModal">
+                                        <section>
+                                        <img class="profileImg_comment_modal" onclick="Go_profile()"
+                                             src=${profileImg}>
+                                        </section>
+                                        <section>
+                                            <span class="name_post" onclick="Go_profile()">${writer_comment}</span>
+                                            <span>${comment}</span>
+                                            <section class="time_post_commentModal">
+                                                <div style="font-size:12px; font-weight:400; color:rgb(142, 142, 142)"><span>13</span>시간
+                                                </div>
+                                            </section>
+                                        </section>
+                               </section>`
+        $('.box_comment').append(post_temp_html)
+        $('.box_content_comment_commentModal').append(modal_temp_html)
+        $('.write_comment_commentModal').val('')
     }
 }
