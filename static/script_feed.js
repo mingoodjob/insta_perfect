@@ -22,6 +22,30 @@ function Go_profile() {
     })
 }
 
+// 유저 정보 가져오기
+$(function() {
+    $.ajax({
+        type: "GET",
+        url: "/find_userDB",
+        data: {},
+        success: function (response) {
+            let userdb = JSON.parse(response['userdb'])
+            let uid = userdb['uid']  // 유저 uid
+            let pr_photo = userdb['pr_photo']  // 유저 프로필 이미지
+            // 유저 uid 적용
+            $('.name_post').text(uid)
+            $('.writer_content').text(uid)
+            $('.profile_name').text(uid)
+
+            // 유저 프로필 이미지 적용
+            $('.profile_nav').attr('src', pr_photo)
+            $('.profile_name_post').attr('src', pr_photo)
+            $('.profile_name_card').attr('src', pr_photo)
+            $('.profileImg_comment_modal').attr('src', pr_photo)
+        }
+    })
+})
+
 // 이미지 슬라이드 //////////////////////
 $(document).ready(function() {
     $('.slider_post').bxSlider({  // bxslider 라이브러리에 지정된 커스텀 가능한 옵션들  // 포스트 박스내 슬라이드
