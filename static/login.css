@@ -1,6 +1,6 @@
 body {
     margin: 0;
-
+    background-color: #FAFAFA;
 }
 .bx-wrapper {
     box-shadow:none;
@@ -14,7 +14,6 @@ body {
 .container {
     width: 100vw;
     height: 100vh;
-    background-color:#fafafa;
     display: flex;
 
 }
@@ -273,6 +272,16 @@ body {
     display: none;
     cursor: pointer;
 }
+.pwd_none {
+    position: absolute;
+    left: 13%;
+    top: 85%;
+    font-size: 14px;
+    white-space: nowrap;
+    color: red;
+    display: none;
+}
+
 
 @media screen and (max-width: 750px) {
     .phone_img_box{
