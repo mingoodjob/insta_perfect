@@ -1,10 +1,18 @@
 // 피드 페이지로 이동
 function logout() {
     $.removeCookie('mytoken', {path: '/'});
-    alert('로그인 페이지로 이동합니다')
     window.location.href = '/login';
 }
 
+$().ready(function () {
+            $("#logout").click(function () {
+                Swal.fire({
+                        title: '로그아웃 중입니다...',
+                        text: '로그인 페이지로 돌아갑니다'
+                });
+
+            });
+        });
 
 function Go_feed() {
     $.ajax({

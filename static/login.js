@@ -35,6 +35,8 @@ const login_input2 = document.querySelector(".login_input2");
 const login_input_text2 = document.querySelector(".login_input_text2");
 const login_hide_pwd = document.querySelector(".login_hide_pwd");
 const login_btn = document.querySelector(".login_btn");
+// var id_value = document.getElementById('id_value').value;
+// var id_value = document.getElementById('pwd_value').value;
 
 login_input2.addEventListener('keydown', (event) => {
     login_input_text2.style.fontSize = "5px";
@@ -79,7 +81,7 @@ function login() {
                     $.cookie('mytoken', response['token'], {path:'/'});
                     window.location.href = '/'
                 } else {
-                    alert('아아디,비밀번호를 확인하세요!')
+
                 }
             },
         });
@@ -93,7 +95,16 @@ $('#uid, #pwd').on('keypress', function(e){
         }
     });
 
+$().ready(function () {
+            $("#login").click(function () {
+                Swal.fire({
+                        icon: 'success',
+                        title: '로그인 확인 중입니다...',
+                        text: '아이디 비밀번호를 확인 해주세요'
 
+                });
+            });
+        });
 
 // function logout(){
 //         $.removeCookie('mytoken');

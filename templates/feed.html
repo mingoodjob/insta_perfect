@@ -9,7 +9,7 @@
     <script
       src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
       crossorigin="anonymous"></script>  <!-- jquery CDN -->
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/static/jquery.bxslider.min.js"></script>  <!-- 이미지 슬라이드 로컬 js -->
@@ -132,7 +132,7 @@
     <nav>
         <div class="box_logo">
             <a class="logo" onclick="Go_feed()"></a>
-            <button onclick="logout()" >로그 아웃</button>
+            <button onclick="logout()" id="logout">로그 아웃</button>
         </div>
         <div class="box_search">
             <!-- 돋보기 아이콘 -->
