@@ -1,13 +1,13 @@
 // 바로실행 함수
-$(function(){
-  
+$(function () {
+
     $('.serch_box > input').focus(function () {
         $('.serch_box > div').css('display', 'none');
     });
     $('.serch_box > input').blur(function () {
         $('.serch_box > div').css('display', 'block');
     });
-    
+
     $(document).mouseup(function (e) {
         if ($(".modal_body").has(e.target).length === 0) {
             $(".modal_body").css('display', 'none');
@@ -15,14 +15,14 @@ $(function(){
         }
     });
 
-    $('#photo_upload').change(function(){
+    $('#photo_upload').change(function () {
         $('.photo_upload').css('display', 'none');
         $('.img_box').css('display', 'flex');
         $('.first_title').css('display', 'none');
         $('.second_title').css('display', 'flex');
         setImageFromFile(this, '#preview');
     });
-    
+
     function setImageFromFile(input, expression) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -33,38 +33,65 @@ $(function(){
         }
     }
 
-    $('.photo_box').click(() => {
-        $('.feed_info_modal').css('display', 'flex');
-
-        // var src = jQuery(".photo2").attr("src");
-        // console.log(src)
-    })
-
-    $(document).mouseup(function (e) {
+    $(document).mouseup((e) => {
         if ($(".feed_info_modal").has(e.target).length === 0) {
             $(".feed_info_modal").css('display', 'none');
             $('body').removeClass('hidden').off('scroll touchmove mousewheel');
         }
     });
 
+
 })
 //바로 실행 함수 종료
 
-function feed_upload(){
+function feed_upload() {
     $('.modal_body').css('display', 'flex');
 }
 
-function photo_upload(){
+function photo_upload() {
     $('#photo_upload').click()
 }
 
-function content_get(){
+function content_get() {
     alert('하이')
     let content = $('#content').val()
     alert(content)
 }
 
-function cancel(){
+function cancel() {
     $(".modal_body").css('display', 'none');
     window.location.reload()
+}
+
+function display_popup() {
+    var feed_number = $(this).data("id");
+
+    $.ajax({
+        type: 'POST',
+        url: '/feed_number',
+        data: { feed_number : feed_number },
+        success: function (response) {
+            if (response["result"] == "success") {
+                username = response["username"];
+                content = response["content"];
+                photo = "../static/img_upload/" + response["photo"];
+                like_count = response["like_count"];
+                console.log(photo)
+
+                desc = `<p><b>${username}</b> ${content}</p>`
+                
+                $('body').addClass('hidden').on('scroll touchmove mousewheel', function (e) {
+                    e.preventDefault();
+                });
+
+                $('#like_count').html(like_count)
+                $('#comment_desc').html(desc)
+                // $('#comment_list').html(desc);
+                $("#photo").attr("src", photo);
+                $('.feed_info_modal').css('display', 'flex');
+                // window.location.reload();
+            }
+
+        }
+    });
 }
