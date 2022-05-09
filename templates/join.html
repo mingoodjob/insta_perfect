@@ -485,9 +485,11 @@
                 success: function (response) {
                     // 성공하면: 이 함수를 실행해줘
                     alert(response['msg'])
-                    // msg를 alert으로 띄워줘(이msg는 서버 쪽에서 지정해둠)
+
                     window.location.reload()
-                    // 그리고 새로고침 해줘.
+
+                    window.location.href = "/login";
+
 
                 }
             });
