@@ -13,7 +13,7 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.joinusers.find_one({"uid": payload['uid']})
+        user_info = db.user.find_one({"uid": payload['uid']})
         print(user_info['uid'])
         print(user_info['name'])
         return render_template('feed.html')
@@ -53,7 +53,7 @@ def join_post():
         'pr_photo': pr_photo_receive
     }
 
-    db.joinusers.insert_one(doc)
+    db.user.insert_one(doc)
 
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
 
@@ -63,7 +63,7 @@ def login_check():
     pwd_receive = request.form['pwd_give']
 
     pwd_hash = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
-    result = db.joinusers.find_one({
+    result = db.user.find_one({
         'uid': uid_receive,
         'pwd': pwd_hash
     })
@@ -87,7 +87,7 @@ def login_name():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # print(payload)
-        userinfo = db.joinusers.find_one({'uid': payload['uid']})
+        userinfo = db.user.find_one({'uid': payload['uid']})
         return jsonify({'result': 'success', 'name': userinfo['name']})
     except jwt.ExpiredSignatureError:
         return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
