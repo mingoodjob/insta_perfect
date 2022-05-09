@@ -94,13 +94,14 @@ function display_popup() {
         data: { feed_number: feed_number },
         success: function (response) {
             if (response["result"] == "success") {
+                write_id = response["write_id"];
                 username = response["username"];
                 content = response["content"];
                 photo = "../static/img_upload/" + response["photo"];
                 like_count = response["like_count"];
                 console.log(photo)
 
-                desc = `<p><b>${username}</b> ${content}</p>`
+                desc = `<p><b>${write_id}</b> ${content}</p>`
 
                 $('body').addClass('hidden').on('scroll touchmove mousewheel', function (e) {
                     e.preventDefault();

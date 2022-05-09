@@ -169,11 +169,12 @@ def feed_number():
         uid_get = db.user.find_one({'uid': payload['uid']})
         uid = uid_get['uid']
         serch_content = db.feed.find_one({"feed_number": int(feed_number)},{"_id": 0})
+        write_id = serch_content['write_id']
         like_count = serch_content['like_count']
         photo = serch_content['photo']
         content = serch_content['content']
         print(photo, content)
-        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count})
+        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count, 'write_id': write_id})
         
 if __name__ == '__main__':
 
