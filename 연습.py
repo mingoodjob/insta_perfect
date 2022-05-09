@@ -15,7 +15,7 @@ col_count = col.count_documents({})
 
 print(col_count)
 like_list = dict(col.find_one({'feed_number': 20}))
-# col.update_one({'feed_number': 20}, {'$push': {'like_list': 'where'}})
+db.feed.update_one({'feed_number': 20}, {'$push': {'like_list': 'where'}}, upsert=True)
 
 likelist = like_list['like_list']
 

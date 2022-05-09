@@ -174,8 +174,32 @@ def feed_number():
         photo = serch_content['photo']
         content = serch_content['content']
         print(photo, content)
-        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count, 'write_id': write_id})
+        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count, 'write_id': write_id, 'feed_number': feed_number})
+
+@app.route('/like_count', methods=['GET', 'POST'])
+def like_count():
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid = payload['uid']
+    if request.method == 'POST':
+        print(uid)
+        number = request.form['number']
+        serch = db.feed.find_one({"feed_number": int(number)},{"_id": 0})
+        like_count = serch['like_count']
+        try:
+            like_list = serch['like_list']
+            if uid in like_list:
+                like = 0
+            else:
+                like = 1
+                db.feed.update_one({'feed_number': int(number)}, {'$push': {'like_list': uid}}, upsert=True)
+                db.feed.update_one({ "feed_number": int(number) }, { "$set": { "like_count": int(like_count) + 1} })
+
+        except:
+            db.feed.update_one({'feed_number': int(number)}, {'$push': {'like_list': uid}}, upsert=True)
         
+        db.feed.update_one({ "feed_number": int(number) }, { "$set" : { "like_count": int(like_count) + 1 }})
+        return jsonify({'result': 'success', 'msg' : '잘 받았다 이눔아!'})
+
 if __name__ == '__main__':
 
   app.run('0.0.0.0', port=80, debug=True)
