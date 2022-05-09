@@ -1,4 +1,19 @@
 // 피드 페이지로 이동
+function logout() {
+    $.removeCookie('mytoken', {path: '/'});
+    window.location.href = '/login';
+}
+
+$().ready(function () {
+            $("#logout").click(function () {
+                Swal.fire({
+                        title: '로그아웃 중입니다...',
+                        text: '로그인 페이지로 돌아갑니다'
+                });
+
+            });
+        });
+
 function Go_feed() {
     $.ajax({
         type: "get",
@@ -9,6 +24,8 @@ function Go_feed() {
         }
     })
 }
+
+
 
 // 프로필 페이지로 이동
 function Go_profile() {
@@ -413,3 +430,4 @@ function write_button_commentModal() {
         $('.write_comment_commentModal').val('')
     }
 }
+

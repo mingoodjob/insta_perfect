@@ -9,6 +9,9 @@
     <script
       src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
       crossorigin="anonymous"></script>  <!-- jquery CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/static/jquery.bxslider.min.js"></script>  <!-- 이미지 슬라이드 로컬 js -->
     <script src="https://kit.fontawesome.com/0469981faa.js" crossorigin="anonymous"></script>  <!-- 아이콘 키트 CDN -->
 </head>
@@ -126,6 +129,7 @@
     <nav>
         <div class="box_logo">
             <a class="logo" onclick="Go_feed()"></a>
+            <button onclick="logout()" id="logout">로그 아웃</button>
         </div>
         <div class="box_search">
             <!-- 돋보기 아이콘 -->
@@ -189,7 +193,7 @@
         <!------------------------------------------------ 상호작용 ---------------------------------------------------->
         <div class="box_icon_SNS">
             <!-- 빨간 하트 아이콘 -->
-            <svg class="red_heart" style="display: none; opacity: 1;" onclick="empty_heart_show()"
+            <svg class="red_heart" style="display: none; opacity: 1;" onclick="empty_heart_show() "
                  color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48" width="24">
                 <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
                 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
@@ -296,4 +300,6 @@
 </div>
 <script src="/static/script_feed.js"></script>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/static/script_feed.js"></script>
 </html>
