@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/login.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <title>instagram</title>
 <style>
 .bx-wrapper {border:0;box-shadow:none; background-color: black;}
@@ -23,28 +25,25 @@
                 <li><img src="../static/login_img/phone_img3.png"/></li>
                 <li><img src="../static/login_img/phone_img4.png"/></li>
             </ul>
-            <script>
-                // $(document).ready(function(){ $('.bxslider').bxSlider(); });
-            </script>
         </div>
 <!--        로그인 박스 작업 -->
         <div class="login_box">
             <img class="insta_logo" src="../static/login_img/insta_logo.png">
-             <form method="post" action="/login_check">
-                <label>
 <!--               id,pw로그인 -->
-                   <div class="log_input">
-                   <input class="login_input" type="text" id="id_value" name="uid" >
+            <label>
+                 <div class="log_input">
+                   <input class="login_input" type="text" id="uid"  >
                         <span class="login_input_text">전화번호, 사용자 이름 또는 이메일</span>
                    </div>
                 <div class="log_input2">
                      <span class="login_input_text2 ">비밀번호</span>
                      <span class="login_hide_pwd">비밀번호 표시</span>
-                    <input class="login_input2" type="password" id="pwd_value" name="pwd">
+                    <input class="login_input2" type="password" id="pwd" >
                 </div>
-                <button type="submit" class="login_btn">로그인</button>
+                <button onclick="login()" class="login_btn" id="login">로그인</button>
+                <p class="pwd_none" id="pwd_show"> 잘못된 비밀번호입니다. 다시 확인하세요.</p>
             </label>
-            </form>
+
 <!--            ----또는---- 부분 -->
             <div>
                 <div class="middle_line">
@@ -59,9 +58,8 @@
                         <img class="facebook_logo" src="../static/login_img/facebook.png">
                     </div>
                 <button class="facebook_btn">Facebook 으로 로그인</button>
-                {% if login == True %}
-                <div> asdfasdfaf</div>
-                {% endif %}
+<!--                <p class="pwd_none" id="pwd_show"> 잘못된 비밀번호입니다. 다시 확인하세요.</p>-->
+
                 <a class="find_pwd" href="https://www.instagram.com/accounts/password/reset/" target='_blank'>비밀번호를 잊으셨나요?</a>
             </div>
 <!--        아이디 찾기 박스-->
@@ -79,10 +77,8 @@
             <span class="footer_3">c 2022 내일배움캠프 AI트랙 2기 14조 기억해조</span>
         </footer>
     </div>
-
-
-
+<script>
+</script>
 <script src="../static/login.js"></script>
-
 </body>
 </html>
