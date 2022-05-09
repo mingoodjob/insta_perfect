@@ -60,10 +60,10 @@ def join_post():
 @app.route('/profile')
 def profile():
     name = '이민기'
-    write_count = db.feed.count_documents({})
+    write_count = db.feed.count_documents({'write_id': username})
     pr_photo = '../static/img_upload/1.jpg'
     #피드 콜렉션에 모든 내용을 받아온다!
-    all_feed = db.feed.find().sort("feed_number", -1)
+    all_feed = db.feed.find({'write_id' : username}).sort("feed_number", -1)
     # all_feed = db.feed.find()
     # pr_photo = 1
     # print(img_number)
@@ -85,7 +85,7 @@ def get_file():
         
         doc = {
             'feed_number' : number + 1,
-            'write_id' : 'dlalsrl',
+            'write_id' : username,
             'photo' : str(img_number) + '.jpg',
             'content' : content,
             'like_count': 0
