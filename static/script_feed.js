@@ -5,7 +5,7 @@ function Go_feed() {
         url: "/",
         data: {},
         success: function () {
-            window.location.href='/feed'
+            window.location.href='/'
         }
     })
 }
