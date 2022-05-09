@@ -26,28 +26,23 @@ function Go_profile() {
 $(function() {
     $.ajax({
         type: "GET",
-        url: "/find_userDB",
+        url: "/user",
         data: {},
         success: function (response) {
-            let userdb = JSON.parse(response['userdb'])
-            let uid = userdb['uid']  // 유저 uid
-            let pr_photo = userdb['pr_photo']  // 유저 프로필 이미지
-            // 유저 uid 적용
-            $('.name_post').text(uid)
-            $('.writer_content').text(uid)
+            let uid = response['user']['uid']  // 유저 uid
+            let pr_photo = response['user']['pr_photo']  // 유저 프로필 이미지
+            // 네임카드 유저 uid 적용
             $('.profile_name').text(uid)
 
-            // 유저 프로필 이미지 적용
+            // 상단바와 네임카드 유저 프로필 이미지 적용
             $('.profile_nav').attr('src', pr_photo)
-            $('.profile_name_post').attr('src', pr_photo)
             $('.profile_name_card').attr('src', pr_photo)
-            $('.profileImg_comment_modal').attr('src', pr_photo)
         }
     })
 })
 
 // 이미지 슬라이드 //////////////////////
-$(document).ready(function() {
+function road_slider() {
     $('.slider_post').bxSlider({  // bxslider 라이브러리에 지정된 커스텀 가능한 옵션들  // 포스트 박스내 슬라이드
         speed: 300,  // 슬라이드 속도
         infiniteLoop: false,  // 루프 off
@@ -56,6 +51,48 @@ $(document).ready(function() {
         adaptiveHeight: true,  // 사진 높이에 따라 박스 크기 조절
         onSliderLoad: function(){
             $(".slider_post").css("visibility", "visible").animate({opacity:1})
+        }
+    })
+}
+
+// feed 정보 불러오기
+$(function() {
+    $.ajax({
+        type: "GET",
+        url: "/feed",
+        data: {},
+        success: function (response) {
+            let pr_photo = response['pr_photo']  // content 작성자 프로필 이미지
+            $('.profile_name_post').attr('src', pr_photo)  // 피드페이지
+            $('.profileImg_comment_modal').attr('src', pr_photo)  // 댓글 모달창
+
+            let all_feed = response['content']
+            for(let i = 0; i < all_feed.length; i++) {
+                let write_id = all_feed[i]['write_id']
+                let content = all_feed[i]['content']
+                let like_count = all_feed[i]['like_count']
+
+                $('.name_post').text(write_id)
+                $('.writer_content').text(write_id)
+                $('.text_content').text(content)
+                $('.like_cnt').text(like_count)
+                $('.like_count_commentModal').text(like_count)
+
+                let all_photo = all_feed[i]['photo']
+
+                for(let i = 0; i < all_photo.length; i++) {
+                    let photo = all_photo[i]
+                    let temp_html = `<img src=${photo}>`
+                    $('.slider_post').append(temp_html)
+
+                    let temp_html_commentModal = `<img src=${photo}>`
+                    $('.slider_modal').append(temp_html_commentModal)
+                }
+            }
+
+            setTimeout(function() {  // 슬라이드 로딩 대기를 위해 지연시간을 줌
+                road_slider();
+            },500);
         }
     })
 })
@@ -140,13 +177,6 @@ const getCommentQuit = document.querySelector('.quit_comment_modal')  // 취소 
 getCommentButton.addEventListener('click', () => {  // 댓글 아이콘에 클릭 이벤트가 발생하면
     getCommentModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
 
-    // setTimeout(function() {  // 모달창에서 슬라이드 이미지가 안뜨면 시도해볼 것
-    //     apiLayout();
-    //     },500);
-
-    // function apiLayout() {
-    // console.log('apiLayout call')
-
     modalslide.reloadSlider({
         speed: 300,  // 슬라이드 속도
         infiniteLoop: false,  // 루프 off
@@ -201,26 +231,73 @@ function blur_search() {
     $(".icon_glass").attr("style", "display: block;") // 나타남
 }
 
-// 좋아요 버튼 ///////////////////////////
-function red_heart_show() {  // 좋아요 입력
-    $(".empty_heart").hide()
-    $('.empty_heart_modal').hide()
-    $('.like_cnt_zero_commentModal').hide()
-    $(".red_heart").show()
-    $('.red_heart_modal').show()
-    $(".heart_count").show()
-    $(".like_cnt_commentModal").show()
-}
+// 좋아요 갯수에 따른 좋아요 텍스트와 아이콘 노출 (페이지 처음 로드시)
+// $(function() {
+//     $.ajax({
+//         type: 'GET',
+//         url: '/feed',
+//         data: {},
+//         success: function (response) {
+//             let content = response['content']
+//             let like_cnt = response['like_count']  // 해당 content의 좋아요 갯수
+//             let like_user = response['like_user'][$('.profile_name').text()]  // 현재 로그인한 유저가 좋아요 눌렀다면=true, 아니면 false
+//             if (like_cnt != 0) {
+//                 $('.heart_count').show()
+//                 $('.like_cnt_zero_commentModal').hide()
+//                 $('.like_cnt_commentModal').show()
+//             }
+//             if (like_user == true) {
+//                 $('.empty_heart').hide()
+//                 $('.empty_heart_modal').hide()
+//                 $('.red_heart').show()
+//                 $('.red_heart_modal').show()
+//             }
+//         }
+//     })
+// })
 
-function empty_heart_show() {  // 좋아요 취소
-    $(".red_heart").hide()
-    $('.red_heart_modal').hide()
-    $(".heart_count").hide()
-    $(".like_cnt_commentModal").hide()
-    $(".empty_heart").show()
-    $('.empty_heart_modal').show()
-    $('.like_cnt_zero_commentModal').show()
-}
+// 좋아요 버튼 입력시
+// function red_heart_show() {
+//     click_like = true
+//
+//     $.ajax({
+//         type: 'POST',
+//         url: '/feed',
+//         data: {click_like:click_like},
+//         success: function (response) {
+//             console.log(response['msg'])
+//             $('.empty_heart').hide()
+//             $('.empty_heart_modal').hide()
+//             $('.like_cnt_zero_commentModal').hide()
+//             $('.red_heart').show()
+//             $('.red_heart_modal').show()
+//             $('.heart_count').show()
+//             $('.like_cnt_commentModal').show()
+//         }
+//     })
+// }
+
+// 좋아요 버튼 취소시
+// function empty_heart_show() {
+//     click_like = false
+//
+//     $.ajax({
+//         type: 'POST',
+//         url: '/feed',
+//         data: {click_like: click_like},
+//         success: function (response) {
+//             console.log(response['msg'])
+//             $('.red_heart').hide()
+//             $('.red_heart_modal').hide()
+//             $('.heart_count').hide()
+//             $('.like_cnt_commentModal').hide()
+//             $('.empty_heart').show()
+//             $('.empty_heart_modal').show()
+//             $('.like_cnt_zero_commentModal').show()
+//         }
+//     })
+// }
+
 
 // content 내용이 길면 숨김 처리와 더보기 버튼
 window.addEventListener('load', function () {
@@ -298,7 +375,6 @@ function write_button() {
 
 // 코멘트 모달 댓글 달기 기능
 function write_button_commentModal() {
-    console.log('모달 게시 버튼 입력')
     let profileImg = $('.profile_name_card').attr('src')  // 작성자 프로필 이미지
     let writer_comment = $('.profile_name').text()  // 작성자 닉네임
     let comment = $('.write_comment_commentModal').val()  // 작성자 코멘트

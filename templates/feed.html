@@ -44,11 +44,7 @@
 <div class="comment_modal_body">
     <div class="container_comment_modal">
         <div class="box_slider">
-            <div class="slider_modal">
-                <img src="https://i.imgur.com/VCobrt6.png">
-                <img src="https://i.imgur.com/VCobrt6.png">
-                <img src="https://i.imgur.com/VCobrt6.png">
-            </div>
+            <div class="slider_modal"></div>
         </div>
         <div>
             <div class="container_name_modal">
@@ -65,7 +61,7 @@
             <section class="box_content_comment_commentModal">
                 <section class="section_content_commentModal">
                     <section>
-                        <img class="profileImg_comment_modal" onclick="Go_profile()" src="https://i.imgur.com/7u7cLKe.jpg">
+                        <img class="profileImg_comment_modal" onclick="Go_profile()" src="">
                     </section>
                     <section>
                         <span class="name_post" onclick="Go_profile()"></span>
@@ -109,7 +105,7 @@
             </div>
             <section class="text_like_commentModal">
                 <div class="like_cnt_zero_commentModal">가장 먼저&nbsp;<span style="font-weight: 600">좋아요</span>를 눌러보세요</div>
-                <div class="like_cnt_commentModal" style="font-weight: 600;">좋아요 <span>1</span>개</div>
+                <div class="like_cnt_commentModal" style="display:none; font-weight: 600;">좋아요 <span class="like_count_commentModal"></span>개</div>
             </section>
             <div class="time_post"><span style="margin:0; padding:0;">13</span>시간 전</div>
             <div class="box_write">
@@ -188,11 +184,7 @@
         </div>
         <!------------------------------------------------ 사진 슬라이드 ------------------------------------------------>
         <div class="box_picture_post">
-            <div class="slider_post">
-                <img src="https://i.imgur.com/VCobrt6.png">
-                <img src="https://i.imgur.com/uCA04xC.png">
-                <img src="https://i.imgur.com/kwuEf8S.gif">
-            </div>
+            <div class="slider_post"></div>
         </div>
         <!------------------------------------------------ 상호작용 ---------------------------------------------------->
         <div class="box_icon_SNS">
@@ -226,12 +218,12 @@
                 <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
             </svg>
         </div>
-        <div class="heart_count">좋아요 <span>1</span>개</div>
+        <div class="heart_count">좋아요 <span class="like_cnt">1</span>개</div>
         <!------------------------------------------------ 포스팅 내용 -------------------------------------------------->
         <div class="container_content">
             <div class="box_content">
                 <span class="writer_content" onclick="Go_profile()"></span>
-                <span class="text_content">졸귀탱;;</span>
+                <span class="text_content"></span>
             </div>
             <div class="show_cotent" onclick="show_content()">... 더 보기</div>
         </div>
@@ -302,8 +294,6 @@
         </footer>
     </div>
 </div>
-</body>
-
 <script src="/static/script_feed.js"></script>
-
+</body>
 </html>

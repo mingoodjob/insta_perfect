@@ -336,11 +336,6 @@ body {
     align-items: center;
 }
 
-/* 좋아요 1개이상 텍스트 */
-.like_cnt_commentModal {
-    display: none;
-}
-
 /* 댓글 input */
 .write_comment_commentModal {
     flex-grow: 1;
