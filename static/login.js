@@ -35,8 +35,6 @@ const login_input2 = document.querySelector(".login_input2");
 const login_input_text2 = document.querySelector(".login_input_text2");
 const login_hide_pwd = document.querySelector(".login_hide_pwd");
 const login_btn = document.querySelector(".login_btn");
-// var id_value = document.getElementById('id_value').value;
-// var id_value = document.getElementById('pwd_value').value;
 
 login_input2.addEventListener('keydown', (event) => {
     login_input_text2.style.fontSize = "5px";
@@ -67,4 +65,38 @@ login_input2.addEventListener('keydown', (event) => {
     }
 
 });
+//로그인 ajax 콜
+function login() {
+        let uid = $('#uid').val()
+        let pwd = $('#pwd').val()
 
+        $.ajax({
+            type: "POST",
+            url: "/login_check",
+            data: {uid_give:uid, pwd_give:pwd},
+            success: function (response) {
+                if (response['result'] == 'success') {
+                    $.cookie('mytoken', response['token'], {path:'/'});
+                    window.location.href = '/'
+                } else {
+                    alert('아아디,비밀번호를 확인하세요!')
+                }
+            },
+        });
+
+
+    }
+// 엔터키로 로그인 가능하게
+$('#uid, #pwd').on('keypress', function(e){
+        if(e.keyCode == '13'){
+            $('.login_btn').click();
+        }
+    });
+
+
+
+// function logout(){
+//         $.removeCookie('mytoken');
+//         alert('로그아웃!')
+//         window.location.href='/login'
+//       }

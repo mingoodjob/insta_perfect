@@ -1,4 +1,11 @@
 // 피드 페이지로 이동
+function logout() {
+    $.removeCookie('mytoken', {path: '/'});
+    alert('로그인 페이지로 이동합니다')
+    window.location.href = '/login';
+}
+
+
 function Go_feed() {
     $.ajax({
         type: "get",
@@ -9,6 +16,8 @@ function Go_feed() {
         }
     })
 }
+
+
 
 // 프로필 페이지로 이동
 function Go_profile() {
@@ -21,6 +30,7 @@ function Go_profile() {
         }
     })
 }
+
 
 // 이미지 슬라이드 //////////////////////
 $(document).ready(function() {
@@ -262,3 +272,4 @@ function write_button() {
     $('.box_content_comment_commentModal').append(modal_temp_html)
     }
 }
+

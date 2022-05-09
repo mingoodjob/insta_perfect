@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.oaadu.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
+import certifi
+client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
+db = client.instaperfect
 import os, hashlib, jwt, datetime
 SECRET_KEY = 'insta'
 
@@ -13,7 +14,10 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.joinusers.find_one({"uid": payload['uid']})
-        return render_template('feed.html', name=user_info["name"])
+        print(user_info['uid'])
+        print(user_info['name'])
+        return render_template('feed.html')
+
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login"))
     except jwt.exceptions.DecodeError:
@@ -67,28 +71,29 @@ def login_check():
     if result is not None:
         payload = {
             'uid': uid_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         print("token =", end=""), print(token)
         return jsonify({'result': 'success', 'token': token})
+
     else:
         return jsonify({'result': 'fail', 'msg': 'wrong'})
+
 
 @app.route('/login/name', methods=['GET'])
 def login_name():
     token_receive = request.cookies.get('mytoken')
-
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        print(payload)
-
-        userinfo = db.joinusers.find_one({'uid': payload['uid']}, {'_id': 0})
+        # print(payload)
+        userinfo = db.joinusers.find_one({'uid': payload['uid']})
         return jsonify({'result': 'success', 'name': userinfo['name']})
     except jwt.ExpiredSignatureError:
         return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
     except jwt.exceptions.DecodeError:
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
+
 
 # 프로필 페이지 이동
 @app.route('/profile')
