@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
+
 import os, hashlib
 import certifi
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
+client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.instaperfect
 
 app = Flask(__name__)
+
 
 SECRET_KEY = 'insta'
 username = 'minkiLee'
@@ -48,11 +50,6 @@ def join_post():
     hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
     pr_photo_receive = request.form['pr_photo_give']
 
-    print(uid_receive)
-    print(name_receive)
-    print(hashed_pw)
-    print(pr_photo_receive)
-
     doc = {
         'uid': uid_receive,
         'name': name_receive,
@@ -60,9 +57,11 @@ def join_post():
         'pr_photo': pr_photo_receive
     }
 
-    db.user.insert_one(doc)
+    db.users.insert_one(doc)
 
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
+
+
 
 @app.route('/login_check', methods=['POST'])
 def login_check():
@@ -115,6 +114,7 @@ def profile():
     # print(img_number)
     
     return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=username, name=name)
+
 
 # 이미지 파일 업로드
 @app.route('/upload', methods=['GET', 'POST'])
