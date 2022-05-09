@@ -17,6 +17,7 @@ username = 'minkiLee'
 def login():
   return render_template('login.html')
 
+
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
@@ -32,10 +33,42 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login"))
 
+
+# 유저 정보 불러오기
+@app.route('/user', methods=['GET'])
+def find_userdb():
+    user = db.user.find_one({'uid': 'jaewan_choi'}, {'_id': False})
+    return jsonify({'response': 'success', 'user': user})
+
+
+# feed 정보 불러오기
+@app.route('/feed', methods=['GET'])
+def find_feed():
+    content = list(db.feed.find({'write_id': 'jaewan_choi'}, {'_id': False}))
+    user = db.user.find_one({'uid': 'jaewan_choi'}, {'_id': False})
+    pr_photo = user['pr_photo']
+    return jsonify({'response': 'success', 'content': content, 'pr_photo': pr_photo})
+
+
+# feed 정보 업데이트
+# @app.route('/feed', methods=['POST'])
+# def update_feed():
+#     click_like = request.form['click_like']
+#     if click_like == True:
+#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$set': {'like_user': 'jaewan_choi'}}, upsert=True)
+#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$inc': {'like_count': +1}})
+#     else :
+#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$set': {'like_user': 'jaewan_choi'}}, upsert=True)
+#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$inc': {'like_count': -1}})
+
+#     return jsonify({'msg': '좋아요 반영 완료'})
+
+
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
     return render_template('login.html', msg=msg)
+
 
 @app.route("/join_page")
 def join_page():
@@ -116,6 +149,7 @@ def profile():
     return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=username, name=name)
 
 
+
 # 이미지 파일 업로드
 @app.route('/upload', methods=['GET', 'POST'])
 def get_file():
@@ -150,4 +184,5 @@ def feed_number():
         return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': username, 'like_count' : like_count})
         
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+
+  app.run('0.0.0.0', port=5000, debug=True)
