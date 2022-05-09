@@ -24,6 +24,13 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login"))
 
+@app.route('/<uid>', methods=['GET'])
+def profiles(uid):
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    userid = payload['uid']
+    all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
+    write_count = db.feed.count_documents({'write_id': uid})
+    return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid)
 
 # 유저 정보 불러오기
 @app.route('/user', methods=['GET'])
@@ -39,20 +46,6 @@ def find_feed():
     user = db.user.find_one({'uid': 'jaewan_choi'}, {'_id': False})
     pr_photo = user['pr_photo']
     return jsonify({'response': 'success', 'content': content, 'pr_photo': pr_photo})
-
-
-# feed 정보 업데이트
-# @app.route('/feed', methods=['POST'])
-# def update_feed():
-#     click_like = request.form['click_like']
-#     if click_like == True:
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$set': {'like_user': 'jaewan_choi'}}, upsert=True)
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$inc': {'like_count': +1}})
-#     else :
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$set': {'like_user': 'jaewan_choi'}}, upsert=True)
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$inc': {'like_count': -1}})
-
-#     return jsonify({'msg': '좋아요 반영 완료'})
 
 
 @app.route('/login')
@@ -128,20 +121,15 @@ def login_name():
 # 프로필 페이지 이동
 @app.route('/profile')
 def profile():
-    token_receive = request.cookies.get('mytoken')
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     uid_get = db.user.find_one({'uid': payload['uid']})
     uid = uid_get['uid']
     name = uid_get['name']
     write_count = db.feed.count_documents({'write_id': uid})
     pr_photo = uid_get['pr_photo']
     print(pr_photo)
-    #피드 콜렉션에 모든 내용을 받아온다!
+    #피드 콜렉션에 모든 내용을 받아온다! #feed number로 내림차순 정렬
     all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
-    # all_feed = db.feed.find()
-    # pr_photo = 1
-    # print(img_number)
-    
     return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=uid, name=name)
 
 
@@ -174,9 +162,9 @@ def get_file():
 
 @app.route('/feed_number', methods=['GET', 'POST'])
 def feed_number():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     if request.method == 'POST':
-        token_receive = request.cookies.get('mytoken')
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         feed_number = request.form['feed_number']
         uid_get = db.user.find_one({'uid': payload['uid']})
         uid = uid_get['uid']

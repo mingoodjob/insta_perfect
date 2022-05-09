@@ -63,13 +63,35 @@ function cancel() {
     window.location.reload()
 }
 
+function heart_click() {
+    console.log('하트 뿅뿅')
+    if ($(".like_click_off").css("display") == "block") {
+        $(".like_click_off").css('display', 'none')
+        $(".like_click_on").css('display', 'block');
+    } else if ($(".like_click_off").css("display") == "none") {
+        $(".like_click_off").css('display', 'block')
+        $(".like_click_on").css('display', 'none');
+    }
+}
+
+// function heart_click_off(){
+//     console.log('하트 뿅뿅')
+//     if ($(".like_click_off").css("display") == "none") {
+//     $(".like_click_off").css('display','block')
+//     $(".like_click_on").css('display', 'none');
+//     }
+// }
+
+
+
+
 function display_popup() {
     var feed_number = $(this).data("id");
 
     $.ajax({
         type: 'POST',
         url: '/feed_number',
-        data: { feed_number : feed_number },
+        data: { feed_number: feed_number },
         success: function (response) {
             if (response["result"] == "success") {
                 username = response["username"];
@@ -79,7 +101,7 @@ function display_popup() {
                 console.log(photo)
 
                 desc = `<p><b>${username}</b> ${content}</p>`
-                
+
                 $('body').addClass('hidden').on('scroll touchmove mousewheel', function (e) {
                     e.preventDefault();
                 });

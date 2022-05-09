@@ -1,7 +1,3 @@
-import curses
-from math import trunc
-from re import T
-from pygame import Cursor
 from pymongo import MongoClient
 import certifi
 import math 
@@ -9,15 +5,26 @@ from datetime import datetime, timedelta
 
 
 
-# client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
-# db = client.instaperfect
+client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
+db = client.instaperfect
 
-# col = db['feed']
+col = db.feed
 
-# #카운트 세기
-# col_count = col.count_documents({})
+#카운트 세기
+col_count = col.count_documents({})
 
-# print(col_count)
+print(col_count)
+like_list = dict(col.find_one({'feed_number': 20}))
+# col.update_one({'feed_number': 20}, {'$push': {'like_list': 'where'}})
+
+likelist = like_list['like_list']
+
+if 'asdf' in likelist:
+    print('True')
+else:
+    print('False')
+
+
 
 
 #시간 계산 해보기
