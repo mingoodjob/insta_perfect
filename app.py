@@ -1,22 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
+import os, hashlib,certifi,datetime,jwt
 
-import os, hashlib
-import certifi
-
-client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
 db = client.instaperfect
 
 app = Flask(__name__)
 
-
 SECRET_KEY = 'insta'
-username = 'minkiLee'
-
-@app.route('/login')
-def login():
-  return render_template('login.html')
-
 
 @app.route('/')
 def home():
@@ -66,8 +57,7 @@ def find_feed():
 
 @app.route('/login')
 def login():
-    msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
+    return render_template('login.html')
 
 
 @app.route("/join_page")
@@ -82,7 +72,8 @@ def join_post():
     pwd_receive = request.form['pwd_give']
     hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
     pr_photo_receive = request.form['pr_photo_give']
-
+    print(pr_photo_receive)
+    
     doc = {
         'uid': uid_receive,
         'name': name_receive,
@@ -90,7 +81,7 @@ def join_post():
         'pr_photo': pr_photo_receive
     }
 
-    db.users.insert_one(doc)
+    db.user.insert_one(doc)
 
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
 
@@ -137,32 +128,41 @@ def login_name():
 # 프로필 페이지 이동
 @app.route('/profile')
 def profile():
-    name = '이민기'
-    write_count = db.feed.count_documents({'write_id': username})
-    pr_photo = '../static/img_upload/1.jpg'
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+    name = uid_get['name']
+    write_count = db.feed.count_documents({'write_id': uid})
+    pr_photo = uid_get['pr_photo']
+    print(pr_photo)
     #피드 콜렉션에 모든 내용을 받아온다!
-    all_feed = db.feed.find({'write_id' : username}).sort("feed_number", -1)
+    all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
     # all_feed = db.feed.find()
     # pr_photo = 1
     # print(img_number)
     
-    return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=username, name=name)
+    return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=uid, name=name)
 
 
 
 # 이미지 파일 업로드
 @app.route('/upload', methods=['GET', 'POST'])
 def get_file():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     if request.method == 'POST':
         image = request.files['file']
         content = request.form['content']
-        image.save(f'./static/img_upload/{img_number}.jpg')
+        uid_get = db.user.find_one({'uid': payload['uid']})
+        uid = uid_get['uid']
         col = db.feed
         number = col.count_documents({})
+        image.save(f'./static/img_upload/{number}.jpg')
         
         doc = {
             'feed_number' : number + 1,
-            'write_id' : username,
+            'write_id' : uid,
             'photo' : str(number) + '.jpg',
             'content' : content,
             'like_count': 0
@@ -175,14 +175,18 @@ def get_file():
 @app.route('/feed_number', methods=['GET', 'POST'])
 def feed_number():
     if request.method == 'POST':
+        token_receive = request.cookies.get('mytoken')
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         feed_number = request.form['feed_number']
+        uid_get = db.user.find_one({'uid': payload['uid']})
+        uid = uid_get['uid']
         serch_content = db.feed.find_one({"feed_number": int(feed_number)},{"_id": 0})
         like_count = serch_content['like_count']
         photo = serch_content['photo']
         content = serch_content['content']
         print(photo, content)
-        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': username, 'like_count' : like_count})
+        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count})
         
 if __name__ == '__main__':
 
-  app.run('0.0.0.0', port=5000, debug=True)
+  app.run('0.0.0.0', port=80, debug=True)
