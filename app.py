@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
-import os, hashlib,certifi,datetime,jwt
+import hashlib,datetime,jwt
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
+client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.instaperfect
 
 app = Flask(__name__)
@@ -73,7 +73,7 @@ def join_post():
     hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
     pr_photo_receive = request.form['pr_photo_give']
     print(pr_photo_receive)
-    
+
     doc = {
         'uid': uid_receive,
         'name': name_receive,
@@ -81,8 +81,16 @@ def join_post():
         'pr_photo': pr_photo_receive
     }
 
-    db.user.insert_one(doc)
+    follow = {
 
+        'uid': uid_receive,
+        'follow': [],
+        'following': []
+    }
+
+
+    db.user.insert_one(doc)
+    db.follow.insert_one(follow)
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
 
 
@@ -124,7 +132,6 @@ def login_name():
     except jwt.exceptions.DecodeError:
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
 
-
 # 프로필 페이지 이동
 @app.route('/profile')
 def profile():
@@ -141,7 +148,7 @@ def profile():
     # all_feed = db.feed.find()
     # pr_photo = 1
     # print(img_number)
-    
+
     return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=uid, name=name)
 
 
@@ -159,7 +166,7 @@ def get_file():
         col = db.feed
         number = col.count_documents({})
         image.save(f'./static/img_upload/{number}.jpg')
-        
+
         doc = {
             'feed_number' : number + 1,
             'write_id' : uid,
@@ -167,9 +174,9 @@ def get_file():
             'content' : content,
             'like_count': 0
         }
-        
+
         db.feed.insert_one(doc)
-        
+
     return redirect(url_for('profile'))
 
 @app.route('/feed_number', methods=['GET', 'POST'])
@@ -186,7 +193,33 @@ def feed_number():
         content = serch_content['content']
         print(photo, content)
         return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count})
-        
+
+#  팔로우 부분 db에 저장하기
+@app.route("/follow_check", methods=["POST"])
+def follow_user():
+
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    db.follow.update_one({'uid': "test1234"}, {'$push': {'following': "test45678"}}, upsert=True)
+    db.follow.update_one({'uid': "test45678"}, {'$push': {'follow': uid}}, upsert=True)
+    return jsonify({'response': 'success'})
+
+# 팔로우 db remove
+@app.route("/follow_delete", methods=["POST"])
+def follow_delete():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    db.follow.update_one({"uid": "test45678"}, {'$pull': {"follow": uid}})
+    return jsonify({'response': 'success'})
+
+
+
 if __name__ == '__main__':
 
-  app.run('0.0.0.0', port=80, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)

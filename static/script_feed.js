@@ -1,18 +1,38 @@
-// 피드 페이지로 이동
 function logout() {
     $.removeCookie('mytoken', {path: '/'});
     window.location.href = '/login';
 }
-
-$().ready(function () {
-            $("#logout").click(function () {
-                Swal.fire({
+        $().ready(function () {
+                $("#logout_id").click(function () {
+                    Swal.fire({
+                        icon: 'success',
                         title: '로그아웃 중입니다...',
                         text: '로그인 페이지로 돌아갑니다'
-                });
+                    });
 
+                });
             });
-        });
+        $().ready(function () {
+                $("#follow_id").click(function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사람들과 가까워지는중...',
+                        text: '팔로우 가 완료 되었습니다!'
+                    });
+
+                });
+            });
+        $().ready(function () {
+                $("#not_follow_id").click(function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사람들과 멀어지는중...',
+                        text: '팔로우 가 취소 되었습니다!'
+                    });
+
+                });
+            });
+
 
 function Go_feed() {
     $.ajax({
@@ -429,5 +449,99 @@ function write_button_commentModal() {
         $('.box_content_comment_commentModal').append(modal_temp_html)
         $('.write_comment_commentModal').val('')
     }
+}
+
+
+
+function follow() {
+
+    let value = $('#follow_id').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/follow_check",
+        data: {follower: value},
+        success: function (response) {
+
+        },
+    });
+}
+
+const follow_btn = document.querySelector(".link_recommend");
+const follow_btn2 = document.querySelector(".link_recommend2")
+follow_btn.addEventListener('click', (event) => {
+    follow_btn.style.display = "none";
+    follow_btn2.style.display = "flex";
+follow_btn2.addEventListener('click', (event) => {
+    follow_btn.style.display = "flex";
+    follow_btn2.style.display = "none";
+
+    });
+});
+
+function not_follow() {
+        let value = $('#not_follow_id').val();
+        $.ajax({
+            type: "POST",
+            url: "/follow_delete",
+            data: {follower: value},
+            success: function (response) {
+
+            },
+        });
+    }
+
+var btn = document.getElementById("profile_btn");
+var modal = document.getElementById("profile_modal");
+var close = document.getElementById("profile_modal_close");
+var mouseover = document.getElementById("mouseover");
+var mouseover2 = document.getElementById("mouseover2");
+var mouseover3 = document.getElementById("mouseover3");
+var mouseover4 = document.getElementById("mouseover4");
+
+
+
+//취소 프로필 모달부분 마우스 오버 이벤트
+close.addEventListener('mouseover', (event) => {
+    close.style.backgroundColor = "#fafafa"
+});
+close.addEventListener('mouseout', (event) => {
+    close.style.backgroundColor = "white"
+});
+//프로필
+mouseover.addEventListener('mouseover', (event) => {
+    mouseover.style.backgroundColor = "#fafafa"
+});
+mouseover.addEventListener('mouseout', (event) => {
+    mouseover.style.backgroundColor = "white"
+});
+//설정
+mouseover2.addEventListener('mouseover', (event) => {
+    mouseover2.style.backgroundColor = "#fafafa"
+});
+mouseover2.addEventListener('mouseout', (event) => {
+    mouseover2.style.backgroundColor = "white"
+});
+//계정변환
+mouseover3.addEventListener('mouseover', (event) => {
+    mouseover3.style.backgroundColor = "#fafafa"
+});
+mouseover3.addEventListener('mouseout', (event) => {
+    mouseover3.style.backgroundColor = "white"
+});
+//로그아웃
+mouseover4.addEventListener('mouseover', (event) => {
+    mouseover4.style.backgroundColor = "#fafafa"
+});
+mouseover4.addEventListener('mouseout', (event) => {
+    mouseover4.style.backgroundColor = "white"
+});
+
+// 모달부분 hide/show
+btn.onclick = function () {
+    modal.style.display = "block"
+modal.onclick = function () {
+    modal.style.display = "none"
+}
 }
 
