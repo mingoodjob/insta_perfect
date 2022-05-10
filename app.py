@@ -65,25 +65,39 @@ def join_page():
     return render_template('join.html')
 
 
+@app.route('/join_page')
+def join_page():
+    return render_template('join.html')
+
 @app.route("/join", methods=["POST"])
 def join_post():
     uid_receive = request.form['uid_give']
     name_receive = request.form['name_give']
     pwd_receive = request.form['pwd_give']
     hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
-    pr_photo_receive = request.form['pr_photo_give']
-    print(pr_photo_receive)
-    
+
     doc = {
         'uid': uid_receive,
         'name': name_receive,
-        'pwd': hashed_pw,
-        'pr_photo': pr_photo_receive
+        'pwd': hashed_pw
     }
+
 
     db.user.insert_one(doc)
 
-    return jsonify({'response': 'success', 'msg': '환영합니다!'})
+    return jsonify({'response':'success', 'msg':'환영합니다!'})
+
+@app.route("/join/check_uid", methods=["POST"])
+def check_user_id():
+    userid_receive = request.form['userid_give']
+
+    is_exists = db.user.find_one({'uid': userid_receive})
+
+    if is_exists:
+        return jsonify({'result': 'fail', 'msg': '중복입니다'})
+    return jsonify({'result': 'success', 'msg': '중복되지 않습니다'})
+
+
 
 
 
