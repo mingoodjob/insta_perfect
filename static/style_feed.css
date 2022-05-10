@@ -1045,3 +1045,44 @@ footer {
 .copyright {
     margin-top: 19px;
 }
+
+/*팔로우/팔로잉*/
+.link_recommend2 {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 1px 0 0 0;
+    color: black;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profile_modal_box {
+    width: 230px;
+    height: 194px;
+    top: 4.5%;
+    left: 63%;
+    position: absolute;
+    display: none;
+    background-color: white;
+    z-index: 99;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px  gray;
+}
+
+.profile_modal_box.show {
+    display: block;
+}
+
+.profile_modal_btn1, .profile_modal_btn2, .profile_modal_btn3, .profile_modal_btn4, .profile_modal_btn5{
+    width: 100%;
+    height: 20%;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.profile_modal_btn5 {
+    border-top: 1px solid lightgray;
+}
