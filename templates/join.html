@@ -29,33 +29,10 @@
         background-color: whitesmoke;
     }
 
-    .login_input1{
+    .form-control{
         background-color: whitesmoke;
-        margin: 5px;
+        margin: 10px;
         width: 250px;
-        border: 0px;
-    }
-
-    .login_input2{
-        background-color: whitesmoke;
-        margin: 5px;
-        width: 250px;
-        border: 0px;
-    }
-
-    .login_input3{
-        background-color: whitesmoke;
-        margin: 5px;
-        width: 250px;
-        border: 0px;
-    }
-
-    .instagram {
-        width:200px;
-        height:80px;
-        position: absolute;
-        top: 50px;
-
     }
 
     .comment{
@@ -63,7 +40,7 @@
         color: gray;
         font-weight: bold;
         font-size: 15px;
-        margin: 70px auto 5px auto;
+        margin: 0px auto 70px auto;
         text-align: center;
 
     }
@@ -71,7 +48,7 @@
     .joinbox{
         border: 1px solid lightgray;
         width: 300px;
-        height: 450px;
+        height: 500px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -89,12 +66,11 @@
     .smallbox{
         border: 1px solid lightgray;
         width: 300px;
-        height: 70px;
         margin-top: 10px;
         text-align: center;
         padding: 25px 10px 10px 10px;
         background-color: white;
-        font-size: 12px;
+        font-size: 14px;
 
     }
 
@@ -106,7 +82,7 @@
     }
 
     .btn-primary {
-        margin: 10px auto auto auto;
+        margin: 10px auto 30px 10px;
         width:250px;
         font-size: 13px;
     }
@@ -162,124 +138,6 @@
           height: 200px;
       }
 
-      .faceimg{
-          width: 20px;
-          height: 20px;
-          margin-bottom: 5px;
-      }
-
-      .btn.btn-primary{
-          padding: 3px 0px 0px 0px;
-      }
-
-      .line {
-          border: 0.8px solid lightgray;
-          width: 110px;
-          margin-bottom: 30px;
-      }
-
-      .or{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .download{
-          font-size:13px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-      }
-
-      .downimg{
-          width: 130px;
-          height: 60px;
-      }
-
-      .downment {
-          margin-bottom: 0px;
-      }
-
-        inputDiv {
-            position: relative;
-        }
-
-        .inputDiv {
-            background-color: whitesmoke;
-            width: 260px;
-            margin-left: 10px;
-        }
-
-        .inputDiv i {
-            position: absolute;
-            left: 870px;
-            top: 283px;
-            color: gray;
-
-        }
-
-        .login_input_text1{
-             color:gray;
-            position: absolute;
-            top: 280px;
-            left: 650px;
-        }
-
-        .login_input_text2{
-             color:gray;
-            position: absolute;
-            top: 325px;
-            left: 650px;
-        }
-
-        .login_input_text3{
-             color:gray;
-            position: absolute;
-            top: 370px;
-            left: 650px;
-        }
-
-
-        inputDiv2 {
-            position: relative;
-        }
-
-        .inputDiv2 {
-            background-color: whitesmoke;
-            margin:10px;
-        }
-
-        .inputDiv2 i {
-            position: absolute;
-            left: 870px;
-            top: 330px;
-            color: gray;
-
-        }
-
-        inputDiv3 {
-            position: relative;
-        }
-
-        .inputDiv3 {
-
-            background-color: whitesmoke;
-            margin:10px;
-        }
-
-        .inputDiv3 i {
-            position: absolute;
-            left: 870px;
-            top: 378px;
-            color: gray;
-        }
-
-
-
-
-
 
 </style>
 
@@ -292,62 +150,27 @@
 
     <div class="main" id="mainbox">
             <div class="joinbox">
-                <img class="instagram"
+                <img style= "width:200px; height:80px;"
                      src = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcpjP3n%2FbtrBgpiGvjs%2Fka3t6Pkkg1k60VKGYl3tMk%2Fimg.png">
                 <p class="comment">친구들의 사진과 동영상을 보려면<br>가입하세요.</p>
-                <div class="form_group">
-                    <button type="button" class="btn btn-primary"><img class="faceimg" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbmfk1V%2FbtrBu56Ynzd%2Fg3KhjCdoMOxzhbSkABdtKK%2Fimg.png">
-                    <b>Facebook으로 로그인</b></button>
-                    <div class="or">
-                        <hr class="line">&ensp;
-                        <p style="color:gray; font-size:12px; font-weight:bold">또는</p>&ensp;
-                        <hr class="line">
-                    </div>
-                    <div id="joinfuction">
-                        <div class="inputDiv">
-                            <input type="text" id="uid" class="login_input1">
-                            <span class="login_input_text1">아이디</span>
-                            <i style="color:lightgray" id="check1" class="fa-solid fa-circle-check"></i>
-                        </div>
-                        <div class="inputDiv2">
-                            <input type="text" id="name" class="login_input2" >
-                            <span class="login_input_text2">성명</span>
-                            <i style="color:lightgray" id="check2" class="fa-solid fa-circle-check"></i>
-                        </div>
-                        <div class="inputDiv3">
-                            <input type="text" id="pwd" class="login_input3">
-                            <span class="login_input_text3">비밀번호</span>
-                            <i style="color:lightgray" id="check3" class="fa-solid fa-circle-check"></i>
-                        </div>
-                    </div>
-                         <button type="button" id="btn_false_join" class="btn btn-lg btn-primary" disabled>가입</button>
+                    <div class="form_group_wrap">
+                        <div class="form_group">
+                                <input type="text" id="uid" class="form-control" placeholder="아이디">
+                                <input type="text" id="name" class="form-control" placeholder="성명">
+                                <input type="text" id="pwd" class="form-control" placeholder="비밀번호">
+                            <button type="button" id="btn_false_join" class="btn btn-lg btn-primary" disabled>가입</button>
 <!--                            비활성화버튼-->
-                    <button type="button" id="btn_join" class="btn btn-primary">가입</button>
+                            <button type="button" id="btn_join" class="btn btn-primary">가입</button>
 <!--                              활성화버튼-->
 
-                </div>
+                        </div>
+                    </div>
             </div>
 
-        <div class="smallbox">
-            <p>계정이 있으신가요? <a href="로그인링크">로그인</a></p>
-        </div>
-        <div class="download">
-            <br>
-            <p class="downment">앱을 다운로드하세요.</p>
-            <div class="imgdown">
-                <a href="https://apps.apple.com/app/instagram/id389801252" target="blank">
-                    <img class="downimg"
-                         src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbsWM6D%2FbtrBtcqIXE1%2FS4lfwTrDxsNwBmbvk0IFfk%2Fimg.png">
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3D26D66EC2-5114-4100-8B76-6D4B3AD69578%26utm_content%3Dlo%26utm_medium%3Dbadge"
-                   target="blank">
-                    <img style="height:58px; margin-left:0px;" class="downimg"
-                         src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvhgHX%2FbtrBynyf0dP%2FxyTmuxQCqSJwOy98M9tCgk%2Fimg.png">
-                </a>
+            <div class="smallbox">
+                <p>계정이 있으신가요? <a href="로그인링크">로그인</a></p>
             </div>
-        </div>
     </div>
-
 
     <div class="photobox" id="photobox">
         <i class="fa-solid fa-camera-retro fa-lg"></i>
@@ -358,10 +181,8 @@
             <label for="pr_photo" id="choosephoto" class="choosephoto" >
                 프로필 사진 추가
             </label>
-            <input type="file" accept="image/jpeg,.png" id="pr_photo" style="display: none" />
-
-            <img id="preview" class="preview" src="#" alt="" />
-
+            <input type="file" accept="image/jpeg,.png" id="pr_photo" style="display: none"onchange="readURL(this);"/>
+            <img id="preview" class="preview" src="#" alt="이미지 미리보기" />
             <label for="photo" id="submitphoto" class="submitphoto">
                 시작하기
             </label>
@@ -391,9 +212,6 @@
         $('#photobox').hide();
         $('#submitphoto').hide()
         $('#preview').hide()
-        $('#check1').hide()
-        $('#check2').hide()
-        $('#check3').hide()
 
     })
 
@@ -405,14 +223,11 @@
 
             $('#btn_false_join').show()
 
-
         } else { // input
 
             $('#btn_false_join').show()
 
             $('#btn_join').hide()
-
-            $('#check1').show()
 
         }
     });
@@ -430,8 +245,6 @@
             $('#btn_false_join').show()
 
             $('#btn_join').hide()
-
-            $('#check2').show()
         }
     });
 
@@ -445,15 +258,12 @@
 
         } else { // input
 
-            $('#btn_join').show()
-
             $('#btn_false_join').hide()
 
-            $('#check3').show()
+            $('#btn_join').show()
 
         }
     });
-
 
 // 가입 버튼 누르면 메인박스 사라지고 프로필사진박스 나타나게
     $("#btn_join").click(function () {
@@ -464,10 +274,12 @@
 
     })
 
-// 프로필사진선택 버튼 누르면 프로필사진선택버튼 사라지게
+// 프로필사진선택 버튼 누르면 프로필사진선택버튼 사라지고 시작하기+이미지 미리보기 버튼 나오게
     $("#choosephoto").click(function () {
         $("#choosephoto").hide();
 
+        $("#submitphoto").show();
+        $("#preview").show();
     })
 
 // join 함수로 ajax 콜
@@ -483,16 +295,12 @@
                 url: '/join',
                 data: { uid_give:uid, name_give:name, pwd_give:pwd, pr_photo_give:pr_photo },
                 success: function (response) {
-                    // 성공하면: 이 함수를 실행해줘
                     alert(response['msg'])
-                    // msg를 alert으로 띄워줘(이msg는 서버 쪽에서 지정해둠)
                     window.location.reload()
-                    // 그리고 새로고침 해줘.
 
                 }
             });
         }
-
 
 // 이미지 미리보기
     function readURL(input) {
@@ -502,41 +310,10 @@
                 document.getElementById('preview').src = e.target.result;
             };
             reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('preview').src = "";
         }
-    };
-
-
-    $("#pr_photo").change(function () {
-        // pr_photo가 실행되면 아래와 같이 체인지
-        readURL(this);
-        $("#preview").show();
-        $("#submitphoto").show();
-
-    });
-
-const login_input1 = document.querySelector(".login_input1");
-const login_input_text1 = document.querySelector(".login_input_text1");
-login_input1.addEventListener('keydown', (event) => {
-    login_input_text1.style.fontSize = "5px";
-    login_input_text1.style.lineHeight = "1px";
-    login_input1.style.padding = "4px 0 1px 4px";
-})
-const login_input2 = document.querySelector(".login_input2");
-const login_input_text2 = document.querySelector(".login_input_text2");
-login_input2.addEventListener('keydown', (event) => {
-    login_input_text2.style.fontSize = "5px";
-    login_input_text2.style.lineHeight = "1px";
-    login_input2.style.padding = "4px 0 1px 4px";
-})
-const login_input3 = document.querySelector(".login_input3");
-const login_input_text3 = document.querySelector(".login_input_text3");
-login_input3.addEventListener('keydown', (event) => {
-    login_input_text3.style.fontSize = "5px";
-    login_input_text3.style.lineHeight = "1px";
-    login_input3.style.padding = "4px 0 1px 4px";
-})
-
-
+    }
 
 </script>
 
