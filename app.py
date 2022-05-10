@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
-import os, hashlib,certifi,datetime,jwt
+import hashlib, certifi, datetime, jwt
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
+client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.instaperfect
 
 app = Flask(__name__)
@@ -15,8 +15,6 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"uid": payload['uid']})
-        print(user_info['uid'])
-        print(user_info['name'])
         return render_template('feed.html')
 
     except jwt.ExpiredSignatureError:
@@ -25,20 +23,51 @@ def home():
         return redirect(url_for("login"))
 
 
-# 유저 정보 불러오기
-@app.route('/user', methods=['GET'])
+# 유저 정보 보내주기
+@app.route('/user', methods=['GET', 'POST'])
 def find_userdb():
-    user = db.user.find_one({'uid': 'jaewan_choi'}, {'_id': False})
+    if request.method == 'POST':
+        receive_uid = request.form['give_uid']
+        find_user = db.user.find_one({'uid': receive_uid}, {'_id': False})
+        return jsonify({'response': 'success', 'find_user': find_user})
+
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+    user = db.user.find_one({'uid': uid}, {'_id': False})
     return jsonify({'response': 'success', 'user': user})
 
 
-# feed 정보 불러오기
-@app.route('/feed', methods=['GET'])
+# 피드 불러오기
+@app.route('/feed', methods=['GET', 'POST'])
 def find_feed():
-    content = list(db.feed.find({'write_id': 'jaewan_choi'}, {'_id': False}))
-    user = db.user.find_one({'uid': 'jaewan_choi'}, {'_id': False})
+    if request.method == 'POST':
+        feed_number = request.form['feed_number']
+        find_feed = db.feed.find_one({'feed_number': int(feed_number)}, {'_id': False})
+        find_user = db.user.find_one({'uid': find_feed['write_id']}, {'_id': False})
+        return jsonify({'response': 'success', 'find_feed': find_feed, 'find_user': find_user})
+
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+    content = list(db.feed.find({'write_id': uid}, {'_id': False}))
+    user = db.user.find_one({'uid': uid}, {'_id': False})
     pr_photo = user['pr_photo']
     return jsonify({'response': 'success', 'content': content, 'pr_photo': pr_photo})
+
+
+# 댓글 입력 저장 후 전송
+@app.route('/comment', methods=['GET', 'POST'])
+def update_comment():
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    receive_feed_number = request.form['give_feed_number']
+    receive_comment = request.form['give_comment']
+    db.feed.update_one({'feed_number': int(receive_feed_number)}, {'$push': {'comment': {'write_id': uid, 'text': receive_comment}}})
+    pr_photo = uid_get['pr_photo']
+    return jsonify({'response': 'success', 'pr_photo': pr_photo, 'write_id': uid, 'text': receive_comment})
 
 
 # feed 정보 업데이트
@@ -72,7 +101,6 @@ def join_post():
     pwd_receive = request.form['pwd_give']
     hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
     pr_photo_receive = request.form['pr_photo_give']
-    print(pr_photo_receive)
     
     doc = {
         'uid': uid_receive,
@@ -116,7 +144,6 @@ def login_name():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # print(payload)
         userinfo = db.user.find_one({'uid': payload['uid']})
         return jsonify({'result': 'success', 'name': userinfo['name']})
     except jwt.ExpiredSignatureError:
@@ -189,4 +216,4 @@ def feed_number():
         
 if __name__ == '__main__':
 
-  app.run('0.0.0.0', port=80, debug=True)
+  app.run('0.0.0.0', port=5000, debug=True)
