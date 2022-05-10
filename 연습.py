@@ -16,7 +16,12 @@ print(name)
 
 # print(col_count)
 # like_list = dict(col.find_one({'feed_number': 20}))
-# db.feed.update_one({'feed_number': 20}, {'$push': {'like_list': 'where'}}, upsert=True)
+for i in db.feed.find():
+    print(i)
+
+
+# db.feed.update_one({'feed_number': 4}, {'$pull': {'like_list': 'rldjrgowh'}})
+# db.feed.update_one({'feed_number': 2}, {'$push': {'like_list': 'rldjrgowh'}}, upsert=True)
 
 # likelist = like_list['like_list']
 
