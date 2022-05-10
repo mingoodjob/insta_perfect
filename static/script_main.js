@@ -22,6 +22,17 @@ $(function () {
             $('.comment_submit').css('opacity','1.0')
         }
     })
+
+    $("#pr_upload").change(function() {
+        this.form.submit();
+   });
+
+    // $("#pr_edit").submit(function(){
+    //     var name = $("#hobby").val();
+    //     var email = $("#description").val();
+    //     return false;
+    // }); // end submit()
+
     //background-color: rgba(47,138,241,0.1)
     //background-color: rgba(0, 0, 0, 0.5);
 
@@ -32,28 +43,6 @@ $(function () {
         $(this).children('.info_feed').css("display", "none");
             });
 
-    //  $(".top_menu li",$(this)).bind('mouseover',function(){
-    //     if(this.id == "bt_01"){
-    //         ms = ".sm_01";
-    //     }else if(this.id == "bt_02"){
-    //         ms = ".sm_02";
-    //     }else if(this.id == "bt_03"){
-    //         ms = ".sm_03";
-    //     }else if(this.id == "bt_04"){
-    //         ms = ".sm_04";
-    //     }
-    // });
-    
-    // $(".top_menu li",$(this)).hover(
-    //     function(){
-    //         $(ms).addClass('show');
-    //     },
-    //     function(){
-    //         $(ms).removeClass('show');    
-    //     }
-    // )
-    // });
- 
 
     $('#photo_upload').change(function () {
         $('.photo_upload').css('display', 'none');
@@ -86,6 +75,9 @@ $(function () {
 
 function feed_upload() {
     $('.modal_body').css('display', 'flex');
+}
+function pr_upload() {
+    $('#pr_upload').click()
 }
 
 function photo_upload() {
@@ -188,6 +180,8 @@ function heart_click() {
 function pr_edit(name){
     console.log(name)
     $('.profile_edit').css('display','flex')
+    userid = $('#userid').text()
+    console.log(userid)
 }
 
 // function heart_click_off(){
@@ -198,6 +192,9 @@ function pr_edit(name){
 //     }
 // }
 
+function pr_close(){
+    $('.profile_edit').css('display','none')
+}
 
 
 
