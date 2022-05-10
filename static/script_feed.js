@@ -87,6 +87,7 @@ function loadFeed() {
             console.log('ajax 실행중')
             let pr_photo = response['pr_photo']  // content 작성자 프로필 이미지
             let all_feed = response['content']  // 전체 content
+            console.log(all_feed.length)
             for (let i = 0; i < all_feed.length; i++) {
                 let write_id = all_feed[i]['write_id']
                 let content = all_feed[i]['content']
@@ -111,7 +112,7 @@ function loadFeed() {
                                 </div>
                                 <!------------------------------------------------ 사진 슬라이드 ------------------------------------------------>
                                 <div class="box_picture_post">
-                                    <img src="${photo}" style="width:100%;">
+                                    <img src="../static/img_upload/${photo}" style="width:100%;">
                                 </div>
                                 <!------------------------------------------------ 상호작용 ---------------------------------------------------->
                                 <div class="box_icon_SNS">
@@ -267,7 +268,7 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
             let write_id = find_feed['write_id']
             let content = find_feed['content']
 
-            let temp_html = `<img class="commentModal_photo" src="${photo}">
+            let temp_html = `<img class="commentModal_photo" src="../static/img_upload/${photo}">
                              <div>
                                 <div class="container_name_modal">
                                     <img class="profile_name_post" onclick="Go_profile()" src="${pr_photo}">

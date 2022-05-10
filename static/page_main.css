@@ -89,6 +89,7 @@ body,p,h1{
     display: none;
     justify-content: center;
     align-items: center;;
+    z-index: 50;
 }
 
 .modal_box{
@@ -618,12 +619,13 @@ body,p,h1{
 }
 
 .edit_pr > .buttons > button{
+    cursor: pointer;
     padding: 10px;
     width: 80px;
     border: none;
     border-radius: 20px;
     margin: 10px 10px;
-    background-color: #ffc7c7;
+    background-color: #000000;
     color: white;
     font-weight: bold;
 }

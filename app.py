@@ -3,7 +3,6 @@ from pymongo import MongoClient
 
 import hashlib,datetime,jwt
 
-
 client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.instaperfect
 
@@ -17,12 +16,14 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"uid": payload['uid']})
-        return render_template('feed.html')
+        user = user_info['uid']
+        print(user)
+        return render_template('feed.html',user=user)
 
     except jwt.ExpiredSignatureError:
-        return redirect(url_for("login"))
+        return redirect(url_for("login"),user=user )
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login"))
+        return redirect(url_for("login") , user=user)
 
 @app.route('/<uid>', methods=['GET'])
 def profiles(uid):
@@ -94,10 +95,6 @@ def join_page():
     return render_template('join.html')
 
 
-@app.route('/join_page')
-def join_page():
-    return render_template('join.html')
-
 @app.route("/join", methods=["POST"])
 def join_post():
     uid_receive = request.form['uid_give']
@@ -109,9 +106,11 @@ def join_post():
     doc = {
         'uid': uid_receive,
         'name': name_receive,
-        'pwd': hashed_pw
+        'pwd': hashed_pw,
+        'pr_photo' : '../static/pr_img/basic.jpg',
+        'hobby' : '',
+        'profile_desc' : '',
     }
-
 
     follow = {
 
@@ -120,13 +119,10 @@ def join_post():
         'following': []
     }
 
-
     db.user.insert_one(doc)
     db.follow.insert_one(follow)
+
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
-
-
-
 
 @app.route('/login_check', methods=['POST'])
 def login_check():
@@ -274,14 +270,10 @@ def pr_edit():
 
 @app.route('/pr_upload', methods=['POST', 'GET'])
 def pr_upload():
-    print('--------------------------------')
     payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     uid = payload['uid']
     if request.method == 'POST':    
         image = request.files['file']
-        print('--------------------------------')
-        print('하하하', image)
-        
         image.save(f'./static/pr_img/{uid}.jpg')
         db.user.update_one({'uid': uid}, {'$set': {'pr_photo': f'./static/pr_img/{uid}.jpg'}})
 
@@ -314,10 +306,6 @@ def follow_delete():
     db.follow.update_one({"uid": "test45678"}, {'$pull': {"follow": uid}})
     return jsonify({'response': 'success'})
 
-
-
-
 if __name__ == '__main__':
-
-  app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
 

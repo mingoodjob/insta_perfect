@@ -85,23 +85,26 @@
 <body>
     <!-- 프로필 편집 -->
     <form id="pr_edit" action="/pr_edit" method="POST">
-    <div class="profile_edit">
-        <div class="edit_pr">
-            <div style="font-weight: bold; font-size:20px; margin-bottom: 10px;">프로필 편집</div>
-            <input type="text" name="hobby" id="hobby" placeholder="취미">
-            <input type="text" name="description" id="description" placeholder="남기는말">
-            <input style="display: none"  type="text" name="uid" id="uid" value="{{username}}" placeholder="남기는말">
-            <div class="buttons">
-            <button type="submit">확인</button>
-            <button type="button" onclick="pr_close()">취소</button>
+        <div class="profile_edit">
+            <div class="edit_pr">
+                <div style="font-weight: bold; font-size:20px; margin-bottom: 10px;">프로필 편집</div>
+                <input type="text" name="hobby" id="hobby" placeholder="취미">
+                <input type="text" name="description" id="description" placeholder="남기는말">
+                <input style="display: none" type="text" name="uid" id="uid" value="{{username}}" placeholder="남기는말">
+                <div class="buttons">
+                    <button type="submit">확인</button>
+                    <button type="button" onclick="pr_close()">취소</button>
+                </div>
+            </div>
         </div>
-        </div>
-    </div>
     </form>
     <!--  -->
 
     <!-- 프로필 사진 변경     -->
-    <div style="display:none"><form action="/pr_upload" method="POST" enctype="multipart/form-data"><input id="pr_upload" type="file" name="file"></form></div>
+    <div style="display:none">
+        <form action="/pr_upload" method="POST" enctype="multipart/form-data"><input id="pr_upload" type="file"
+                name="file"></form>
+    </div>
     <!--  -->
 
     <!-- 사진 등록 모달창 띄우기 -->

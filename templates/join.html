@@ -29,10 +29,36 @@
         background-color: whitesmoke;
     }
 
-    .form-control{
+    .login_input1{
         background-color: whitesmoke;
-        margin: 10px;
+        margin: 5px;
         width: 250px;
+        border: 0px;
+        outline: none;
+    }
+
+    .login_input2{
+        background-color: whitesmoke;
+        margin: 5px;
+        width: 250px;
+        border: 0px;
+        outline: none;
+    }
+
+    .login_input3{
+        background-color: whitesmoke;
+        margin: 5px;
+        width: 250px;
+        border: 0px;
+        outline: none;
+    }
+
+    .instagram {
+        width:200px;
+        height:80px;
+        position: absolute;
+        top: 50px;
+
     }
 
     .comment{
@@ -40,7 +66,7 @@
         color: gray;
         font-weight: bold;
         font-size: 15px;
-        margin: 0px auto 70px auto;
+        margin: 70px auto 5px auto;
         text-align: center;
 
     }
@@ -48,7 +74,7 @@
     .joinbox{
         border: 1px solid lightgray;
         width: 300px;
-        height: 500px;
+        height: 450px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -61,16 +87,18 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin-top: -10px;
     }
 
     .smallbox{
         border: 1px solid lightgray;
         width: 300px;
+        height: 70px;
         margin-top: 10px;
         text-align: center;
         padding: 25px 10px 10px 10px;
         background-color: white;
-        font-size: 14px;
+        font-size: 12px;
 
     }
 
@@ -82,7 +110,7 @@
     }
 
     .btn-primary {
-        margin: 10px auto 30px 10px;
+        margin: 10px auto auto auto;
         width:250px;
         font-size: 13px;
     }
@@ -91,52 +119,127 @@
         font-size: 10px;
         color: gray;
         text-align: center;
-        position: absolute;
+        position: fixed;
         top: 700px;
         left: 50%;
         transform: translate(-50%, -50%);
     }
 
-      .photobox{
-        background-color: white;
-        border: 1px solid lightgray;
-        max-width: 300px;
-        width: 100%;
-        padding: 20px;
-        margin: 100px auto auto auto;
-        text-align: center;
+      .faceimg{
+          width: 20px;
+          height: 20px;
+          margin-bottom: 5px;
       }
 
-      .sbcomment{
-        color: gray;
-        font-size:13px;
+      .btn.btn-primary{
+          padding: 3px 0px 0px 0px;
       }
 
-      .choosephoto{
-          font-size: 13px;
-          padding: 5px;
-          background-color: blue;
-          border-radius: 4px;
-          color: white;
-          font-weight: bold;
-          cursor: pointer;
+      .line {
+          border: 0.8px solid lightgray;
+          width: 110px;
+          margin-bottom: 30px;
       }
 
-      .submitphoto {
-          font-size: 13px;
-          padding: 5px;
-          background-color: blue;
-          border-radius: 4px;
-          color: white;
-          font-weight: bold;
-          cursor: pointer;
-          margin-top: 15px;
+      .or{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
       }
 
-      .preview{
-          width: 200px;
-          height: 200px;
+      .download{
+          font-size:13px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
       }
+
+      .downimg{
+          width: 140px;
+          height: 60px;
+      }
+
+      .downment {
+          margin-bottom: 0px;
+      }
+
+        inputDiv {
+            position: relative;
+        }
+
+        .inputDiv {
+            background-color: whitesmoke;
+            margin:10px;
+            height: 35px;
+            width: 255px;
+
+        }
+
+        .login_input_text1{
+            color:gray;
+            position: relative;
+            top: -30px;
+            left: 10px;
+        }
+
+        .login_input_text2{
+             color:gray;
+            position: relative;
+            top: -30px;
+            left: 10px;
+        }
+
+        .login_input_text3{
+             color:gray;
+            position: relative;
+            top: -30px;
+            left: 10px;
+
+        }
+
+
+        inputDiv2 {
+            position: relative;
+        }
+
+        .inputDiv2 {
+            background-color: whitesmoke;
+            margin:10px;
+            height: 35px;
+            width: 255px;
+        }
+
+        inputDiv3 {
+            position: relative;
+        }
+
+        .inputDiv3 {
+
+            background-color: whitesmoke;
+            margin:10px;
+            height: 35px;
+            width: 255px;
+        }
+
+        .checkbutton {
+            background-color: white;
+            border: solid 1px gray;
+            color: gray;
+            font-size: 10px;
+            width: 60px;
+            position: relative;
+            left: 90px;
+            top: 17px;
+        }
+
+        .joinboxs{
+            margin-top:-20px;
+        }
+
+
+
 
 
 </style>
@@ -150,44 +253,59 @@
 
     <div class="main" id="mainbox">
             <div class="joinbox">
-                <img style= "width:200px; height:80px;"
+                <img class="instagram"
                      src = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcpjP3n%2FbtrBgpiGvjs%2Fka3t6Pkkg1k60VKGYl3tMk%2Fimg.png">
                 <p class="comment">친구들의 사진과 동영상을 보려면<br>가입하세요.</p>
-                    <div class="form_group_wrap">
-                        <div class="form_group">
-                                <input type="text" id="uid" class="form-control" placeholder="아이디">
-                                <input type="text" id="name" class="form-control" placeholder="성명">
-                                <input type="text" id="pwd" class="form-control" placeholder="비밀번호">
-                            <button type="button" id="btn_false_join" class="btn btn-lg btn-primary" disabled>가입</button>
-<!--                            비활성화버튼-->
-                            <button type="button" id="btn_join" class="btn btn-primary">가입</button>
-<!--                              활성화버튼-->
+                <div class="form_group">
+                    <button type="button" class="btn btn-primary"><img class="faceimg" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbmfk1V%2FbtrBu56Ynzd%2Fg3KhjCdoMOxzhbSkABdtKK%2Fimg.png">
+                    <b>Facebook으로 로그인</b></button>
+                    <div class="or">
+                        <hr class="line">&ensp;
+                        <p style="color:gray; font-size:12px; font-weight:bold">또는</p>&ensp;
+                        <hr class="line">
 
+                    </div>
+                    <button type="button" class="checkbutton" onclick="check_uid()" >중복확인</button>
+                    <div class="joinboxs" id="joinfuction">
+                        <div class="inputDiv">
+                            <input type="text" id="uid" class="login_input1" >
+                            <span class="login_input_text1">아이디</span>
+                        </div>
+                        <div class="inputDiv2">
+                            <input type="text" id="name" class="login_input2" >
+                            <span class="login_input_text2">성명</span>
+                        </div>
+                        <div class="inputDiv3">
+                            <input type="text" id="pwd" class="login_input3" minlength='5'>
+                            <span class="login_input_text3" >비밀번호</span>
                         </div>
                     </div>
+                         <button type="button" id="btn_false_join" class="btn btn-lg btn-primary" disabled>가입</button>
+<!--                            비활성화버튼-->
+                    <button type="button" id="btn_join" class="btn btn-primary" onclick="join()">가입</button>
+<!--                              활성화버튼-->
+
+                </div>
             </div>
 
-            <div class="smallbox">
-                <p>계정이 있으신가요? <a href="로그인링크">로그인</a></p>
+        <div class="smallbox">
+            <p>계정이 있으신가요? <a href="로그인링크">로그인</a></p>
+        </div>
+        <div class="download">
+            <br>
+            <p class="downment">앱을 다운로드하세요.</p>
+            <div class="imgdown">
+                <a href="https://apps.apple.com/app/instagram/id389801252" target="blank">
+                    <img class="downimg"
+                         src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbsWM6D%2FbtrBtcqIXE1%2FS4lfwTrDxsNwBmbvk0IFfk%2Fimg.png">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3D26D66EC2-5114-4100-8B76-6D4B3AD69578%26utm_content%3Dlo%26utm_medium%3Dbadge"
+                   target="blank">
+                    <img style="height:58px; margin-left:0px;" class="downimg"
+                         src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvhgHX%2FbtrBynyf0dP%2FxyTmuxQCqSJwOy98M9tCgk%2Fimg.png">
+                </a>
             </div>
-    </div>
-
-    <div class="photobox" id="photobox">
-        <i class="fa-solid fa-camera-retro fa-lg"></i>
-        <br><br>
-        <h6><b>프로필 사진 추가</b></h6>
-        <p class="sbcomment">친구들이 회원님을 알아볼 수 있도록 <br>프로필 사진을 추가하세요.</p>
-        <br>
-            <label for="pr_photo" id="choosephoto" class="choosephoto" >
-                프로필 사진 추가
-            </label>
-            <input type="file" accept="image/jpeg,.png" id="pr_photo" style="display: none"onchange="readURL(this);"/>
-            <img id="preview" class="preview" src="#" alt="이미지 미리보기" />
-            <label for="photo" id="submitphoto" class="submitphoto">
-                시작하기
-            </label>
-            <input onclick="join()" id="photo" type="submit" style="display:none">
-
+        </div>
     </div>
 
     <br><br>
@@ -198,126 +316,114 @@
     </div>
 
 
+
 <script>
 
-// # input입력에 따라 버튼 활성화/ 비활성화
-// 첫 로드시 가짜join버튼과 메인박스, 사진선택하기만 보이고, 진짜 join버튼과 포토박스, 시작하기+미리보기는 가려지도록
+
+// 첫 로드시 가짜join버튼만 보이고, 진짜 join버튼 가려지도록
     $(document).ready(function() { //
         $('#btn_false_join').show();
-        $('#mainbox').show();
-        $('#choosephoto').show()
-
 
         $('#btn_join').hide();
-        $('#photobox').hide();
-        $('#submitphoto').hide()
-        $('#preview').hide()
-
     })
 
-    $("#uid").on('input', function() {
-
-        if ($("#uid").val() == '') {
-
+// 입력칸에 입력 감지하여 버튼 활성화/비활성화
+    $("#uid") && $("#name") && $("#pwd").on('input', function () {
+        if ($("#uid").val() == '' || $("#name").val() == '' || $("#pwd").val() == '') {
             $('#btn_join').hide()
-
             $('#btn_false_join').show()
-
-        } else { // input
-
-            $('#btn_false_join').show()
-
-            $('#btn_join').hide()
-
-        }
-    });
-
-    $("#name").on('input', function() {
-
-        if ($("#name").val() == '') {
-
-            $('#btn_join').hide()
-
-            $('#btn_false_join').show()
-
-        } else { // input
-
-            $('#btn_false_join').show()
-
-            $('#btn_join').hide()
-        }
-    });
-
-    $("#pwd").on('input', function() {
-
-        if ($("#pwd").val() == '') {
-
-            $('#btn_join').hide()
-
-            $('#btn_false_join').show()
-
-        } else { // input
-
-            $('#btn_false_join').hide()
-
+        } else {
             $('#btn_join').show()
-
+            $('#btn_false_join').hide()
         }
     });
-
-// 가입 버튼 누르면 메인박스 사라지고 프로필사진박스 나타나게
-    $("#btn_join").click(function () {
-
-        $("#mainbox").hide();
-
-        $("#photobox").show();
-
-    })
-
-// 프로필사진선택 버튼 누르면 프로필사진선택버튼 사라지고 시작하기+이미지 미리보기 버튼 나오게
-    $("#choosephoto").click(function () {
-        $("#choosephoto").hide();
-
-        $("#submitphoto").show();
-        $("#preview").show();
-    })
 
 // join 함수로 ajax 콜
         function join() {
             let uid = $('#uid').val()
             let name = $('#name').val()
             let pwd = $('#pwd').val()
-            let pr_photo = $('#pr_photo').val()
 
 
             $.ajax({
                 type: 'POST',
                 url: '/join',
-                data: { uid_give:uid, name_give:name, pwd_give:pwd, pr_photo_give:pr_photo },
+                data: {uid_give: uid, name_give: name, pwd_give: pwd},
                 success: function (response) {
-                    alert(response['msg'])
-
-                    window.location.reload()
-                    window.location.href = "/login";
-
-
+                    var p1 = document.getElementById('pwd').value;
+                    if (p1.length < 6) {
+                        alert('비밀번호는 6글자 이상이어야 합니다.');
+                        window.location.reload()
+                    }
+                    else {
+                        alert(response['msg'])
+                        window.location.href = "/login";
+                    }
                 }
             });
         }
 
-// 이미지 미리보기
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('preview').src = e.target.result;
-            };
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            document.getElementById('preview').src = "";
-        }
-    }
+        function check_uid() {
+
+            let userid = $('#uid').val()
+
+            $.ajax({
+                type: 'POST',
+                url: '/join/check_uid',
+                data: {userid_give: userid},
+                success: function (response) {
+                    if (response['result'] == "success") {
+                        alert(response['msg'])
+                    }
+                    else{
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+            }
+        })
+    };
+
+const login_input1 = document.querySelector(".login_input1");
+const login_input_text1 = document.querySelector(".login_input_text1");
+login_input1.addEventListener('keydown', (event) => {
+    login_input_text1.style.fontSize = "3px";
+    login_input_text2.style.lineHeight = "1px";
+    login_input1.style.padding = "0px 0 1px 4px";
+    login_input_text1.style.position = "relative";
+    login_input_text1.style.top = "-43px";
+})
+
+const login_input2 = document.querySelector(".login_input2");
+const login_input_text2 = document.querySelector(".login_input_text2");
+login_input2.addEventListener('keydown', (event) => {
+    login_input_text2.style.fontSize = "3px";
+    login_input_text2.style.lineHeight = "1px";
+    login_input2.style.padding = "4px 0 1px 4px";
+    login_input_text2.style.position = "relative";
+    login_input_text2.style.top = "-46px";
+})
+
+const login_input3 = document.querySelector(".login_input3");
+const login_input_text3 = document.querySelector(".login_input_text3");
+login_input3.addEventListener('keydown', (event) => {
+    login_input_text3.style.fontSize = "3px";
+    login_input_text3.style.lineHeight = "1px";
+    login_input3.style.padding = "4px 0 1px 4px";
+    login_input_text3.style.position = "relative";
+    login_input_text3.style.top = "-46px";
+})
+
+
+
+
+
 
 </script>
+
+
+
+
+
+
 </body>
 </html>

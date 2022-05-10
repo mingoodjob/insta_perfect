@@ -7,31 +7,9 @@ from datetime import datetime, timedelta
 client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
 db = client.instaperfect
 
-col = db.feed
+name = ''
 
-doc = {
-    'comment' : [{
-
-     'write_id' : 'id',
-        'text' : 'text'
-    },
-
-    {
-
-     'write_id' : 'id',
-        'text' : 'text'
-    },
-
-    {
-
-     'write_id' : 'id',
-        'text' : 'text'
-    },
-
-    ]
-}
-
-col.insert_one(doc)
+print(name)
 
 # #카운트 세기
 # col_count = col.count_documents({})
