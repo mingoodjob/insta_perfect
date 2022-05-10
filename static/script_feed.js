@@ -1,4 +1,19 @@
 // 피드 페이지로 이동
+function logout() {
+    $.removeCookie('mytoken', {path: '/'});
+    window.location.href = '/login';
+}
+
+$().ready(function () {
+            $("#logout").click(function () {
+                Swal.fire({
+                        title: '로그아웃 중입니다...',
+                        text: '로그인 페이지로 돌아갑니다'
+                });
+
+            });
+        });
+
 function Go_feed() {
     $.ajax({
         type: "get",
@@ -9,6 +24,8 @@ function Go_feed() {
         }
     })
 }
+
+
 
 // 프로필 페이지로 이동
 function Go_profile() {
@@ -22,8 +39,27 @@ function Go_profile() {
     })
 }
 
+// 유저 정보 가져오기
+$(function() {
+    $.ajax({
+        type: "GET",
+        url: "/user",
+        data: {},
+        success: function (response) {
+            let uid = response['user']['uid']  // 유저 uid
+            let pr_photo = response['user']['pr_photo']  // 유저 프로필 이미지
+            // 네임카드 유저 uid 적용
+            $('.profile_name').text(uid)
+
+            // 상단바와 네임카드 유저 프로필 이미지 적용
+            $('.profile_nav').attr('src', pr_photo)
+            $('.profile_name_card').attr('src', pr_photo)
+        }
+    })
+})
+
 // 이미지 슬라이드 //////////////////////
-$(document).ready(function() {
+function road_slider() {
     $('.slider_post').bxSlider({  // bxslider 라이브러리에 지정된 커스텀 가능한 옵션들  // 포스트 박스내 슬라이드
         speed: 300,  // 슬라이드 속도
         infiniteLoop: false,  // 루프 off
@@ -32,6 +68,48 @@ $(document).ready(function() {
         adaptiveHeight: true,  // 사진 높이에 따라 박스 크기 조절
         onSliderLoad: function(){
             $(".slider_post").css("visibility", "visible").animate({opacity:1})
+        }
+    })
+}
+
+// feed 정보 불러오기
+$(function() {
+    $.ajax({
+        type: "GET",
+        url: "/feed",
+        data: {},
+        success: function (response) {
+            let pr_photo = response['pr_photo']  // content 작성자 프로필 이미지
+            $('.profile_name_post').attr('src', pr_photo)  // 피드페이지
+            $('.profileImg_comment_modal').attr('src', pr_photo)  // 댓글 모달창
+
+            let all_feed = response['content']
+            for(let i = 0; i < all_feed.length; i++) {
+                let write_id = all_feed[i]['write_id']
+                let content = all_feed[i]['content']
+                let like_count = all_feed[i]['like_count']
+
+                $('.name_post').text(write_id)
+                $('.writer_content').text(write_id)
+                $('.text_content').text(content)
+                $('.like_cnt').text(like_count)
+                $('.like_count_commentModal').text(like_count)
+
+                let all_photo = all_feed[i]['photo']
+
+                for(let i = 0; i < all_photo.length; i++) {
+                    let photo = all_photo[i]
+                    let temp_html = `<img src=${photo}>`
+                    $('.slider_post').append(temp_html)
+
+                    let temp_html_commentModal = `<img src=${photo}>`
+                    $('.slider_modal').append(temp_html_commentModal)
+                }
+            }
+
+            setTimeout(function() {  // 슬라이드 로딩 대기를 위해 지연시간을 줌
+                road_slider();
+            },500);
         }
     })
 })
@@ -116,13 +194,6 @@ const getCommentQuit = document.querySelector('.quit_comment_modal')  // 취소 
 getCommentButton.addEventListener('click', () => {  // 댓글 아이콘에 클릭 이벤트가 발생하면
     getCommentModal.classList.toggle('modalToggle')  // modalToggle를 토글시켜줌
 
-    // setTimeout(function() {  // 모달창에서 슬라이드 이미지가 안뜨면 시도해볼 것
-    //     apiLayout();
-    //     },500);
-
-    // function apiLayout() {
-    // console.log('apiLayout call')
-
     modalslide.reloadSlider({
         speed: 300,  // 슬라이드 속도
         infiniteLoop: false,  // 루프 off
@@ -177,18 +248,73 @@ function blur_search() {
     $(".icon_glass").attr("style", "display: block;") // 나타남
 }
 
-// 좋아요 버튼 ///////////////////////////
-function red_heart_show() {  // 좋아요 입력
-    $(".red_heart").show()
-    $(".empty_heart").hide()
-    $(".heart_count").show()
-}
+// 좋아요 갯수에 따른 좋아요 텍스트와 아이콘 노출 (페이지 처음 로드시)
+// $(function() {
+//     $.ajax({
+//         type: 'GET',
+//         url: '/feed',
+//         data: {},
+//         success: function (response) {
+//             let content = response['content']
+//             let like_cnt = response['like_count']  // 해당 content의 좋아요 갯수
+//             let like_user = response['like_user'][$('.profile_name').text()]  // 현재 로그인한 유저가 좋아요 눌렀다면=true, 아니면 false
+//             if (like_cnt != 0) {
+//                 $('.heart_count').show()
+//                 $('.like_cnt_zero_commentModal').hide()
+//                 $('.like_cnt_commentModal').show()
+//             }
+//             if (like_user == true) {
+//                 $('.empty_heart').hide()
+//                 $('.empty_heart_modal').hide()
+//                 $('.red_heart').show()
+//                 $('.red_heart_modal').show()
+//             }
+//         }
+//     })
+// })
 
-function empty_heart_show() {  // 좋아요 취소
-    $(".empty_heart").show()
-    $(".red_heart").hide()
-    $(".heart_count").hide()
-}
+// 좋아요 버튼 입력시
+// function red_heart_show() {
+//     click_like = true
+//
+//     $.ajax({
+//         type: 'POST',
+//         url: '/feed',
+//         data: {click_like:click_like},
+//         success: function (response) {
+//             console.log(response['msg'])
+//             $('.empty_heart').hide()
+//             $('.empty_heart_modal').hide()
+//             $('.like_cnt_zero_commentModal').hide()
+//             $('.red_heart').show()
+//             $('.red_heart_modal').show()
+//             $('.heart_count').show()
+//             $('.like_cnt_commentModal').show()
+//         }
+//     })
+// }
+
+// 좋아요 버튼 취소시
+// function empty_heart_show() {
+//     click_like = false
+//
+//     $.ajax({
+//         type: 'POST',
+//         url: '/feed',
+//         data: {click_like: click_like},
+//         success: function (response) {
+//             console.log(response['msg'])
+//             $('.red_heart').hide()
+//             $('.red_heart_modal').hide()
+//             $('.heart_count').hide()
+//             $('.like_cnt_commentModal').hide()
+//             $('.empty_heart').show()
+//             $('.empty_heart_modal').show()
+//             $('.like_cnt_zero_commentModal').show()
+//         }
+//     })
+// }
+
 
 // content 내용이 길면 숨김 처리와 더보기 버튼
 window.addEventListener('load', function () {
@@ -223,7 +349,7 @@ $(document).ready(function() {
     })
 })
 
-// 댓글 달기 기능
+// 포스트 박스 댓글 달기 기능
 function write_button() {
     let profileImg = $('.profile_name_card').attr('src')  // 작성자 프로필 이미지
     let writer_comment = $('.profile_name').text()  // 작성자 닉네임
@@ -258,7 +384,50 @@ function write_button() {
                                             </section>
                                         </section>
                                </section>`
-    $('.box_comment').append(post_temp_html)
-    $('.box_content_comment_commentModal').append(modal_temp_html)
+        $('.box_comment').append(post_temp_html)
+        $('.box_content_comment_commentModal').append(modal_temp_html)
+        $('.write_comment').val('')
     }
 }
+
+// 코멘트 모달 댓글 달기 기능
+function write_button_commentModal() {
+    let profileImg = $('.profile_name_card').attr('src')  // 작성자 프로필 이미지
+    let writer_comment = $('.profile_name').text()  // 작성자 닉네임
+    let comment = $('.write_comment_commentModal').val()  // 작성자 코멘트
+    if (comment !== '') {
+        // 포스트 박스 div
+        let post_temp_html = `<div class="box_list_comment">
+                                    <span class="writer_comment" onclick="Go_profile()">${writer_comment}</span>
+                                    <span class="comment">${comment}</span>
+                                    <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
+                                        <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
+                                        3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
+                                        014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
+                                        0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
+                                        9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
+                                        2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
+                                        4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
+                                    </svg>
+                               </div>`
+        // 모달 박스 div
+        let modal_temp_html = `<section class="section_comment_commentModal">
+                                        <section>
+                                        <img class="profileImg_comment_modal" onclick="Go_profile()"
+                                             src=${profileImg}>
+                                        </section>
+                                        <section>
+                                            <span class="name_post" onclick="Go_profile()">${writer_comment}</span>
+                                            <span>${comment}</span>
+                                            <section class="time_post_commentModal">
+                                                <div style="font-size:12px; font-weight:400; color:rgb(142, 142, 142)"><span>13</span>시간
+                                                </div>
+                                            </section>
+                                        </section>
+                               </section>`
+        $('.box_comment').append(post_temp_html)
+        $('.box_content_comment_commentModal').append(modal_temp_html)
+        $('.write_comment_commentModal').val('')
+    }
+}
+

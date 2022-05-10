@@ -296,7 +296,10 @@
                 data: { uid_give:uid, name_give:name, pwd_give:pwd, pr_photo_give:pr_photo },
                 success: function (response) {
                     alert(response['msg'])
+
                     window.location.reload()
+                    window.location.href = "/login";
+
 
                 }
             });

@@ -149,7 +149,6 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
-    padding: 24px 64px;
     display: none;
     background: rgb(0, 0, 0, .65);
     z-index: 10001;  /* 상단바보다 위에 있도록 함 */
@@ -183,18 +182,42 @@ body {
 /* /////////////////////////////////////////////// 모달 슬라이드 박스 ////////////////////////////////////////////////// */
 /* 슬라이드 박스 */
 .box_slider {
-    width: 487px;
-    height: 487px;
     border-right: 1px solid rgb(219,219,219, 0.5);
     visibility: hidden;
     opacity: 0;
 }
 
+/* 이미지 슬라이드 박스 */
 .box_slider > .bx-wrapper {
-    border: 0;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
+    border: 0;
     box-shadow: none;
-    width: 487px;
-    height: 487px;
+}
+
+/* 이미지 슬라이드 다음 버튼 (라이브러리 내부 옵션) */
+.box_slider > .bx-wrapper > .bx-controls > .bx-controls-direction > .bx-next {
+    background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_32f0a4f27407.png/32f0a4f27407.png") !important;
+    background-position-x: -162px !important;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
+    background-position-y: -98px !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+/* 이미지 슬라이드 이전 버튼 (라이브러리 내부 옵션) */
+.box_slider > .bx-wrapper > .bx-controls > .bx-controls-direction > .bx-prev {
+    background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_32f0a4f27407.png/32f0a4f27407.png") !important;
+    background-position-x: -130px !important;
+    background-position-y: -98px !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+/* 이미지 슬라이드 페이지 아이콘 박스 (라이브러리 내부 옵션) */
+.box_slider > .bx-wrapper > .bx-controls > .bx-pager {
+    bottom: 10px;
+    padding-top: 0;
+    height: 0;
+    margin-bottom: 18px;
+    margin-left: 2px;
 }
 
 /* //////////////////////////////////////// 모달 컨텐츠, 댓글 박스 ///////////////////////////////////////////////////// */
@@ -306,7 +329,7 @@ body {
     opacity: 0.5;
 }
 
-/* 좋아요 텍스트 */
+/* 좋아요 0개 텍스트 */
 .text_like_commentModal {
     padding: 0 16px 4px 16px;
     display: flex;
@@ -514,47 +537,39 @@ nav {
     cursor: pointer;
 }
 
-/* ////////////////////////////////////////////// 사진 /////////////////////////////////////////////////////////////// */
-/* 사진 박스 */
-.box_picture_post {
-    position: center;  /* 해당 div 위에 다른 div 를 겹치기 위해 설정 */
-}
-
+/* /////////////////////////////////////////// 사진 슬라이드 ////////////////////////////////////////////////////////// */
+/* 슬라이드 박스 */
 .slider_post {
-    visibility: hidden;
+    visibility: hidden;  /* 슬라이드 로딩 대기를 위해 숨겼다가 보여줌 */
     opacity: 0;
 }
 
 /* 이미지 슬라이드 박스 (라이브러리 내부 옵션) */
 .box_picture_post > .bx-wrapper {
-    border: 0;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
+    border: 0;
     box-shadow: none;
 }
 
 /* 이미지 슬라이드 다음 버튼 (라이브러리 내부 옵션) */
-.bx-next {
+.box_picture_post > .bx-wrapper > .bx-controls > .bx-controls-direction > .bx-next {
     background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_32f0a4f27407.png/32f0a4f27407.png") !important;
-    background-position-x: -162px !important;
+    background-position-x: -162px !important;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
     background-position-y: -98px !important;
     width: 30px !important;
     height: 30px !important;
-    right: 8px !important;
-    top: 308px !important;
 }
 
 /* 이미지 슬라이드 이전 버튼 (라이브러리 내부 옵션) */
-.bx-prev {
+.box_picture_post > .bx-wrapper > .bx-controls > .bx-controls-direction > .bx-prev {
     background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_32f0a4f27407.png/32f0a4f27407.png") !important;
     background-position-x: -130px !important;
     background-position-y: -98px !important;
     width: 30px !important;
     height: 30px !important;
-    left: 8px !important;
-    top: 308px !important;
 }
 
 /* 이미지 슬라이드 페이지 아이콘 박스 (라이브러리 내부 옵션) */
-.bx-pager {
+.box_picture_post > .bx-wrapper > .bx-controls > .bx-pager {
     bottom: -25px;
     padding-top: 0;
     height: 0;
@@ -702,11 +717,10 @@ nav {
 
 /* 댓글 보여주기 버튼 */
 .show_comment {
-    width: 614px;
     border: 0;
     background: transparent;
-    margin-bottom: 4px;
-    padding: 0 16px;
+    margin: 0 16px 4px 16px;
+    padding: 0;
     text-align: left;
     font-size: 14px;
     color: rgb(142, 142, 142);
