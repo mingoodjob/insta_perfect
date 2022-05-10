@@ -543,6 +543,10 @@ body,p,h1{
     display: none;
 }
 
+#like_click_off{
+    display: block;
+}
+
 .tab_menu_list{
     flex-basis: 100%;
     height: 50px;

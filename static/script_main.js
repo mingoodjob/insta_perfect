@@ -65,6 +65,7 @@ function cancel() {
 
 function display_popup() {
     var feed_number = $(this).data("id");
+    sessionStorage.setItem('feed_number', feed_number);
 
     $.ajax({
         type: 'POST',
@@ -78,17 +79,18 @@ function display_popup() {
                 photo = "../static/img_upload/" + response["photo"];
                 like_count = response["like_count"];
                 console.log(feed_number)
-                like_click = `<div class="like_click_off" style="cursor: pointer;" onclick="heart_click(${feed_number})"><svg
-                style="width: 24px; height: 24px">
-                <path
-                    d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-        3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-        014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0
-        013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0
-        3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174
-        0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z">
-                </path>
-            </svg></div>`
+                like = (response["like"])
+                uid = response["uid"]
+                console.log(like)
+                if (like == 1) { 
+                    $("#like_click_on").css("display", "block")
+                    $("#like_click_off").css("display", "none")
+                } else {
+                    $("#like_click_on").css("display", "none")
+                    $("#like_click_off").css("display", "block")
+                }
+
+
 
                 desc = `<p><b>${write_id}</b> ${content}</p>`
 
@@ -99,25 +101,44 @@ function display_popup() {
                 $('#like_count').html(like_count)
                 $('#comment_desc').html(desc)
                 // $('#comment_list').html(desc);
+                
                 $("#photo").attr("src", photo);
                 $('.feed_info_modal').css('display', 'flex');
-                $('#like_click_off').html(like_click)
                 // window.location.reload();
             }
 
         }
     });
+    
 }
 
-function heart_click(number) {
-    console.log(number)
+function heart_click() {
+
+    feed_number = sessionStorage.getItem('feed_number')
+    console.log(feed_number)
+
+    if ($("#like_click_off").css("display") == "block") {
+        like = 1
+        $("#like_click_on").css("display", "block")
+        $("#like_click_off").css("display", "none")
+        
+    } else if ($("#like_click_on").css("display") == "block") {
+        like = 0
+        $("#like_click_on").css("display", "none")
+        $("#like_click_off").css("display", "block")
+        
+    }
+
+
     $.ajax({
         type: 'POST',
         url: '/like_count',
-        data: { number: number },
+        data: { like: like, feed_number: feed_number },
         success: function (response) {
             if (response["result"] == "success") {
                 console.log(response['msg'])
+                count = response['count']
+                $('#like_count').html(count)
             }
 
         }
