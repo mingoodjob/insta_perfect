@@ -24,6 +24,18 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login"))
 
+@app.route('/<uid>', methods=['GET'])
+def profiles(uid):
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    userid = payload['uid']
+    user = db.user.find_one({'uid': uid}, {'_id': False})
+    name = user['name']
+    hobby = user['hobby']
+    profile_desc = user['profile_desc']
+    user_photo = user['pr_photo']
+    all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
+    write_count = db.feed.count_documents({'write_id': uid})
+    return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid, user_photo=user_photo, name=name, hobby=hobby, profile_desc=profile_desc)
 
 # 유저 정보 보내주기
 @app.route('/user', methods=['GET', 'POST'])
@@ -70,20 +82,6 @@ def update_comment():
     db.feed.update_one({'feed_number': int(receive_feed_number)}, {'$push': {'comment': {'write_id': uid, 'text': receive_comment}}})
     pr_photo = uid_get['pr_photo']
     return jsonify({'response': 'success', 'pr_photo': pr_photo, 'write_id': uid, 'text': receive_comment})
-
-
-# feed 정보 업데이트
-# @app.route('/feed', methods=['POST'])
-# def update_feed():
-#     click_like = request.form['click_like']
-#     if click_like == True:
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$set': {'like_user': 'jaewan_choi'}}, upsert=True)
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$inc': {'like_count': +1}})
-#     else :
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$set': {'like_user': 'jaewan_choi'}}, upsert=True)
-#         db.feed.update_many({'uid': 'jaewan_choi'}, {'$inc': {'like_count': -1}})
-
-#     return jsonify({'msg': '좋아요 반영 완료'})
 
 
 @app.route('/login')
@@ -144,7 +142,7 @@ def login_check():
     if result is not None:
         payload = {
             'uid': uid_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         print("token =", end=""), print(token)
@@ -169,23 +167,17 @@ def login_name():
 # 프로필 페이지 이동
 @app.route('/profile')
 def profile():
-    token_receive = request.cookies.get('mytoken')
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     uid_get = db.user.find_one({'uid': payload['uid']})
     uid = uid_get['uid']
     name = uid_get['name']
     write_count = db.feed.count_documents({'write_id': uid})
     pr_photo = uid_get['pr_photo']
     print(pr_photo)
-    #피드 콜렉션에 모든 내용을 받아온다!
+    #피드 콜렉션에 모든 내용을 받아온다! #feed number로 내림차순 정렬
     all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
-    # all_feed = db.feed.find()
-    # pr_photo = 1
-    # print(img_number)
 
     return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=uid, name=name)
-
-
 
 # 이미지 파일 업로드
 @app.route('/upload', methods=['GET', 'POST'])
@@ -215,16 +207,86 @@ def get_file():
 
 @app.route('/feed_number', methods=['GET', 'POST'])
 def feed_number():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     if request.method == 'POST':
-        token_receive = request.cookies.get('mytoken')
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         feed_number = request.form['feed_number']
         uid_get = db.user.find_one({'uid': payload['uid']})
         uid = uid_get['uid']
         serch_content = db.feed.find_one({"feed_number": int(feed_number)},{"_id": 0})
+        write_id = serch_content['write_id']
         like_count = serch_content['like_count']
         photo = serch_content['photo']
         content = serch_content['content']
+
+        try:
+            like_list = serch_content['like_list']
+        except:
+            like_list = []
+        if len(like_list) < 0:
+            like = 0
+        elif len(like_list) > 1 and uid in like_list:
+            like = 1
+        else:
+            like = 0
+        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count, 'write_id': write_id, 'like': like, 'feed_number': feed_number, 'uid':uid})
+
+@app.route('/like_count', methods=['GET', 'POST'])
+def like_count():
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid = payload['uid']
+    if request.method == 'POST':
+        number = request.form['feed_number']
+        like = request.form['like']
+        serch = db.feed.find_one({"feed_number": int(number)},{"_id": 0})
+        count = serch['like_count']
+
+        if like == '0':
+            try:
+                db.feed.update_one({'feed_number': int(number)}, {"$pull": {'like_list' : uid}})
+                if count > 1:
+                    addcount = count - 1
+                    db.feed.update_one({'feed_number': int(number)}, {'$set': {'like_count': addcount}})
+                else:
+                    pass
+                print('빠져나왔당!')
+            except:
+                pass
+        else:
+            print(uid,'들어갔당!')
+            addcount = count + 1
+            db.feed.update_one({'feed_number': int(number)}, {"$push": {'like_list' : uid}},upsert=True)
+            db.feed.update_one({'feed_number': int(number)}, {'$set': {'like_count': addcount}})
+        
+        return jsonify({'result': 'success', 'msg' : '잘 받았다 이눔아!', 'count' : addcount})
+
+@app.route('/pr_edit', methods=['POST', 'GET'])
+def pr_edit():
+    if request.method == 'POST':
+        username = request.form['uid']
+        uid_get = db.user.find_one({'uid': username })
+        hobby = request.form['hobby']
+        description = request.form['description']
+        db.user.update_one({'uid': username}, {'$set': {'hobby': hobby}})
+        db.user.update_one({'uid': username}, {'$set': {'profile_desc': description}})
+
+    return redirect("/" + username)
+
+@app.route('/pr_upload', methods=['POST', 'GET'])
+def pr_upload():
+    print('--------------------------------')
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid = payload['uid']
+    if request.method == 'POST':    
+        image = request.files['file']
+        print('--------------------------------')
+        print('하하하', image)
+        
+        image.save(f'./static/pr_img/{uid}.jpg')
+        db.user.update_one({'uid': uid}, {'$set': {'pr_photo': f'./static/pr_img/{uid}.jpg'}})
+
+        return redirect("/" + uid)
+
         print(photo, content)
         return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count})
 
@@ -251,6 +313,7 @@ def follow_delete():
 
     db.follow.update_one({"uid": "test45678"}, {'$pull': {"follow": uid}})
     return jsonify({'response': 'success'})
+
 
 
 

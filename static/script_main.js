@@ -15,6 +15,35 @@ $(function () {
         }
     });
 
+    $("#comment_text").on("propertychange change keyup paste input", function() {
+        if ($('#comment_text').val().trim() == ''){
+            $('.comment_submit').css('opacity','0.5')
+        }else{
+            $('.comment_submit').css('opacity','1.0')
+        }
+    })
+
+    $("#pr_upload").change(function() {
+        this.form.submit();
+   });
+
+    // $("#pr_edit").submit(function(){
+    //     var name = $("#hobby").val();
+    //     var email = $("#description").val();
+    //     return false;
+    // }); // end submit()
+
+    //background-color: rgba(47,138,241,0.1)
+    //background-color: rgba(0, 0, 0, 0.5);
+
+    $('.photo_box').hover(function() {
+        $(this).children('.info_feed').css("display", "flex");
+        $(this).children('.info_feed').css("background", "rgba(0, 0, 0, 0.4)");
+        }, function(){
+        $(this).children('.info_feed').css("display", "none");
+            });
+
+
     $('#photo_upload').change(function () {
         $('.photo_upload').css('display', 'none');
         $('.img_box').css('display', 'flex');
@@ -47,6 +76,9 @@ $(function () {
 function feed_upload() {
     $('.modal_body').css('display', 'flex');
 }
+function pr_upload() {
+    $('#pr_upload').click()
+}
 
 function photo_upload() {
     $('#photo_upload').click()
@@ -65,21 +97,35 @@ function cancel() {
 
 function display_popup() {
     var feed_number = $(this).data("id");
+    sessionStorage.setItem('feed_number', feed_number);
 
     $.ajax({
         type: 'POST',
         url: '/feed_number',
-        data: { feed_number : feed_number },
+        data: { feed_number: feed_number },
         success: function (response) {
             if (response["result"] == "success") {
+                write_id = response["write_id"];
                 username = response["username"];
                 content = response["content"];
                 photo = "../static/img_upload/" + response["photo"];
                 like_count = response["like_count"];
-                console.log(photo)
+                console.log(feed_number)
+                like = (response["like"])
+                uid = response["uid"]
+                console.log(like)
+                if (like == 1) { 
+                    $("#like_click_on").css("display", "block")
+                    $("#like_click_off").css("display", "none")
+                } else {
+                    $("#like_click_on").css("display", "none")
+                    $("#like_click_off").css("display", "block")
+                }
 
-                desc = `<p><b>${username}</b> ${content}</p>`
-                
+
+
+                desc = `<p><b>${write_id}</b> ${content}</p>`
+
                 $('body').addClass('hidden').on('scroll touchmove mousewheel', function (e) {
                     e.preventDefault();
                 });
@@ -87,6 +133,7 @@ function display_popup() {
                 $('#like_count').html(like_count)
                 $('#comment_desc').html(desc)
                 // $('#comment_list').html(desc);
+                
                 $("#photo").attr("src", photo);
                 $('.feed_info_modal').css('display', 'flex');
                 // window.location.reload();
@@ -94,4 +141,60 @@ function display_popup() {
 
         }
     });
+    
 }
+
+function heart_click() {
+
+    feed_number = sessionStorage.getItem('feed_number')
+    console.log(feed_number)
+
+    if ($("#like_click_off").css("display") == "block") {
+        like = 1
+        $("#like_click_on").css("display", "block")
+        $("#like_click_off").css("display", "none")
+        
+    } else if ($("#like_click_on").css("display") == "block") {
+        like = 0
+        $("#like_click_on").css("display", "none")
+        $("#like_click_off").css("display", "block")
+        
+    }
+
+
+    $.ajax({
+        type: 'POST',
+        url: '/like_count',
+        data: { like: like, feed_number: feed_number },
+        success: function (response) {
+            if (response["result"] == "success") {
+                console.log(response['msg'])
+                count = response['count']
+                $('#like_count').html(count)
+            }
+
+        }
+    });
+}
+
+function pr_edit(name){
+    console.log(name)
+    $('.profile_edit').css('display','flex')
+    userid = $('#userid').text()
+    console.log(userid)
+}
+
+// function heart_click_off(){
+//     console.log('하트 뿅뿅')
+//     if ($(".like_click_off").css("display") == "none") {
+//     $(".like_click_off").css('display','block')
+//     $(".like_click_on").css('display', 'none');
+//     }
+// }
+
+function pr_close(){
+    $('.profile_edit').css('display','none')
+}
+
+
+
