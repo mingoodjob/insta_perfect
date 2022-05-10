@@ -29,10 +29,13 @@ def profiles(uid):
     payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     userid = payload['uid']
     user = db.user.find_one({'uid': uid}, {'_id': False})
+    name = user['name']
+    hobby = user['hobby']
+    profile_desc = user['profile_desc']
     user_photo = user['pr_photo']
     all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
     write_count = db.feed.count_documents({'write_id': uid})
-    return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid, user_photo=user_photo)
+    return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid, user_photo=user_photo, name=name, hobby=hobby, profile_desc=profile_desc)
 
 # 유저 정보 불러오기
 @app.route('/user', methods=['GET'])
@@ -96,7 +99,7 @@ def login_check():
     if result is not None:
         payload = {
             'uid': uid_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         print("token =", end=""), print(token)

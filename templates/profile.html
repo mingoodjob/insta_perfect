@@ -16,7 +16,7 @@
 
 <!-- 상단 메뉴바 -->
 
-<head>
+<header>
     <div class="top_menu_bar">
         <div class="page_logo">
             <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png">
@@ -77,10 +77,22 @@
         </div>
         <!--  -->
     </div>
-</head>
+</header>
 <!-- 상단 메뉴바 종료 -->
 
+
+
 <body>
+    <!-- 프로필 편집 -->
+    <div class="profile_edit">
+        <div class="edit_pr">
+            <div style="font-size:20px; margin-bottom: 10px;">프로필 편집</div>
+            <input type="text" name="" id="" placeholder="취미">
+            <input type="text" name="" id="" placeholder="남기는말">
+            <button type="submit">확인</button>
+        </div>
+    </div>
+
     <!-- 사진 등록 모달창 띄우기 -->
     <div class="modal_body">
         <div class="modal_box">
@@ -158,9 +170,9 @@
                     <div class="like_button">
                         <div class="like_click_buttons">
                             <div id="like_click_on">
-                                <div class="like_click_on" onclick="heart_click()" style="cursor: pointer;"
-                                    ><svg color="#ed4956" fill="#ed4956" height="24" role="img"
-                                        viewBox="0 0 48 48" width="24">
+                                <div class="like_click_on" onclick="heart_click()" style="cursor: pointer;"><svg
+                                        color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48"
+                                        width="24">
                                         <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
                                 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
                                 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
@@ -213,7 +225,7 @@
                         <i class="fa-regular fa-face-smile"></i>
                     </div>
                     <div class="comment_input">
-                        <input type="text" placeholder="댓글 입력....">
+                        <input id="comment_text" type="text" placeholder="댓글 입력....">
                     </div>
                     <div class="comment_submit">
                         게시
@@ -241,7 +253,7 @@
                 <div class="pr_account">
                     <div style="font-size:24px; color: #262626;">{{username}}</div>
                     {% if username == userid %}
-                    <div class="pr_edit"><button>프로필 편집</button></div>
+                    <div class="pr_edit"><button onclick="pr_edit('hi')" type="button">프로필 편집</button></div>
                     <div style="font-size: 25px;"><i class="fa-solid fa-gear fa-lg"></i></div>
                     {% endif %}
                 </div>
@@ -258,8 +270,8 @@
                 </div>
                 <div>
                     <div style="font-weight: bold;">{{name}}</div>
-                    <div>//이곳은 hobby 가 들어가는 곳 입니다.</div>
-                    <div>//이곳은 profile desc 가 들어가는 곳 입니다.</div>
+                    <div style="color: #8e8e8e;">{{hobby}}</div>
+                    <div>{{profile_desc}}</div>
                 </div>
             </div>
         </div>
@@ -277,10 +289,18 @@
             </div>
             <div class="feed">
                 {% for feeds in all_feed %}
-                <div onclick="display_popup.bind(this)()" class="photo_box" value="{{feeds.feed_number}}"
+
+                <div id="photo_box" onclick="display_popup.bind(this)()" class="photo_box" value="{{feeds.feed_number}}"
                     data-id="{{feeds.feed_number}}">
-                    <img src="../static/img_upload/{{feeds.photo}}">
+
+                    <div style="font-weight: bold;" class="info_feed">
+                        <div><i class="fa-solid fa-heart"></i>{{feeds.like_count}}개</div>
+                        <div><i class="fa-solid fa-comment"></i>{{feeds.like_count}}개</div>
+                    </div>
+
+                    <img src="../static/img_upload/{{feeds.photo}}" class="img_photo">
                 </div>
+
                 {% endfor %}
                 <div>{{ content }}</div>
             </div>

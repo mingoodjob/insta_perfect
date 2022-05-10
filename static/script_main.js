@@ -15,6 +15,46 @@ $(function () {
         }
     });
 
+    $("#comment_text").on("propertychange change keyup paste input", function() {
+        if ($('#comment_text').val().trim() == ''){
+            $('.comment_submit').css('opacity','0.5')
+        }else{
+            $('.comment_submit').css('opacity','1.0')
+        }
+    })
+    //background-color: rgba(47,138,241,0.1)
+    //background-color: rgba(0, 0, 0, 0.5);
+
+    $('.photo_box').hover(function() {
+        $(this).children('.info_feed').css("display", "flex");
+        $(this).children('.info_feed').css("background", "rgba(0, 0, 0, 0.4)");
+        }, function(){
+        $(this).children('.info_feed').css("display", "none");
+            });
+
+    //  $(".top_menu li",$(this)).bind('mouseover',function(){
+    //     if(this.id == "bt_01"){
+    //         ms = ".sm_01";
+    //     }else if(this.id == "bt_02"){
+    //         ms = ".sm_02";
+    //     }else if(this.id == "bt_03"){
+    //         ms = ".sm_03";
+    //     }else if(this.id == "bt_04"){
+    //         ms = ".sm_04";
+    //     }
+    // });
+    
+    // $(".top_menu li",$(this)).hover(
+    //     function(){
+    //         $(ms).addClass('show');
+    //     },
+    //     function(){
+    //         $(ms).removeClass('show');    
+    //     }
+    // )
+    // });
+ 
+
     $('#photo_upload').change(function () {
         $('.photo_upload').css('display', 'none');
         $('.img_box').css('display', 'flex');
@@ -143,6 +183,11 @@ function heart_click() {
 
         }
     });
+}
+
+function pr_edit(name){
+    console.log(name)
+    $('.profile_edit').css('display','flex')
 }
 
 // function heart_click_off(){

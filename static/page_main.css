@@ -85,7 +85,7 @@ body,p,h1{
     width: 100%;
     height: 100%;
     position: fixed;
-    background: #cecece;
+    background-color: rgba(0, 0, 0, 0.5);
     display: none;
     justify-content: center;
     align-items: center;;
@@ -248,6 +248,7 @@ body,p,h1{
     height: 100%;
 }
 
+
 .pr_photo{
     flex-shrink: 1;
     max-width: 150px;
@@ -304,7 +305,9 @@ body,p,h1{
     flex-wrap: wrap;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
+
 
 .feed{
     max-width: 975px;
@@ -315,10 +318,32 @@ body,p,h1{
     justify-content: flex-start;
 }
 
+.info_feed{
+    display: flex;
+    width: 93%;
+    height: 91%;
+    position: absolute;
+    display: none;
+    color: white;
+    justify-content: center;
+    text-align: center;
+
+    align-items: center;
+}
+.info_feed > div{
+    font-size: 20px;
+    padding: 10px 10px;
+}
+
+.info_feed > div > i{
+    padding: 5px 5px;   
+}
+
 .photo_box{
+    position: relative;
+    flex-basis: 33%;
     padding: 15px 0px;
     overflow: hidden;
-    flex-basis: 33%;
     display: flex;
     justify-content: center;
 }
@@ -329,10 +354,6 @@ body,p,h1{
     object-fit: cover;
 }
 
-.photo_box > img:hover{
-    opacity: 0.3;
-}
-
 .feed_photo:hover{
     opacity: 0.5;
 }
@@ -341,7 +362,7 @@ body,p,h1{
     z-index: 1000;
     width: 100%;
     height: 100%;
-    background-color: #ebebeb;
+    background-color: rgba(0, 0, 0, 0.5);
     display: none;
     position: fixed;
     justify-content: center;
@@ -487,6 +508,8 @@ body,p,h1{
 }
 
 .comment_submit{
+    font-size:  12px;
+    font-weight: bold;
     margin-right: 30px;
     margin-left: auto;
     opacity: 0.5;
@@ -562,6 +585,44 @@ body,p,h1{
     padding: 10px 5px;
     /* border-top: 1px solid #000000; */
 
+}
+
+.profile_edit{
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    z-index: 10;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.edit_pr{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    width: 40%;
+    height: 20%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.edit_pr > input{
+    margin: 10px;
+    width: 85%;
+    border: 1px solid #cecece;
+    padding: 10px;
+}
+
+.edit_pr > button{
+    padding: 10px;
+    width: 50px;
+    border: none;
+    border-radius: 20px;
+    background-color: #ffc7c7;
 }
 
 /* 미디어 쿼리 상단 검색창 숨기기 */
