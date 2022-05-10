@@ -4,7 +4,6 @@ import math
 from datetime import datetime, timedelta
 
 
-
 client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
 db = client.instaperfect
 

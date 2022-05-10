@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
-import os, hashlib,certifi,datetime,jwt
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
+import hashlib,datetime,jwt
+
+
+client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.instaperfect
 
 app = Flask(__name__)
@@ -15,8 +17,6 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"uid": payload['uid']})
-        print(user_info['uid'])
-        print(user_info['name'])
         return render_template('feed.html')
 
     except jwt.ExpiredSignatureError:
@@ -37,20 +37,51 @@ def profiles(uid):
     write_count = db.feed.count_documents({'write_id': uid})
     return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid, user_photo=user_photo, name=name, hobby=hobby, profile_desc=profile_desc)
 
-# 유저 정보 불러오기
-@app.route('/user', methods=['GET'])
+# 유저 정보 보내주기
+@app.route('/user', methods=['GET', 'POST'])
 def find_userdb():
-    user = db.user.find_one({'uid': 'jaewan_choi'}, {'_id': False})
+    if request.method == 'POST':
+        receive_uid = request.form['give_uid']
+        find_user = db.user.find_one({'uid': receive_uid}, {'_id': False})
+        return jsonify({'response': 'success', 'find_user': find_user})
+
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+    user = db.user.find_one({'uid': uid}, {'_id': False})
     return jsonify({'response': 'success', 'user': user})
 
 
-# feed 정보 불러오기
-@app.route('/feed', methods=['GET'])
+# 피드 불러오기
+@app.route('/feed', methods=['GET', 'POST'])
 def find_feed():
-    content = list(db.feed.find({'write_id': 'jaewan_choi'}, {'_id': False}))
-    user = db.user.find_one({'uid': 'jaewan_choi'}, {'_id': False})
+    if request.method == 'POST':
+        feed_number = request.form['feed_number']
+        find_feed = db.feed.find_one({'feed_number': int(feed_number)}, {'_id': False})
+        find_user = db.user.find_one({'uid': find_feed['write_id']}, {'_id': False})
+        return jsonify({'response': 'success', 'find_feed': find_feed, 'find_user': find_user})
+
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+    content = list(db.feed.find({'write_id': uid}, {'_id': False}))
+    user = db.user.find_one({'uid': uid}, {'_id': False})
     pr_photo = user['pr_photo']
     return jsonify({'response': 'success', 'content': content, 'pr_photo': pr_photo})
+
+
+# 댓글 입력 저장 후 전송
+@app.route('/comment', methods=['GET', 'POST'])
+def update_comment():
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    receive_feed_number = request.form['give_feed_number']
+    receive_comment = request.form['give_comment']
+    db.feed.update_one({'feed_number': int(receive_feed_number)}, {'$push': {'comment': {'write_id': uid, 'text': receive_comment}}})
+    pr_photo = uid_get['pr_photo']
+    return jsonify({'response': 'success', 'pr_photo': pr_photo, 'write_id': uid, 'text': receive_comment})
 
 
 @app.route('/login')
@@ -63,25 +94,37 @@ def join_page():
     return render_template('join.html')
 
 
+@app.route('/join_page')
+def join_page():
+    return render_template('join.html')
+
 @app.route("/join", methods=["POST"])
 def join_post():
     uid_receive = request.form['uid_give']
     name_receive = request.form['name_give']
     pwd_receive = request.form['pwd_give']
     hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
-    pr_photo_receive = request.form['pr_photo_give']
-    print(pr_photo_receive)
-    
+
+
     doc = {
         'uid': uid_receive,
         'name': name_receive,
-        'pwd': hashed_pw,
-        'pr_photo': pr_photo_receive
+        'pwd': hashed_pw
     }
 
-    db.user.insert_one(doc)
 
+    follow = {
+
+        'uid': uid_receive,
+        'follow': [],
+        'following': []
+    }
+
+
+    db.user.insert_one(doc)
+    db.follow.insert_one(follow)
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
+
 
 
 
@@ -114,14 +157,12 @@ def login_name():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # print(payload)
         userinfo = db.user.find_one({'uid': payload['uid']})
         return jsonify({'result': 'success', 'name': userinfo['name']})
     except jwt.ExpiredSignatureError:
         return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
     except jwt.exceptions.DecodeError:
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
-
 
 # 프로필 페이지 이동
 @app.route('/profile')
@@ -135,6 +176,7 @@ def profile():
     print(pr_photo)
     #피드 콜렉션에 모든 내용을 받아온다! #feed number로 내림차순 정렬
     all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
+
     return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=uid, name=name)
 
 # 이미지 파일 업로드
@@ -150,7 +192,7 @@ def get_file():
         col = db.feed
         number = col.count_documents({})
         image.save(f'./static/img_upload/{number}.jpg')
-        
+
         doc = {
             'feed_number' : number + 1,
             'write_id' : uid,
@@ -158,9 +200,9 @@ def get_file():
             'content' : content,
             'like_count': 0
         }
-        
+
         db.feed.insert_one(doc)
-        
+
     return redirect(url_for('profile'))
 
 @app.route('/feed_number', methods=['GET', 'POST'])
@@ -176,6 +218,7 @@ def feed_number():
         like_count = serch_content['like_count']
         photo = serch_content['photo']
         content = serch_content['content']
+
         try:
             like_list = serch_content['like_list']
         except:
@@ -244,6 +287,37 @@ def pr_upload():
 
         return redirect("/" + uid)
 
+        print(photo, content)
+        return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count})
+
+#  팔로우 부분 db에 저장하기
+@app.route("/follow_check", methods=["POST"])
+def follow_user():
+
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    db.follow.update_one({'uid': "test1234"}, {'$push': {'following': "test45678"}}, upsert=True)
+    db.follow.update_one({'uid': "test45678"}, {'$push': {'follow': uid}}, upsert=True)
+    return jsonify({'response': 'success'})
+
+# 팔로우 db remove
+@app.route("/follow_delete", methods=["POST"])
+def follow_delete():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    db.follow.update_one({"uid": "test45678"}, {'$pull': {"follow": uid}})
+    return jsonify({'response': 'success'})
+
+
+
+
 if __name__ == '__main__':
 
-  app.run('0.0.0.0', port=80, debug=True)
+  app.run('0.0.0.0', port=5000, debug=True)
+
