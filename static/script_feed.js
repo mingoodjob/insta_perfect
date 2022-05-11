@@ -110,8 +110,8 @@ $(function() {
             $('.profile_name').text(uid)
 
             // 상단바와 네임카드 유저 프로필 이미지 적용
-            $('.profile_nav').attr('src', 'static/img_upload/'+pr_photo)
-            $('.profile_name_card').attr('src', 'static/img_upload/'+pr_photo)
+            $('.profile_nav').attr('src', pr_photo)
+            $('.profile_name_card').attr('src',pr_photo)
         }
     })
 })
@@ -135,7 +135,7 @@ function loadFeed() {
                 let temp_html = `<div class="container_post feed_number${feed_number}">
                                 <!------------------------------------------------ 포스트 네임카드 ---------------------------------------------->
                                 <div class="container_name_post">
-                                    <img class="profile_name_post" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
+                                    <img class="profile_name_post" onclick="Go_profile()" src="${pr_photo}">
                                     <div class="box_name_post">
                                         <a class="name_post" onclick="Go_profile()">${write_id}</a>
                                     </div>
@@ -316,7 +316,7 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
             let temp_html = `<img class="commentModal_photo" src="/static/img_upload/${photo}">
                              <div>
                                 <div class="container_name_modal">
-                                    <img class="profile_name_post" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
+                                    <img class="profile_name_post" onclick="Go_profile()" src="${pr_photo}">
                                     <div class="box_name_post">
                                         <a class="name_post" onclick="Go_profile()">${write_id}</a>
                                     </div>
@@ -329,7 +329,7 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
                                 <section class="box_content_comment_commentModal">
                                     <section class="section_content_commentModal">
                                         <section>
-                                            <img class="profileImg_comment_modal" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
+                                            <img class="profileImg_comment_modal" onclick="Go_profile()" src="${pr_photo}">
                                         </section>
                                         <section>
                                             <span class="name_post" onclick="Go_profile()">${write_id}</span>
@@ -405,7 +405,7 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
                             let find_user = response['find_user']
                             let pr_photo = find_user['pr_photo']
                             let temp_html = `<section class="commentBox_commentModal">
-                                                <img class="profileImg_comment_modal" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
+                                                <img class="profileImg_comment_modal" onclick="Go_profile()" src="${pr_photo}">
                                                 <section>
                                                 <span class="name_post" onclick="Go_profile()">${write_id}</span>
                                                 <span>${text}</span>

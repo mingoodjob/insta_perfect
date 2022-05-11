@@ -2,7 +2,7 @@ from telnetlib import TLS
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
 import certifi
-import hashlib,datetime,jwt
+import hashlib,datetime,jwt,random
 
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
@@ -43,7 +43,7 @@ def home():
 def profiles(uid):
     payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     userid = payload['uid']
-    user = db.user.find_one({'uid': 'test'}, {'_id': False})
+    user = db.user.find_one({'uid': uid }, {'_id': False})
     follows = db.follow.find_one({'uid': uid}, {'_id': 0})
     follow = follows['follow']
     following = follows['following']
@@ -439,6 +439,15 @@ def follow_delete3():
     db.follow.update_one({'uid': id_receive3}, {'$pull': {'follow': uid}}, upsert=True),
     db.follow.update_one({'uid': uid}, {'$pull': {'following': id_receive3}}, upsert=True)
     return jsonify({'response': 'success'})
+
+@app.route("/join/check_uid", methods=["POST"])
+def check_user_id():
+    userid_receive = request.form['userid_give']
+    is_exists = db.user.find_one({'uid': userid_receive})
+
+    if is_exists:
+        return jsonify({'result': 'fail', 'msg': '중복입니다'})
+    return jsonify({'result': 'success', 'msg': '중복되지 않습니다'})
 
 
 if __name__ == '__main__':

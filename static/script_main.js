@@ -97,7 +97,8 @@ function cancel() {
 function display_popup() {
   var feed_number = $(this).data("id");
   sessionStorage.setItem("feed_number", feed_number);
-
+  
+  // $('#comment_list').empty();
   $.ajax({
     type: "POST",
     url: "/feed_number",
@@ -111,7 +112,7 @@ function display_popup() {
         photo = "../static/img_upload/" + response["photo"];
         like_count = response["like_count"];
         comments = response["comment"];
-        $('#comment_list').empty();
+        
         if (comments.length > 0) {
           for (cm in comments) {
             console.log(comments[cm].text)
@@ -166,7 +167,7 @@ function display_popup() {
           .on("scroll touchmove mousewheel", function (e) {
             e.preventDefault();
           });
-
+          $("#comment_desc").html(desc);
         $("#like_count").html(like_count);
         $("#comment_desc").html(desc);
         $("#like_click").html(like_html);

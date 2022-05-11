@@ -251,10 +251,17 @@
                     <div class="pr_edit"><button onclick="pr_edit()" type="button">프로필 편집</button></div>
                     <div style="font-size: 25px;"><i class="fa-solid fa-gear fa-lg"></i></div>
                     {% endif %}
-                    {% if userid in follow  %}
-                    <div><button onclick="follower()" type="button">팔로워</div>
-                    {% endif %}
-                    <div><button onclick="unfollower()" style="background-color: red;" type="button">언팔로워</div>
+                    
+                    
+                    
+                    <div style="display: block;">
+                        {% if userid in follow  %}
+                    
+                        <div><button onclick="follower()" type="button">팔로워</div>
+                            {% endif %}
+                        <button onclick="unfollower()" style="background-color: red;" type="button">언팔로워
+                        </div>
+                    
                     
                 </div>
                 <div class="follow_info">
