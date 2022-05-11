@@ -72,7 +72,7 @@
                     </path>
                 </svg></div> <!-- 하트 -->
             <div class="menu_pr_photo">
-                <img src="{{pr_photo}}" alt="" srcset="">
+                <img src="{{user_photo}}" alt="" srcset="">
             </div> <!-- 프로필 사진 -->
         </div>
         <!--  -->
@@ -136,7 +136,7 @@
     <!-- 모달창 코드 종료  -->
 
     <!-- 피드 상세 정보 모달 -->
-    <div class="feed_info_modal">
+    <div id="feed_info_modal" class="feed_info_modal">
         <div class="feed_info_content">
             <div class="feed_info_photo">
                 <img src="{{ url_for('static', filename='img_upload/{}'.format('1.jpg')) }}" alt="" srcset=""
@@ -147,7 +147,7 @@
                 <!-- 피드 모달 상단 어카운트 내용 -->
                 <div class="feed_info_account">
                     <div id="feed_pr_photo" class="feed_pr_photo">
-                        <img src="../static/img_upload/1.jpg" alt="" srcset="">
+                        <img id="pr_feed_photo" src="../static/img_upload/1.jpg" alt="" srcset="">
                     </div>
 
                     <div id="feed_account" class="feed_account">
@@ -163,7 +163,7 @@
                 <div id="comment_list" class="comment_list">
                     <div id="comment_desc_box" class="comment_desc_box">
                         <div class="comment_pr_photo">
-                            <img src="../static/img_upload/1.jpg" alt="" srcset="">
+                            <img id="pr_photo_comment" src="../static/img_upload/1.jpg" alt="" srcset="">
                         </div>
                         <div id="comment_desc" class="comment_desc">
                             <p><b>{{username}}</b> 안녕하세요 좋은하루 되시기 바랍니다.안녕하세요 좋은하루 되시기 바랍니다.안녕하세요 좋은하루 되시기 바랍니다.안녕하세요
@@ -176,6 +176,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
 
 
@@ -183,29 +184,10 @@
                 <div id="like_info" class="like_info">
                     <div class="like_button">
                         <div class="like_click_buttons">
-                            <div id="like_click_on">
-                                <div class="like_click_on" onclick="heart_click()" style="cursor: pointer;"><svg
-                                        color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48"
-                                        width="24">
-                                        <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
-                                10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
-                                7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
-                                        </path>
-                                    </svg></div>
+                            <div id="like_click">
+                             
                             </div>
-                            <div id="like_click_off">
-                                <div onclick="heart_click()" class="like_click_off" style="cursor: pointer;"><svg
-                                        style="width: 24px; height: 24px">
-                                        <path
-                                            d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
-                                3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
-                                014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0
-                                013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0
-                                3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174
-                                0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z">
-                                        </path>
-                                    </svg></div>
-                            </div>
+                            
                             <div><svg style="width: 24px; height: 24px">
                                     <path d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z" fill="none"
                                         stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
@@ -233,22 +215,21 @@
                         7일전
                     </div>
                 </div>
-
+        
                 <div class="comment_write">
                     <div class="comment_icon">
                         <i class="fa-regular fa-face-smile"></i>
                     </div>
-                    <div class="comment_input">
-                        <input id="comment_text" type="text" placeholder="댓글 입력....">
-                    </div>
-                    <div class="comment_submit">
+
+                        <div class="comment_input">
+                            <input id="comment_text" name="comment_text" type="text" placeholder="댓글 입력....">
+                        </div>
+                    <div onclick="comment_up()" class="comment_submit">
                         게시
                     </div>
                 </div>
-
+        
             </div>
-
-
         </div>
     </div>
     <!-- ****피드 상세 정보 모달 end**** -->
@@ -265,21 +246,26 @@
 
             <div class="pr_info">
                 <div class="pr_account">
-                    <div id="userid" style="font-size:24px; color: #262626;">{{username}}</div>
+                    <div id="userid" value="{{username}}" style="font-size:24px; color: #262626;">{{username}}</div>
                     {% if username == userid %}
                     <div class="pr_edit"><button onclick="pr_edit()" type="button">프로필 편집</button></div>
                     <div style="font-size: 25px;"><i class="fa-solid fa-gear fa-lg"></i></div>
                     {% endif %}
+                    {% if userid in follow  %}
+                    <div><button onclick="follower()" type="button">팔로워</div>
+                    {% endif %}
+                    <div><button onclick="unfollower()" style="background-color: red;" type="button">언팔로워</div>
+                    
                 </div>
                 <div class="follow_info">
                     <div>
                         게시물 <span style="font-weight: bold;">{{write_count}}</span>
                     </div>
                     <div>
-                        팔로워 <span style="font-weight: bold;">0</span>
+                        팔로워 <span style="font-weight: bold;">{{follow | length}}</span>
                     </div>
                     <div>
-                        팔로잉 <span style="font-weight: bold;">0</span>
+                        팔로잉 <span style="font-weight: bold;">{{following | length}}</span>
                     </div>
                 </div>
                 <div>
@@ -308,8 +294,8 @@
                     data-id="{{feeds.feed_number}}">
 
                     <div style="font-weight: bold;" class="info_feed">
-                        <div><i class="fa-solid fa-heart"></i>{{feeds.like_count}}개</div>
-                        <div><i class="fa-solid fa-comment"></i>{{feeds.like_count}}개</div>
+                        <div><i class="fa-solid fa-heart"></i>{{feeds.like_list | length}}개</div>
+                        <div><i class="fa-solid fa-comment"></i>{{feeds.comment | length}}개</div>
                     </div>
 
                     <img src="../static/img_upload/{{feeds.photo}}" class="img_photo">
