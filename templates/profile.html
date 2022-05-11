@@ -136,7 +136,7 @@
     <!-- 모달창 코드 종료  -->
 
     <!-- 피드 상세 정보 모달 -->
-    <div class="feed_info_modal">
+    <div id="feed_info_modal" class="feed_info_modal">
         <div class="feed_info_content">
             <div class="feed_info_photo">
                 <img src="{{ url_for('static', filename='img_upload/{}'.format('1.jpg')) }}" alt="" srcset=""
@@ -246,21 +246,26 @@
 
             <div class="pr_info">
                 <div class="pr_account">
-                    <div id="userid" style="font-size:24px; color: #262626;">{{username}}</div>
+                    <div id="userid" value="{{username}}" style="font-size:24px; color: #262626;">{{username}}</div>
                     {% if username == userid %}
                     <div class="pr_edit"><button onclick="pr_edit()" type="button">프로필 편집</button></div>
                     <div style="font-size: 25px;"><i class="fa-solid fa-gear fa-lg"></i></div>
                     {% endif %}
+                    {% if userid in follow  %}
+                    <div><button onclick="follower()" type="button">팔로워</div>
+                    {% endif %}
+                    <div><button onclick="unfollower()" style="background-color: red;" type="button">언팔로워</div>
+                    
                 </div>
                 <div class="follow_info">
                     <div>
                         게시물 <span style="font-weight: bold;">{{write_count}}</span>
                     </div>
                     <div>
-                        팔로워 <span style="font-weight: bold;">0</span>
+                        팔로워 <span style="font-weight: bold;">{{follow | length}}</span>
                     </div>
                     <div>
-                        팔로잉 <span style="font-weight: bold;">0</span>
+                        팔로잉 <span style="font-weight: bold;">{{following | length}}</span>
                     </div>
                 </div>
                 <div>
@@ -290,7 +295,7 @@
 
                     <div style="font-weight: bold;" class="info_feed">
                         <div><i class="fa-solid fa-heart"></i>{{feeds.like_list | length}}개</div>
-                        <div><i class="fa-solid fa-comment"></i>{{feeds.like_list | length}}개</div>
+                        <div><i class="fa-solid fa-comment"></i>{{feeds.comment | length}}개</div>
                     </div>
 
                     <img src="../static/img_upload/{{feeds.photo}}" class="img_photo">

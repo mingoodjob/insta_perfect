@@ -1,4 +1,3 @@
-from crypt import methods
 from telnetlib import TLS
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo import MongoClient
@@ -31,14 +30,17 @@ def home():
 def profiles(uid):
     payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     userid = payload['uid']
-    user = db.user.find_one({'uid': uid}, {'_id': False})
+    user = db.user.find_one({'uid': 'test'}, {'_id': False})
+    follows = db.follow.find_one({'uid': uid}, {'_id': 0})
+    follow = follows['follow']
+    following = follows['following']
     name = user['name']
     hobby = user['hobby']
     profile_desc = user['profile_desc']
     user_photo = user['pr_photo']
     all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
     write_count = db.feed.count_documents({'write_id': uid})
-    return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid, user_photo=user_photo, name=name, hobby=hobby, profile_desc=profile_desc)
+    return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid, user_photo=user_photo, name=name, hobby=hobby, profile_desc=profile_desc, follow=follow,following=following)
 
 # 유저 정보 보내주기
 @app.route('/user', methods=['GET', 'POST'])
@@ -314,6 +316,34 @@ def comment_up():
         db.feed.update_one({"feed_number" : int(feed_number)}, {'$push': {'comment': doc }}, upsert=True)
         
     return jsonify({'response': 'success', 'uid' : uid})    
+
+@app.route('/follower_click', methods=['GET', 'POST'])
+def follower_click():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    follows = db.follow.find_one({'uid': uid}, {'_id': 0})
+    uid = uid_get['uid']
+    username = request.form['username']
+    if uid not in follows['follow']:
+        db.follow.update_one({"uid" : uid}, {'$push': {'follow': username }}, upsert=True)
+    else:
+        pass
+    return redirect("/" + uid)
+
+@app.route('/unfollower_click', methods=['GET', 'POST'])
+def unfollower_click():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    follows = db.follow.find_one({'uid': uid}, {'_id': 0})
+    uid = uid_get['uid']
+    username = request.form['username']
+    if uid in follows['follow']:
+        db.follow.update_one({"uid" : uid}, {'$pull': {'follow': username }})
+    else:
+        pass
+    return redirect("/" + uid)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=80, debug=True)

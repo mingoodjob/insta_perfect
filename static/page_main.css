@@ -289,6 +289,15 @@ body,p,h1{
     padding: 12px 12px 0px 0px;
 }
 
+.pr_account > div > button{
+    padding: 5px 15px;
+    border: none;
+    background-color: #0095f6;
+    color: #efefef;
+    border-radius: 5px;
+    margin-top: auto;
+}
+
 .follow_info{
     display: flex;
 }
@@ -332,8 +341,8 @@ body,p,h1{
     align-items: center;
 }
 .info_feed > div{
-    font-size: 20px;
-    padding: 10px 10px;
+    font-size: 15px;
+    padding: 5px 5px;
 }
 
 .info_feed > div > i{

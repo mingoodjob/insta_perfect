@@ -111,9 +111,11 @@ function display_popup() {
         photo = "../static/img_upload/" + response["photo"];
         like_count = response["like_count"];
         comments = response["comment"];
-        if (comments.length > 0){
-        for (cm in comments){
-          comment_html = `<div id="comment_desc_box" class="comment_desc_box">
+        $('#comment_list').empty();
+        if (comments.length > 0) {
+          for (cm in comments) {
+            console.log(comments[cm].text)
+            comment_html = `<div id="comment_desc_box" class="comment_desc_box">
     <div class="comment_pr_photo">
         <img id="pr_photo_comment" src="${comments[cm].pr_photo}" alt="" srcset="">
     </div>
@@ -126,10 +128,10 @@ function display_popup() {
         </div>
     </div>
 </div>`
-$('#comment_list').append(comment_html)
-   
-        }
-        
+            $('#comment_list').append(comment_html)
+
+          }
+
         }
         like = response["like"];
         uid = response["uid"];
@@ -174,7 +176,7 @@ $('#comment_list').append(comment_html)
         $("#pr_photo_comment").attr("src", write_pr_photo);
         $(".feed_info_modal").css("display", "flex");
         // window.location.reload();
-        
+
       }
     },
   });
@@ -209,20 +211,20 @@ function heart_click(click) {
     like = '1'
   }
 
-  
+
   $("#like_click").html(like_html);
 
   $.ajax({
     type: "POST",
     url: "/like_count",
-    data: { like : like, feed_number: feed_number },
+    data: { like: like, feed_number: feed_number },
     success: function (response) {
-        console.log(response['msg'])
-        count = response['count']
-        console.log(count)
-        $('#like_count').html(count)
+      console.log(response['msg'])
+      count = response['count']
+      console.log(count)
+      $('#like_count').html(count)
     }
-})
+  })
 
 
 
@@ -246,24 +248,22 @@ function pr_close() {
   $(".profile_edit").css("display", "none");
 }
 
-function comment_up(){
-    text = $('#comment_text').val()
-    feed_number = sessionStorage.getItem('feed_number')
-    $('#comment_text').val('')
+function comment_up() {
+  text = $('#comment_text').val()
+  feed_number = sessionStorage.getItem('feed_number')
+  $('#comment_text').val('')
 
-    
 
-    $.ajax({
-        type: "POST",
-        url: "/comment_up",
-        data: { feed_number: feed_number, text:text },
-        success: function (response) {
-          uid = response["uid"];
+  $.ajax({
+    type: "POST",
+    url: "/comment_up",
+    data: { feed_number: feed_number, text: text },
+    success: function (response) {
+      uid = response["uid"];
 
-        
-          comment_html = `<div id="comment_desc_box" class="comment_desc_box">
+      comment_html = `<div id="comment_desc_box" class="comment_desc_box">
     <div class="comment_pr_photo">
-        <img id="pr_photo_comment" src="../static/img_upload/1.jpg" alt="" srcset="">
+        <img id="pr_photo_comment" src="{{user_photo}}" alt="" srcset="">
     </div>
     <div id="comment_desc" class="comment_desc">
         <p><b>${uid}</b> ${text}</p>
@@ -274,12 +274,42 @@ function comment_up(){
         </div>
     </div>
 </div>`
-$('#comment_list').append(comment_html)  
-        
-        }
-});
+      $('#comment_list').append(comment_html)
+
+    }
+  });
+
+}
+
+function follower() {
+  username = $('#userid').text()
+  console.log(username)
+
+  $.ajax({
+    type: "POST",
+    url: "/follower_click",
+    data: { username: username },
+    success: function (response) {
+  
+    }
+
+  });
+
+}
 
 
+function unfollower() {
+  username = $('#userid').text()
+  console.log(username)
 
-    
+  $.ajax({
+    type: "POST",
+    url: "/unfollower_click",
+    data: { username: username },
+    success: function (response) {
+  
+    }
+
+  });
+
 }
