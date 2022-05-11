@@ -1,0 +1,332 @@
+body {
+    margin: 0;
+    background-color: #FAFAFA;
+}
+.bx-wrapper {
+    box-shadow:none;
+    position: absolute;
+    left: 33.7%;
+    top: 4%;
+    width: 250px;
+    height: 480px;
+
+}
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+
+}
+
+.phone_img_box {
+    display: flex;
+    position: relative;
+    left: 34.5%;
+    top: 21.7%;
+    background-image: url("../static/login_img/iphone.png");
+    width: 460px;
+    height: 630px;
+    z-index: 99;
+}
+
+.login_box {
+    display: flex;
+    position: relative;
+    left: 34%;
+    top: 22.7%;
+    width: 350px;
+    height: 400px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+
+}
+
+.insta_logo {
+    width: 175px;
+    height: 51px;
+    margin-top: 14%;
+    margin-left: 25%;
+    cursor: pointer;
+}
+.login_input {
+    width: 265px;
+    top: 20%;
+    height: 20px;
+    background-color: #FAFAFA;
+    border: none;
+    position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+    outline: none;
+
+
+}
+
+.log_input {
+    width: 270px;
+    left: 11%;
+    top: 33.5%;
+    height: 36px;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    border: 1px solid #dbdbdb;
+    position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+}
+
+.log_input2 {
+    width: 270px;
+    left: 11%;
+    top: 45%;
+    height: 36px;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    border: 1px solid #dbdbdb;
+    position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+
+}
+.login_input2 {
+    width: 265px;
+    top: 19%;
+    height: 20px;
+    background-color: #FAFAFA;
+    border: none;
+    position: absolute;
+    font-size: 12px;
+    max-height: 460px;
+    outline: none;
+    /*padding: 9px 0 1px 4px;*/
+
+}
+
+.login_input_text {
+    font-size: 12px;
+    left: 2%;
+    top: 25.5%;
+    color: darkgrey;
+    position: absolute;
+    font-weight: 600;
+    padding: 1px 0 1px 1px;
+    cursor: text;
+
+}
+.login_input_text2 {
+    font-weight: 600;
+    font-size: 12px;
+    left: 2%;
+    top: 29%;
+    z-index: 1;
+    color: darkgrey;
+    position: absolute;
+    cursor: text;
+}
+.login_btn {
+    position: absolute;
+    width: 270px;
+    left: 11%;
+    top: 58.5%;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #0095f6;
+    border: 1px solid transparent;
+    color: white;
+    font-size: 14px;
+    opacity: 0.3;
+}
+.middle_line {
+    background-color: #dbdbdb;
+    width: 103px;
+    height: 1px;
+    position: absolute;
+    top: 72%;
+    left: 11.3%;
+}
+.middle_line2 {
+    background-color: #dbdbdb;
+    width: 103px;
+    height: 1px;
+    position: absolute;
+    top: 72%;
+    left: 58.3%;
+}
+
+.middle_line_text {
+    position: absolute;
+    font-size: 13px;
+    color:  gray;
+    font-weight: 600;
+    left: 46%;
+    top: 70%;
+}
+.facebook_logo {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 81%;
+    left: 26%;
+}
+.facebook_btn {
+    color: #385185;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-weight: 700;
+    position: absolute;
+    top: 80.2%;
+    left: 32%;
+
+}
+.find_pwd {
+    position: absolute;
+    text-decoration-line: none;
+    top: 90%;
+    left: 31%;
+    font-size: 12px;
+    color: #00376b;
+}
+.find_id_box{
+    position: absolute;
+    top: 102.7%;
+    width: 350px;
+    height: 63px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+
+}
+.find_id_text {
+    color: #262626;
+    font-size: 14px;
+    position: absolute;
+    top: 35%;
+    left: 22%;
+}
+.find_id_btn {
+    position: absolute;
+    left: 57.5%;
+    top: 34%;
+    color: #0095f6;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.down_text {
+    position: absolute;
+    left: 30%;
+    top: 128%;
+    color: #262626;
+    font-size: 14px;
+}
+
+.app_img {
+    position: absolute;
+    width: 136px;
+    height: 40px;
+    left: 9%;
+    top: 175%;
+}
+.google_img {
+    position: absolute;
+    width: 136px;
+    height: 40px;
+    top: 175%;
+    left: 51%;
+}
+
+.footer_1 {
+    position: absolute;
+    left: 45%;
+    top: 90%;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+.footer_2 {
+    position: absolute;
+    left: 46.5%;
+    top: 92%;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+.footer_3 {
+    position: absolute;
+    left: 45%;
+    top: 94%;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+.login_hide_pwd {
+    position: absolute;
+    top: 28%;
+    left: 68%;
+    font-weight: bold;
+    font-size: 12.5px;
+    z-index: 2;
+    display: none;
+    cursor: pointer;
+}
+.pwd_none {
+    position: absolute;
+    left: 13%;
+    top: 85%;
+    font-size: 14px;
+    white-space: nowrap;
+    color: red;
+    visibility: hidden;
+}
+
+
+
+@media screen and (max-width: 750px) {
+    .login_box {
+        left: 15%;
+    }
+}
+@media screen and (max-width: 750px) {
+    .footer_1, .footer_3 {
+        left: 25%;
+    }
+}
+@media screen and (max-width: 750px) {
+    .footer_2 {
+        left: 35%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .container{
+        width: 120%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .phone_img_box {
+
+        display: none;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .login_box {
+        left: 8%;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .footer_1, .footer_3 {
+        left: 20%;
+    }
+}
+@media screen and (max-width: 414px) {
+    .footer_2 {
+        left: 30%;
+    }
+}
+
