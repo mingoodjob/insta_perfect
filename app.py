@@ -21,9 +21,9 @@ def home():
         return render_template('feed.html',user=user)
 
     except jwt.ExpiredSignatureError:
-        return redirect(url_for("login"),user=user )
+        return redirect(url_for("login"))
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login") , user=user)
+        return redirect(url_for("login"))
 
 @app.route('/<uid>', methods=['GET'])
 def profiles(uid):
@@ -57,7 +57,7 @@ def find_userdb():
 @app.route('/feed', methods=['GET', 'POST'])
 def find_feed():
     if request.method == 'POST':
-        feed_number = request.form['feed_number']
+        feed_number = request.form['give_feed_number']
         find_feed = db.feed.find_one({'feed_number': int(feed_number)}, {'_id': False})
         find_user = db.user.find_one({'uid': find_feed['write_id']}, {'_id': False})
         return jsonify({'response': 'success', 'find_feed': find_feed, 'find_user': find_user})
@@ -65,10 +65,10 @@ def find_feed():
     payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     uid_get = db.user.find_one({'uid': payload['uid']})
     uid = uid_get['uid']
-    content = list(db.feed.find({'write_id': uid}, {'_id': False}))
+    all_feed = list(db.feed.find({'write_id': uid}, {'_id': False}))
     user = db.user.find_one({'uid': uid}, {'_id': False})
     pr_photo = user['pr_photo']
-    return jsonify({'response': 'success', 'content': content, 'pr_photo': pr_photo})
+    return jsonify({'response': 'success', 'all_feed': all_feed, 'pr_photo': pr_photo})
 
 
 # 댓글 입력 저장 후 전송
@@ -83,6 +83,19 @@ def update_comment():
     db.feed.update_one({'feed_number': int(receive_feed_number)}, {'$push': {'comment': {'write_id': uid, 'text': receive_comment}}})
     pr_photo = uid_get['pr_photo']
     return jsonify({'response': 'success', 'pr_photo': pr_photo, 'write_id': uid, 'text': receive_comment})
+
+
+# 좋아요 업데이트
+@app.route('/like', methods=['GET', 'POST'])
+def update_like():
+    payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    if request.method == 'POST':
+        receive_feed_number = request.form['give_feed_number']
+        db.feed.update_one({'feed_number': int(receive_feed_number)}, {'$push': {'like_list': uid}})
+        return jsonify({'result': 'success'})
 
 
 @app.route('/login')
