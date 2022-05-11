@@ -179,45 +179,9 @@ body {
     display: flex;
 }
 
-/* /////////////////////////////////////////////// 모달 슬라이드 박스 ////////////////////////////////////////////////// */
-/* 슬라이드 박스 */
+/* 사진 */
 .commentModal_photo {
     border-right: 1px solid rgb(219,219,219, 0.5);
-    /*visibility: hidden;*/
-    /*opacity: 0;*/
-}
-
-/* 이미지 슬라이드 박스 */
-.box_slider > .bx-wrapper {
-    border: 0;
-    box-shadow: none;
-}
-
-/* 이미지 슬라이드 다음 버튼 (라이브러리 내부 옵션) */
-.box_slider > .bx-wrapper > .bx-controls > .bx-controls-direction > .bx-next {
-    background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_32f0a4f27407.png/32f0a4f27407.png") !important;
-    background-position-x: -162px !important;  /* 라이브러리에 적용되있는 옵션을 덮어쓰기위해 !important 명령어를 사용 */
-    background-position-y: -98px !important;
-    width: 30px !important;
-    height: 30px !important;
-}
-
-/* 이미지 슬라이드 이전 버튼 (라이브러리 내부 옵션) */
-.box_slider > .bx-wrapper > .bx-controls > .bx-controls-direction > .bx-prev {
-    background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_32f0a4f27407.png/32f0a4f27407.png") !important;
-    background-position-x: -130px !important;
-    background-position-y: -98px !important;
-    width: 30px !important;
-    height: 30px !important;
-}
-
-/* 이미지 슬라이드 페이지 아이콘 박스 (라이브러리 내부 옵션) */
-.box_slider > .bx-wrapper > .bx-controls > .bx-pager {
-    bottom: 10px;
-    padding-top: 0;
-    height: 0;
-    margin-bottom: 18px;
-    margin-left: 2px;
 }
 
 /* //////////////////////////////////////// 모달 컨텐츠, 댓글 박스 ///////////////////////////////////////////////////// */
