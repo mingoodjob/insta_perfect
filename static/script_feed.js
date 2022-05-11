@@ -142,7 +142,7 @@ function loadFeed() {
                                         <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
                                     </svg>
                                 </div>
-                                <div class="heart_count heart_count${feed_number}">좋아요 <span class="like_cnt">${like_list.length}</span>개</div>
+                                <div class="heart_count heart_count${feed_number}">좋아요 <span class="like_cnt${feed_number}">${like_list.length}</span>개</div>
                                 <!------------------------------------------------ 포스팅 내용 -------------------------------------------------->
                                 <div class="container_content">
                                     <div class="box_content box_content${feed_number}">
@@ -438,18 +438,23 @@ $(function() {
 
 // 좋아요 버튼 입력시
 function red_heart_show(feed_number) {
+    var like_count = Number($('.like_cnt'+feed_number).text())
+    like_count += 1
+    $('.like_cnt'+feed_number).text(like_count)
+
+    $('.empty_heart'+feed_number).hide()
+    $('.empty_heart_modal'+feed_number).hide()
+    $('.like_cnt_zero_commentModal'+feed_number).hide()
+    $('.red_heart'+feed_number).show()
+    $('.red_heart_modal'+feed_number).show()
+    $('.heart_count'+feed_number).show()
+    $('.like_cnt_commentModal'+feed_number).show()
+
     $.ajax({
         type: 'POST',
         url: '/like',
         data: {give_feed_number: feed_number},
         success: function (result) {
-            $('.empty_heart'+feed_number).hide()
-            $('.empty_heart_modal'+feed_number).hide()
-            $('.like_cnt_zero_commentModal'+feed_number).hide()
-            $('.red_heart'+feed_number).show()
-            $('.red_heart_modal'+feed_number).show()
-            $('.heart_count'+feed_number).show()
-            $('.like_cnt_commentModal'+feed_number).show()
         }
     })
 }
