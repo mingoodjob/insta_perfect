@@ -21,9 +21,9 @@ def home():
         return render_template('feed.html',user=user)
 
     except jwt.ExpiredSignatureError:
-        return redirect(url_for("login"),user=user )
+        return redirect(url_for("login"))
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login") , user=user)
+        return redirect(url_for("login"))
 
 @app.route('/<uid>', methods=['GET'])
 def profiles(uid):
@@ -123,6 +123,17 @@ def join_post():
     db.follow.insert_one(follow)
 
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
+
+
+@app.route("/join/check_uid", methods=["POST"])
+def check_user_id():
+    userid_receive = request.form['userid_give']
+    is_exists = db.user.find_one({'uid': userid_receive})
+
+    if is_exists:
+        return jsonify({'result': 'fail', 'msg': '중복입니다'})
+    return jsonify({'result': 'success', 'msg': '중복되지 않습니다'})
+
 
 @app.route('/login_check', methods=['POST'])
 def login_check():
