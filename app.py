@@ -4,12 +4,14 @@ from pymongo import MongoClient
 import certifi
 import hashlib,datetime,jwt
 
+
 client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
 db = client.instaperfect
 
 app = Flask(__name__)
 
 SECRET_KEY = 'insta'
+
 
 @app.route('/')
 def home():
@@ -18,13 +20,25 @@ def home():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"uid": payload['uid']})
         user = user_info['uid']
-        print(user)
-        return render_template('feed.html',user=user)
+        # 유저 id랜덤 호출
+        all_user = list(db.user.find({}, {"_id": False}))
+        all_choice = random.choice(all_user)
+        all_choice2 = random.choice(all_user)
+        all_choice3 = random.choice(all_user)
+        choice_user = all_choice['uid']
+        choice_user2 = all_choice2['uid']
+        choice_user3 = all_choice3['uid']
+
+
+
+        return render_template('feed.html', user=user, choice_user=choice_user, choice_user2=choice_user2, choice_user3=choice_user3)
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login"))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login"))
+
+
 
 @app.route('/<uid>', methods=['GET'])
 def profiles(uid):
@@ -38,9 +52,11 @@ def profiles(uid):
     hobby = user['hobby']
     profile_desc = user['profile_desc']
     user_photo = user['pr_photo']
-    all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
+    all_feed = db.feed.find({'write_id': uid}).sort("feed_number", -1)
     write_count = db.feed.count_documents({'write_id': uid})
+
     return render_template('profile.html',all_feed=all_feed, username=uid, write_count=write_count, userid=userid, user_photo=user_photo, name=name, hobby=hobby, profile_desc=profile_desc, follow=follow,following=following)
+
 
 # 유저 정보 보내주기
 @app.route('/user', methods=['GET', 'POST'])
@@ -84,7 +100,8 @@ def update_comment():
 
     receive_feed_number = request.form['give_feed_number']
     receive_comment = request.form['give_comment']
-    db.feed.update_one({'feed_number': int(receive_feed_number)}, {'$push': {'comment': {'write_id': uid, 'text': receive_comment}}})
+    db.feed.update_one({'feed_number': int(receive_feed_number)},
+                       {'$push': {'comment': {'write_id': uid, 'text': receive_comment}}})
     pr_photo = uid_get['pr_photo']
     return jsonify({'response': 'success', 'pr_photo': pr_photo, 'write_id': uid, 'text': receive_comment})
 
@@ -106,14 +123,13 @@ def join_post():
     pwd_receive = request.form['pwd_give']
     hashed_pw = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
 
-
     doc = {
         'uid': uid_receive,
         'name': name_receive,
         'pwd': hashed_pw,
-        'pr_photo' : '../static/pr_img/basic.jpg',
-        'hobby' : '',
-        'profile_desc' : '',
+        'pr_photo': '../static/pr_img/basic.jpg',
+        'hobby': '',
+        'profile_desc': '',
     }
 
     follow = {
@@ -127,16 +143,6 @@ def join_post():
     db.follow.insert_one(follow)
 
     return jsonify({'response': 'success', 'msg': '환영합니다!'})
-
-
-@app.route("/join/check_uid", methods=["POST"])
-def check_user_id():
-    userid_receive = request.form['userid_give']
-    is_exists = db.user.find_one({'uid': userid_receive})
-
-    if is_exists:
-        return jsonify({'result': 'fail', 'msg': '중복입니다'})
-    return jsonify({'result': 'success', 'msg': '중복되지 않습니다'})
 
 
 @app.route('/login_check', methods=['POST'])
@@ -156,7 +162,7 @@ def login_check():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        print("token =", end=""), print(token)
+        # print("token =", end=""), print(token)
         return jsonify({'result': 'success', 'token': token})
 
     else:
@@ -175,6 +181,7 @@ def login_name():
     except jwt.exceptions.DecodeError:
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
 
+
 # 프로필 페이지 이동
 @app.route('/profile')
 def profile():
@@ -184,11 +191,13 @@ def profile():
     name = uid_get['name']
     write_count = db.feed.count_documents({'write_id': uid})
     pr_photo = uid_get['pr_photo']
-    print(pr_photo)
-    #피드 콜렉션에 모든 내용을 받아온다! #feed number로 내림차순 정렬
-    all_feed = db.feed.find({'write_id' : uid}).sort("feed_number", -1)
+    # print(pr_photo)
+    # 피드 콜렉션에 모든 내용을 받아온다! #feed number로 내림차순 정렬
+    all_feed = db.feed.find({'write_id': uid}).sort("feed_number", -1)
 
-    return render_template('profile.html',all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=uid, name=name)
+    return render_template('profile.html', all_feed=all_feed, pr_photo=pr_photo, write_count=write_count, username=uid,
+                           name=name)
+
 
 # 이미지 파일 업로드
 @app.route('/upload', methods=['GET', 'POST'])
@@ -205,17 +214,20 @@ def get_file():
         image.save(f'./static/img_upload/{number}.jpg')
 
         doc = {
+
             'feed_number' : number + 2,
             'write_id' : uid,
             'photo' : str(number) + '.jpg',
             'content' : content,
             'like_list' : [],
             'comment': []
+
         }
 
         db.feed.insert_one(doc)
 
     return redirect("/" + uid)
+
 
 @app.route('/feed_number', methods=['GET', 'POST'])
 def feed_number():
@@ -225,7 +237,7 @@ def feed_number():
         feed_number = request.form['feed_number']
         uid_get = db.user.find_one({'uid': payload['uid']})
         uid = uid_get['uid']
-        serch_content = db.feed.find_one({"feed_number": int(feed_number)},{"_id": 0})
+        serch_content = db.feed.find_one({"feed_number": int(feed_number)}, {"_id": 0})
         write_id = serch_content['write_id']
         serch_id = db.user.find_one({"uid": write_id},{"_id": 0})
         write_pr_photo = serch_id['pr_photo']
@@ -237,12 +249,14 @@ def feed_number():
             else:
                 like=0
         except:
+
             like=0
             like_count = 0
         photo = serch_content['photo']
         content = serch_content['content']
         
         return jsonify({'result': 'success', 'photo': photo, 'content': content, 'username': uid, 'like_count' : like_count, 'write_id': write_id, 'like': like, 'feed_number': feed_number, 'uid':uid, 'write_pr_photo':write_pr_photo, "comment" : comment})
+
 
 @app.route('/like_count', methods=['GET', 'POST'])
 def like_count():
@@ -252,6 +266,7 @@ def like_count():
         feed_number = request.form['feed_number']
         print(feed_number)
         like = request.form['like']
+
         uid_get = db.user.find_one({'uid': payload['uid']})
         uid = uid_get['uid']
         serch_content = db.feed.find_one({"feed_number": int(feed_number)},{"_id": 0})
@@ -266,11 +281,12 @@ def like_count():
         count = len(serch_content['like_list'])
         return jsonify({'result': 'success', 'msg' : '잘 받았다 이눔아!', 'count' : count})
 
+
 @app.route('/pr_edit', methods=['POST', 'GET'])
 def pr_edit():
     if request.method == 'POST':
         username = request.form['uid']
-        uid_get = db.user.find_one({'uid': username })
+        uid_get = db.user.find_one({'uid': username})
         hobby = request.form['hobby']
         description = request.form['description']
         db.user.update_one({'uid': username}, {'$set': {'hobby': hobby}})
@@ -278,40 +294,83 @@ def pr_edit():
 
     return redirect("/" + username)
 
+
 @app.route('/pr_upload', methods=['POST', 'GET'])
 def pr_upload():
     payload = jwt.decode(request.cookies.get('mytoken'), SECRET_KEY, algorithms=['HS256'])
     uid = payload['uid']
-    if request.method == 'POST':    
+    if request.method == 'POST':
         image = request.files['file']
         image.save(f'./static/pr_img/{uid}.jpg')
         db.user.update_one({'uid': uid}, {'$set': {'pr_photo': f'./static/pr_img/{uid}.jpg'}})
 
         return redirect("/" + uid)
 
+
 #  팔로우 부분 db에 저장하기
 @app.route("/follow_check", methods=["POST"])
 def follow_user():
-
+    id_receive = request.form['follower']
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     uid_get = db.user.find_one({'uid': payload['uid']})
     uid = uid_get['uid']
 
-    db.follow.update_one({'uid': "test1234"}, {'$push': {'following': "test45678"}}, upsert=True)
-    db.follow.update_one({'uid': "test45678"}, {'$push': {'follow': uid}}, upsert=True)
+    db.follow.update_one({'uid': id_receive}, {'$push': {'follow': uid}}, upsert=True)
+    db.follow.update_one({'uid': uid}, {'$push': {'following': id_receive}}, upsert=True)
     return jsonify({'response': 'success'})
+
+@app.route("/follow_check2", methods=["POST"])
+def follow_user2():
+    id_receive = request.form['follower2']
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    db.follow.update_one({'uid': id_receive}, {'$push': {'follow': uid}}, upsert=True)
+    db.follow.update_one({'uid': uid}, {'$push': {'following': id_receive}}, upsert=True)
+    return jsonify({'response': 'success'})
+
+@app.route("/follow_check3", methods=["POST"])
+def follow_user3():
+    id_receive = request.form['follower3']
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    db.follow.update_one({'uid': id_receive}, {'$push': {'follow': uid}}, upsert=True)
+    db.follow.update_one({'uid': uid}, {'$push': {'following': id_receive}}, upsert=True)
+    return jsonify({'response': 'success'})
+
+
 
 # 팔로우 db remove
 @app.route("/follow_delete", methods=["POST"])
 def follow_delete():
+    id_receive = request.form['follower']
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+    db.follow.update_one({'uid': id_receive}, {'$pull': {'follow': uid}}, upsert=True)
+    db.follow.update_one({'uid': uid}, {'$pull': {'following': id_receive}}, upsert=True)
+    return jsonify({'response': 'success'})
+
+
+@app.route("/follow_delete2", methods=["POST"])
+def follow_delete2():
+    id_receive2 = request.form['follower2']
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     uid_get = db.user.find_one({'uid': payload['uid']})
     uid = uid_get['uid']
 
-    db.follow.update_one({"uid": "test45678"}, {'$pull': {"follow": uid}})
+    db.follow.update_one({'uid': id_receive2}, {'$pull': {'follow': uid}}, upsert=True),
+    db.follow.update_one({'uid': uid}, {'$pull': {'following': id_receive2}}, upsert=True)
     return jsonify({'response': 'success'})
+
 
 @app.route("/comment_up", methods=["POST","GET"])
 def comment_up():
@@ -356,6 +415,19 @@ def unfollower_click():
         pass
     return redirect("/" + uid)
 
-if __name__ == '__main__':
-    app.run('0.0.0.0', port=80, debug=True)
 
+@app.route("/follow_delete3", methods=["POST"])
+def follow_delete3():
+    id_receive3 = request.form['follower3']
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    uid_get = db.user.find_one({'uid': payload['uid']})
+    uid = uid_get['uid']
+
+    db.follow.update_one({'uid': id_receive3}, {'$pull': {'follow': uid}}, upsert=True),
+    db.follow.update_one({'uid': uid}, {'$pull': {'following': id_receive3}}, upsert=True)
+    return jsonify({'response': 'success'})
+
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5000, debug=True)

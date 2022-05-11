@@ -195,27 +195,29 @@
         <div class="name_card_recommend">
             <img class="profile_recommend" onclick="Go_profile()" src="https://i.imgur.com/7u7cLKe.jpg">
             <div class="box_info_recommend">
-                <button class="name_recommend" onclick="Go_profile()">hajin_kim</button>
+                <button id="follow_id" class="name_recommend" onclick="Go_profile()">{{choice_user}}</button>
                 <div class="info_recommend">기억해조</div>
             </div>
-            <button type="submit"  onclick="follow()" id="follow_id" value="" class="link_recommend">팔로우</button>
-            <button type="submit"  onclick="not_follow()" id="not_follow_id" value="" class="link_recommend2">팔로잉</button>
+            <button id="follow_click" onclick="follow()" class="link_recommend">팔로우</button>
+            <button  id="not_follow_id" onclick="not_follow()"  class="follow_hidde">팔로잉</button>
         </div>
         <div class="name_card_recommend">
             <img class="profile_recommend" onclick="Go_profile()" src="https://i.imgur.com/7u7cLKe.jpg">
             <div class="box_info_recommend">
-                <button class="name_recommend" onclick="Go_profile()">sunyoung_baek</button>
+                <button id="follow_id2"  class="name_recommend" onclick="Go_profile()">{{choice_user2}}</button>
                 <div class="info_recommend">기억해조</div>
             </div>
-            <button class="link_recommend">팔로우</button>
+            <button  id="follow_click2" class="link_recommend2" onclick="follow2()">팔로우</button>
+            <button id="not_follow_id2" type="submit"  onclick="not_follow2()" class="follow_hidde2">팔로잉</button>
         </div>
         <div class="name_card_recommend">
             <img class="profile_recommend" onclick="Go_profile()" src="https://i.imgur.com/7u7cLKe.jpg">
             <div class="box_info_recommend">
-                <button class="name_recommend" onclick="Go_profile()">mingi_lee</button>
+                <button id="follow_id3" class="name_recommend" onclick="Go_profile()">{{choice_user3}}</button>
                 <div class="info_recommend">기억해조</div>
             </div>
-            <button class="link_recommend">팔로우</button>
+            <button id="follow_click3" onclick="follow3()" class="link_recommend3">팔로우</button>
+            <button  id="not_follow_id3" onclick="not_follow3()" class="follow_hidde3">팔로잉</button>
         </div>
         <!--------------------------------------------------- footer -------------------------------------------------->
         <footer>
