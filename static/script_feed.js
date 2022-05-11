@@ -13,7 +13,7 @@ function logout() {
                 });
             });
         $().ready(function () {
-                $("#follow_id").click(function () {
+                $("#follow_click").click(function () {
                     Swal.fire({
                         icon: 'success',
                         title: '사람들과 가까워지는중...',
@@ -30,6 +30,45 @@ function logout() {
                         text: '팔로우 가 취소 되었습니다!'
                     });
 
+                });
+            });
+        $().ready(function () {
+                $("#follow_click2").click(function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사람들과 가까워지는중...',
+                        text: '팔로우 가 완료 되었습니다!'
+                    });
+
+                });
+            });
+        $().ready(function () {
+                $("#not_follow_id2").click(function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사람들과 멀어지는중...',
+                        text: '팔로우 가 취소 되었습니다!'
+                    });
+
+                });
+            });
+        $().ready(function () {
+                $("#follow_click3").click(function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사람들과 가까워지는중...',
+                        text: '팔로우 가 완료 되었습니다!'
+                    });
+
+                });
+            });
+        $().ready(function () {
+                $("#not_follow_id3").click(function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사람들과 멀어지는중...',
+                        text: '팔로우 가 취소 되었습니다!'
+                    });
                 });
             });
 
@@ -598,9 +637,7 @@ function write_button_commentModal(feed_number) {  // 댓글 모달
 }
 
 function follow() {
-
-    let value = $('#follow_id').val();
-
+    let value = $('#follow_id').text();
     $.ajax({
         type: "POST",
         url: "/follow_check",
@@ -611,20 +648,31 @@ function follow() {
     });
 }
 
-const follow_btn = document.querySelector(".link_recommend");
-const follow_btn2 = document.querySelector(".link_recommend2")
-follow_btn.addEventListener('click', (event) => {
-    follow_btn.style.display = "none";
-    follow_btn2.style.display = "flex";
-follow_btn2.addEventListener('click', (event) => {
-    follow_btn.style.display = "flex";
-    follow_btn2.style.display = "none";
+function follow2() {
+    let value2 = $('#follow_id2').text();
+    $.ajax({
+        type: "POST",
+        url: "/follow_check2",
+        data: {follower2: value2},
+        success: function (response) {
 
+        },
     });
-});
+}
+function follow3() {
+    let value3 = $('#follow_id3').text();
+    $.ajax({
+        type: "POST",
+        url: "/follow_check3",
+        data: {follower3: value3},
+        success: function (response) {
+
+        },
+    });
+}
 
 function not_follow() {
-        let value = $('#not_follow_id').val();
+        let value = $('#follow_id').text();
         $.ajax({
             type: "POST",
             url: "/follow_delete",
@@ -635,6 +683,67 @@ function not_follow() {
         });
     }
 
+function not_follow2() {
+        let value2 = $('#follow_id2').text();
+        $.ajax({
+            type: "POST",
+            url: "/follow_delete2",
+            data: {follower2: value2},
+            success: function (response) {
+
+            },
+        });
+    }
+
+function not_follow3() {
+        let value3 = $('#follow_id3').text();
+        $.ajax({
+            type: "POST",
+            url: "/follow_delete3",
+            data: {follower3: value3},
+            success: function (response) {
+
+            },
+        });
+    }
+
+
+const follow_btn = document.querySelector(".link_recommend");
+const follow_hidebtn = document.querySelector(".follow_hidde")
+follow_btn.addEventListener('click', (event) => {
+    follow_btn.style.display = "none";
+    follow_hidebtn.style.display = "flex";
+follow_hidebtn.addEventListener('click', (event) => {
+    follow_hidebtn.style.display = "none";
+     follow_btn.style.display = "flex";
+
+    });
+});
+
+const follow_btn2 = document.querySelector(".link_recommend2");
+const follow_hidebtn2 = document.querySelector(".follow_hidde2")
+follow_btn2.addEventListener('click', (event) => {
+    follow_btn2.style.display = "none";
+    follow_hidebtn2.style.display = "flex";
+follow_hidebtn2.addEventListener('click', (event) => {
+    follow_btn2.style.display = "flex";
+    follow_hidebtn2.style.display = "none";
+
+    });
+});
+
+const follow_btn3 = document.querySelector(".link_recommend3");
+const follow_hidebtn3 = document.querySelector(".follow_hidde3")
+follow_btn3.addEventListener('click', (event) => {
+    follow_btn3.style.display = "none";
+    follow_hidebtn3.style.display = "flex";
+follow_hidebtn3.addEventListener('click', (event) => {
+    follow_btn3.style.display = "flex";
+    follow_hidebtn3.style.display = "none";
+    });
+});
+
+
 var btn = document.getElementById("profile_btn");
 var modal = document.getElementById("profile_modal");
 var close = document.getElementById("profile_modal_close");
@@ -642,8 +751,6 @@ var mouseover = document.getElementById("mouseover");
 var mouseover2 = document.getElementById("mouseover2");
 var mouseover3 = document.getElementById("mouseover3");
 var mouseover4 = document.getElementById("mouseover4");
-
-
 
 //취소 프로필 모달부분 마우스 오버 이벤트
 close.addEventListener('mouseover', (event) => {

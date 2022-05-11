@@ -1011,7 +1011,7 @@ footer {
 }
 
 /*팔로우/팔로잉*/
-.link_recommend2 {
+.follow_hidde {
     display: none;
     background: transparent;
     border: 0;
@@ -1021,6 +1021,48 @@ footer {
     font-weight: 600;
     cursor: pointer;
 }
+.follow_hidde2 {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 1px 0 0 0;
+    color: black;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.follow_hidde3 {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 1px 0 0 0;
+    color: black;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.link_recommend2 {
+    background: transparent;
+    border: 0;
+    padding: 1px 0 0 0;
+    color: rgb(0, 149, 246);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.link_recommend3 {
+    background: transparent;
+    border: 0;
+    padding: 1px 0 0 0;
+    color: rgb(0, 149, 246);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
 
 .profile_modal_box {
     width: 230px;
