@@ -110,8 +110,8 @@ $(function() {
             $('.profile_name').text(uid)
 
             // 상단바와 네임카드 유저 프로필 이미지 적용
-            $('.profile_nav').attr('src', pr_photo)
-            $('.profile_name_card').attr('src', pr_photo)
+            $('.profile_nav').attr('src', 'static/img_upload/'+pr_photo)
+            $('.profile_name_card').attr('src', 'static/img_upload/'+pr_photo)
         }
     })
 })
@@ -123,23 +123,19 @@ function loadFeed() {
         url: "/feed",
         data: {},
         success: function (response) {
-            console.log('ajax 실행중')
             let pr_photo = response['pr_photo']  // content 작성자 프로필 이미지
-            let all_feed = response['content']  // 전체 content
-            console.log(all_feed.length)
+            let all_feed = response['all_feed']  // 전체 content
             for (let i = 0; i < all_feed.length; i++) {
                 let write_id = all_feed[i]['write_id']
                 let content = all_feed[i]['content']
-                let like_count = all_feed[i]['like_count']
+                let like_list = all_feed[i]['like_list']
                 let feed_number = all_feed[i]['feed_number']
                 let photo = all_feed[i]['photo']
-                let all_comment = all_feed[i]['comment']
-                let all_comment_count = all_comment.length
 
-                let temp_html = `<div class="container_post">
+                let temp_html = `<div class="container_post feed_number${feed_number}">
                                 <!------------------------------------------------ 포스트 네임카드 ---------------------------------------------->
                                 <div class="container_name_post">
-                                    <img class="profile_name_post" onclick="Go_profile()" src="${pr_photo}">
+                                    <img class="profile_name_post" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
                                     <div class="box_name_post">
                                         <a class="name_post" onclick="Go_profile()">${write_id}</a>
                                     </div>
@@ -149,21 +145,21 @@ function loadFeed() {
                                         <circle cx="18" cy="12" r="1.5"></circle>
                                     </svg>
                                 </div>
-                                <!------------------------------------------------ 사진 슬라이드 ------------------------------------------------>
+                                <!------------------------------------------------ 사진 ------------------------------------------------>
                                 <div class="box_picture_post">
                                     <img src="../static/img_upload/${photo}" style="width:100%;">
                                 </div>
                                 <!------------------------------------------------ 상호작용 ---------------------------------------------------->
                                 <div class="box_icon_SNS">
                                     <!-- 빨간 하트 아이콘 -->
-                                    <svg class="red_heart" style="display: none; opacity: 1;" onclick="empty_heart_show() "
+                                    <svg class="red_heart red_heart${feed_number}" style="display: none; opacity: 1;" onclick="empty_heart_show(${feed_number}) "
                                          color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48" width="24">
                                         <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
                                         10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
                                         7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
                                     </svg>
                                     <!-- 빈 하트 아이콘 -->
-                                    <svg class="empty_heart" onclick="red_heart_show()" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                    <svg class="empty_heart empty_heart${feed_number}" onclick="red_heart_show(${feed_number})" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
                                         <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
                                         3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
                                         014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0
@@ -185,20 +181,20 @@ function loadFeed() {
                                         <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
                                     </svg>
                                 </div>
-                                <div class="heart_count">좋아요 <span class="like_cnt">${like_count}</span>개</div>
+                                <div class="heart_count heart_count${feed_number}">좋아요 <span class="like_cnt">${like_list.length}</span>개</div>
                                 <!------------------------------------------------ 포스팅 내용 -------------------------------------------------->
                                 <div class="container_content">
-                                    <div class="box_content">
+                                    <div class="box_content box_content${feed_number}">
                                         <span class="writer_content" onclick="Go_profile()">${write_id}</span>
-                                        <span class="text_content">${content}</span>
+                                        <span class="text_content text_content${feed_number}">${content}</span>
                                     </div>
-                                    <div class="show_cotent" onclick="show_content()">... 더 보기</div>
+                                    <div class="show_cotent show_cotent${feed_number}" onclick="show_content(${feed_number})">... 더 보기</div>
                                 </div>
                                 <!---------------------------------------------------- 댓글 --------------------------------------------------->
                                 <div>
-                                    <button class="show_comment" onclick="show_commentModal(${feed_number})">댓글 <span>${all_comment_count}</span>개 모두 보기</button>
+                                    <button class="show_comment show_comment${feed_number}" onclick="show_commentModal(${feed_number})">댓글 <span class="commentCount${feed_number}"></span>개 모두 보기</button>
                                 </div>
-                                <div class="box_comment"></div>
+                                <div class="box_comment box_comment${feed_number}"></div>
                                 <div class="time_post"><span style="margin:0; padding:0;">13</span>시간 전</div>
                                  <!------------------------------------------------ 댓글 작성 -------------------------------------------------->
                                 <div class="box_write">
@@ -207,12 +203,15 @@ function loadFeed() {
                                             <path d="M15.83 10.997a1.167 1.167 0 101.167 1.167 1.167 1.167 0 00-1.167-1.167zm-6.5 1.167a1.167 1.167 0 10-1.166 1.167 1.167 1.167 0 001.166-1.167zm5.163 3.24a3.406 3.406 0 01-4.982.007 1 1 0 10-1.557 1.256 5.397 5.397 0 008.09 0 1 1 0 00-1.55-1.263zM12 .503a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012 .503zm0 21a9.5 9.5 0 119.5-9.5 9.51 9.51 0 01-9.5 9.5z"></path>
                                         </svg>
                                     </button>
-                                    <input class="write_comment" onkeyup="if(event.keyCode==13){write_button(${feed_number})}" placeholder="댓글 달기...">
-                                    <button class="write_button" onclick="write_button(${feed_number})">게시</button>
+                                    <input class="write_comment write_comment${feed_number}" oninput="checkInputComment()" onkeyup="if(event.keyCode==13){write_button(${feed_number})}" placeholder="댓글 달기...">
+                                    <button class="write_button write_button${feed_number}" onclick="write_button(${feed_number})">게시</button>
                                 </div>
                             </div>`
                 $('.container').append(temp_html)
-                for (let i = 0; i < all_comment.length; i++) {
+
+                let all_comment = all_feed[i]['comment']
+                if (all_comment !== undefined) {
+                    for (let i = 0; i < all_comment.length; i++) {
                     let write_id = all_comment[i]['write_id']
                     let text = all_comment[i]['text']
                     let temp_html = `<div class="box_list_comment">
@@ -228,16 +227,21 @@ function loadFeed() {
                                         4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
                                     </svg>
                                  </div>`
-                    $('.box_comment').append(temp_html)
+                    $('.commentCount'+feed_number).text(all_comment.length)
+                    $('.box_comment'+feed_number).append(temp_html)
+                    }
+                } else {
+                    $('.show_comment'+feed_number).hide()
                 }
+                checkContentHeight(feed_number)  // 게시글 내용 높이 체크 후 더보기 버튼 처리
             }
-            contentHeight();
         }
     })
 }
+
 $(document).ready(function() {
-    loadFeed();
-});
+    loadFeed()
+})
 
 // 포스트 작성 아이콘 모달 /////////////////////////////////////////
 const getPostButton = document.querySelector('#button_post')  // 작성 아이콘 버튼을 변수에 담음
@@ -298,19 +302,21 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
     $.ajax({
         type: 'POST',
         url: "/feed",
-        data: {feed_number: feed_number},
+        data: {give_feed_number: feed_number},
         success: function (response) {
             let find_user = response['find_user']
             let find_feed = response['find_feed']
+            let feed_number = find_feed['feed_number']
             let photo = find_feed['photo']
             let pr_photo = find_user['pr_photo']
             let write_id = find_feed['write_id']
             let content = find_feed['content']
+            let like_list = find_feed['like_list']
 
-            let temp_html = `<img class="commentModal_photo" src="../static/img_upload/${photo}">
+            let temp_html = `<img class="commentModal_photo" src="/static/img_upload/${photo}">
                              <div>
                                 <div class="container_name_modal">
-                                    <img class="profile_name_post" onclick="Go_profile()" src="${pr_photo}">
+                                    <img class="profile_name_post" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
                                     <div class="box_name_post">
                                         <a class="name_post" onclick="Go_profile()">${write_id}</a>
                                     </div>
@@ -323,7 +329,7 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
                                 <section class="box_content_comment_commentModal">
                                     <section class="section_content_commentModal">
                                         <section>
-                                            <img class="profileImg_comment_modal" onclick="Go_profile()" src="${pr_photo}">
+                                            <img class="profileImg_comment_modal" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
                                         </section>
                                         <section>
                                             <span class="name_post" onclick="Go_profile()">${write_id}</span>
@@ -337,14 +343,14 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
                                 </section>
                                 <div class="box_icon_modal">
                                     <!-- 빨간 하트 아이콘 -->
-                                    <svg class="red_heart_modal" style="display: none; opacity: 1;" onclick="empty_heart_show()"
+                                    <svg class="red_heart_modal red_heart_modal${feed_number}" style="display: none; opacity: 1;" onclick="empty_heart_show(${feed_number})"
                                          color="#ed4956" fill="#ed4956" height="24" role="img" viewBox="0 0 48 48" width="24">
                                         <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12
                                         10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2
                                         7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
                                     </svg>
                                     <!-- 빈 하트 아이콘 -->
-                                    <svg class="empty_heart_modal" onclick="red_heart_show()" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                    <svg class="empty_heart_modal empty_heart_modal${feed_number}" onclick="red_heart_show(${feed_number})" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
                                         <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
                                         3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
                                         014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0
@@ -367,8 +373,8 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
                                     </svg>
                                 </div>
                                 <section class="text_like_commentModal">
-                                    <div class="like_cnt_zero_commentModal">가장 먼저&nbsp;<span style="font-weight: 600">좋아요</span>를 눌러보세요</div>
-                                    <div class="like_cnt_commentModal" style="display:none; font-weight: 600;">좋아요 <span class="like_count_commentModal"></span>개</div>
+                                    <div class="like_cnt_zero_commentModal like_cnt_zero_commentModal${feed_number}">가장 먼저&nbsp;<span style="font-weight: 600">좋아요</span>를 눌러보세요</div>
+                                    <div class="like_cnt_commentModal like_cnt_commentModal${feed_number}" style="display:none; font-weight: 600;">좋아요 <span class="like_count_commentModal">${like_list.length}</span>개</div>
                                 </section>
                                 <div class="time_post"><span style="margin:0; padding:0;">13</span>시간 전</div>
                                 <div class="box_write">
@@ -377,38 +383,41 @@ function show_commentModal(feed_number) {  // 댓글 아이콘, 댓글 모두보
                                             <path d="M15.83 10.997a1.167 1.167 0 101.167 1.167 1.167 1.167 0 00-1.167-1.167zm-6.5 1.167a1.167 1.167 0 10-1.166 1.167 1.167 1.167 0 001.166-1.167zm5.163 3.24a3.406 3.406 0 01-4.982.007 1 1 0 10-1.557 1.256 5.397 5.397 0 008.09 0 1 1 0 00-1.55-1.263zM12 .503a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012 .503zm0 21a9.5 9.5 0 119.5-9.5 9.51 9.51 0 01-9.5 9.5z"></path>
                                         </svg>
                                     </button>
-                                    <input class="write_comment" onkeyup="if(event.keyCode==13){write_button(${feed_number})}" placeholder="댓글 달기...">
-                                    <button class="write_button_commentModal" onclick="write_button(${feed_number})">게시</button>
+                                    <input class="write_comment_commentModal" onkeyup="if(event.keyCode==13){write_button_commentModal(${feed_number})}" placeholder="댓글 달기...">
+                                    <button class="write_button_commentModal" onclick="write_button_commentModal(${feed_number})">게시</button>
                                 </div>
                              </div>`
             $('.container_comment_modal').empty()
-            $('.container_comment_modal').prepend(temp_html)
+            $('.container_comment_modal').append(temp_html)
+            checkInputCommentModal()
 
             let all_comment = find_feed['comment']
-            for(let i = 0; i < all_comment.length; i++) {
+            if (all_comment !== undefined) {
+            for(let i = all_comment.length-1; i >= 0; i--) {
                 let write_id = all_comment[i]['write_id']
+                let text = all_comment[i]['text']
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/user',
-                    data: {give_uid: write_id},
-                    success: function (response) {
-                        let find_user = response['find_user']
-                        let pr_photo = find_user['pr_photo']
-                        let text = all_comment[i]['text']
-                        let temp_html = `<section class="commentBox_commentModal">
-                                            <img class="profileImg_comment_modal" onclick="Go_profile()" src="${pr_photo}">
-                                            <section>
-                                            <span class="name_post" onclick="Go_profile()">${write_id}</span>
-                                            <span>${text}</span>
-                                            <section class="time_post_commentModal">
-                                                <div style="font-size:12px; font-weight:400; color:rgb(142, 142, 142)"><span>13</span>시간</div>
-                                            </section>
-                                         </section>
-                                         </section>`
-                        $('.section_comment_commentModal').append(temp_html)
-                    }
-                })
+                    $.ajax({
+                        type: 'POST',
+                        url: '/user',
+                        data: {give_uid: write_id},
+                        success: function (response) {
+                            let find_user = response['find_user']
+                            let pr_photo = find_user['pr_photo']
+                            let temp_html = `<section class="commentBox_commentModal">
+                                                <img class="profileImg_comment_modal" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
+                                                <section>
+                                                <span class="name_post" onclick="Go_profile()">${write_id}</span>
+                                                <span>${text}</span>
+                                                <section class="time_post_commentModal">
+                                                    <div style="font-size:12px; font-weight:400; color:rgb(142, 142, 142)"><span>13</span>시간</div>
+                                                </section>
+                                             </section>
+                                             </section>`
+                            $('.section_comment_commentModal').append(temp_html)
+                        }
+                    })
+                }
             }
         }
     })
@@ -446,51 +455,44 @@ function blur_search() {
 }
 
 // 좋아요 갯수에 따른 좋아요 텍스트와 아이콘 노출 (페이지 처음 로드시)
-// $(function() {
-//     $.ajax({
-//         type: 'GET',
-//         url: '/feed',
-//         data: {},
-//         success: function (response) {
-//             let like_cnt = response['like_count']  // 해당 content의 좋아요 갯수
-//             let like_user = response['like_user'][$('.profile_name').text()]
-//             console.log(like_cnt)
-//             if (like_cnt != 0) {
-//                 $('.heart_count').show()
-//                 $('.like_cnt_zero_commentModal').hide()
-//                 $('.like_cnt_commentModal').show()
-//             }
-//             if (like_user == true) {
-//                 $('.empty_heart').hide()
-//                 $('.empty_heart_modal').hide()
-//                 $('.red_heart').show()
-//                 $('.red_heart_modal').show()
-//             }
-//         }
-//     })
-// })
-//
-// // 좋아요 버튼 입력시
-// function red_heart_show() {
-//     click_like = true
-//
-//     $.ajax({
-//         type: 'POST',
-//         url: '/feed',
-//         data: {click_like:click_like},
-//         success: function (response) {
-//             console.log(response['msg'])
-//             $('.empty_heart').hide()
-//             $('.empty_heart_modal').hide()
-//             $('.like_cnt_zero_commentModal').hide()
-//             $('.red_heart').show()
-//             $('.red_heart_modal').show()
-//             $('.heart_count').show()
-//             $('.like_cnt_commentModal').show()
-//         }
-//     })
-// }
-//
+$(function() {
+    $.ajax({
+        type: 'GET',
+        url: '/feed',
+        data: {},
+        success: function (response) {
+            let all_feed = response['all_feed']
+            for (let i = 0; i < all_feed.length; i++) {
+                let feed_number = all_feed[i]['feed_number']
+                let like_list = all_feed[i]['like_list']
+                if (like_list.length != 0) {
+                    $('.heart_count'+feed_number).show()
+                    $('.like_cnt_zero_commentModal'+feed_number).hide()
+                    $('.like_cnt_commentModal'+feed_number).show()
+                }
+            }
+        }
+    })
+})
+
+// 좋아요 버튼 입력시
+function red_heart_show(feed_number) {
+    $.ajax({
+        type: 'POST',
+        url: '/like',
+        data: {give_feed_number: feed_number},
+        success: function (result) {
+            $('.empty_heart'+feed_number).hide()
+            $('.empty_heart_modal'+feed_number).hide()
+            $('.like_cnt_zero_commentModal'+feed_number).hide()
+            $('.red_heart'+feed_number).show()
+            $('.red_heart_modal'+feed_number).show()
+            $('.heart_count'+feed_number).show()
+            $('.like_cnt_commentModal'+feed_number).show()
+        }
+    })
+}
+
 // // 좋아요 버튼 취소시
 // function empty_heart_show() {
 //     click_like = false
@@ -514,42 +516,47 @@ function blur_search() {
 
 
 // 피드 게시글의 내용이 길면 숨김 처리와 더보기 버튼
-function contentHeight() {
-    let contentHeight = document.querySelector('.text_content').offsetHeight // content 높이 얻기
-    console.log(contentHeight)
+function checkContentHeight(feed_number) {
+    let contentHeight = document.querySelector('.text_content'+feed_number).offsetHeight // content 높이 얻기
     if (contentHeight < 20) {
-        document.querySelector('.show_cotent').classList.add('hide_btn') // 1줄이하면 버튼 감춤
+        document.querySelector('.show_cotent'+feed_number).classList.add('hide_btn') // 1줄이하면 버튼 감춤
     } else {
-        document.querySelector('.box_content').classList.add('hide_content') // 2줄이상은 숨김
+        document.querySelector('.box_content'+feed_number).classList.add('hide_content') // 2줄이상은 숨김
     }
 }
 
-function show_content() {  // 더 보기 버튼 클릭시
-    document.querySelector('.box_content').classList.remove('hide_content') // 텍스트 숨김처리 취소
-    document.querySelector('.show_cotent').classList.add('hide_btn') // 버튼 숨김
+function show_content(feed_number) {  // 더 보기 버튼 클릭시
+    document.querySelector('.box_content'+feed_number).classList.remove('hide_content') // 텍스트 숨김처리 취소
+    document.querySelector('.show_cotent'+feed_number).classList.add('hide_btn') // 버튼 숨김
 }
 
 // 댓글달기 input 박스에 텍스트 감지 여부에 따라 게시 버튼 스타일 변경 기능 //////////////////////
-$(document).ready(function() {
-    $(".write_comment").on('input',function() {
-        if($('.write_comment').val() == '')
-            $('.write_button').attr("style", "opacity: 50%; cursor: auto;");  // 텍스트 감지되지않으면 흐리게, 기본 커서
-        else
-            $('.write_button').attr("style", "opacity: 100%; cursor: pointer;")  // 텍스트 감지되면 진하게, 포인터 커서
-            $('.write_comment').attr("style", "font-size: 14px; padding-bottom: 1px;")  // 텍스트 감지되면 폰트 사이즈 키우고 살짝 위로
+function checkInputComment() {
+    $('.write_comment').on('input', function () {
+        if ($('.write_comment:focus').val() === '') {
+            $('.write_comment:focus').next().attr("style", "opacity: 50%; cursor: auto;")  // 텍스트 감지되지않으면 흐리게, 기본 커서
+        } else {
+            $('.write_comment:focus').next().attr("style", "opacity: 100%; cursor: pointer;")  // 텍스트 감지되면 진하게, 포인터 커서
+            $(".write_comment").attr("style", "font-size: 14px; padding-bottom: 1px;")  // 텍스트 감지되면 폰트 사이즈 키우고 살짝 위로
+        }
     })
-    $(".write_comment_commentModal").on('input',function() {
-        if($('.write_comment_commentModal').val() == '')
-            $('.write_button_commentModal').attr("style", "opacity: 50%; cursor: auto;");  // 텍스트 감지되지않으면 흐리게, 기본 커서
-        else
+}
+function checkInputCommentModal() {
+    $('.write_comment_commentModal').on('input', function () {
+        if ($('.write_comment_commentModal').val() === '') {
+            $('.write_button_commentModal').attr("style", "opacity: 50%; cursor: auto;")  // 텍스트 감지되지않으면 흐리게, 기본 커서
+        } else {
             $('.write_button_commentModal').attr("style", "opacity: 100%; cursor: pointer;")  // 텍스트 감지되면 진하게, 포인터 커서
-            $('.write_comment_commentModal').attr("style", "font-size: 14px; padding-bottom: 1px;")  // 텍스트 감지되면 폰트 사이즈 키우고 살짝 위로
+            $(".write_comment_commentModal").attr("style", "font-size: 14px; padding-bottom: 1px;")  // 텍스트 감지되면 폰트 사이즈 키우고 살짝 위로
+        }
     })
-})
+}
 
 // 댓글 달기 기능 //////////////////////////////////////////////////////////////////////////////////
-function write_button(feed_number) {
-    let input_comment = $('.write_comment').val()  // 작성자 코멘트
+function write_button(feed_number) {  // 피드 페이지
+    let input_comment = $('.write_comment'+feed_number).val()  // 작성자 코멘트
+    console.log(input_comment)
+    $('.write_button').attr("style", "opacity: 50%; cursor: auto;")
     if (input_comment !== '') {
         $.ajax({
             type: 'POST',
@@ -560,7 +567,6 @@ function write_button(feed_number) {
                 let text = response['text']
                 let pr_photo = response['pr_photo']
 
-                // 피드 페이지
                 let temp_html = `<div class="box_list_comment">
                                        <span class="writer_comment" onclick="Go_profile()">${write_id}</span>
                                        <span class="comment">${text}</span>
@@ -574,9 +580,27 @@ function write_button(feed_number) {
                                             4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
                                        </svg>
                                  </div>`
-                // 댓글 모달
+                $('.box_comment'+feed_number).append(temp_html)
+                $('.write_comment'+feed_number).val('')
+            }
+        })
+    }
+}
+function write_button_commentModal(feed_number) {  // 댓글 모달
+    let input_comment = $('.write_comment_commentModal').val()  // 작성자 코멘트
+    $('.write_button_commentModal').attr("style", "opacity: 50%; cursor: auto;")
+    if (input_comment !== '') {
+        $.ajax({
+            type: 'POST',
+            url: '/comment',
+            data: {give_feed_number: feed_number, give_comment: input_comment},
+            success: function (response) {
+                let write_id = response['write_id']
+                let text = response['text']
+                let pr_photo = response['pr_photo']
+
                 let commentModal_html = `<section class="commentBox_commentModal">
-                                            <img class="profileImg_comment_modal" onclick="Go_profile()" src="${pr_photo}">
+                                            <img class="profileImg_comment_modal" onclick="Go_profile()" src="/static/img_upload/${pr_photo}">
                                             <section>
                                             <span class="name_post" onclick="Go_profile()">${write_id}</span>
                                             <span>${text}</span>
@@ -585,15 +609,27 @@ function write_button(feed_number) {
                                             </section>
                                          </section>
                                          </section>`
-                $('.box_comment').append(temp_html)
-                $('.section_comment_commentModal').append(commentModal_html)
-                $('.write_comment').val('')
+
+                let temp_html = `<div class="box_list_comment">
+                                       <span class="writer_comment" onclick="Go_profile()">${write_id}</span>
+                                       <span class="comment">${text}</span>
+                                       <svg class="heart_comment" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
+                                            <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865
+                                            3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0
+                                            014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17
+                                            0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5
+                                            9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018
+                                            2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025
+                                            4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
+                                       </svg>
+                                 </div>`
+                $('.box_comment'+feed_number).append(temp_html)
+                $('.section_comment_commentModal').prepend(commentModal_html)
+                $('.write_comment_commentModal').val('')
             }
         })
     }
-
 }
-
 
 function follow() {
     let value = $('#follow_id').text();
@@ -754,5 +790,3 @@ modal.onclick = function () {
     modal.style.display = "none"
 }
 }
-
-
