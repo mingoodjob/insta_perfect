@@ -4,10 +4,6 @@ from pymongo import MongoClient
 import certifi
 import hashlib,datetime,jwt,random
 
-
-client = MongoClient('mongodb+srv://test:sparta@cluster0.avef3.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
-db = client.instaperfect
-
 app = Flask(__name__)
 
 SECRET_KEY = 'insta'
